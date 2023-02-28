@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Readex pro google font 200,300,400,5000,700*/
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  text-align: center;
+}
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.onBoarding input[type="radio"] {
+  display: none;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.65) 0%,
+      rgba(0, 0, 0, 0) 100%
+    ),
+    url("./components/imgs/backgroundTinder.webp");
+}
+
+.onBoarding input[type="radio"]:checked + label {
+  background: rgba(255, 68, 0, 0.595);
+  border: none;
+  color: white;
+  backdrop-filter: 7px;
+}
