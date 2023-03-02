@@ -30,9 +30,10 @@ jobs:
  
     - run: npm ci
     - run: npm run build --if-present
+    - run: pm2 reload all
 
 
-    
+
 # name: Node.js CI
 
 # on:
