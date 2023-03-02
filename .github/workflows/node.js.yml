@@ -2,44 +2,6 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
 
-name: Node.js CI
-
-on:
-  push:
-    branches: [ "main" ]
-
-jobs:
-  build:
-
-
-    runs-on: self-hosted
-    defaults:
-      run:
-        working-directory: 'clients' # Here the path to the folder where package-lock.json is located.
-    strategy:
-      matrix:
-        node-version: [16.x] # Are you are missing this specification?
-    steps:
-
-    - name: Install dependencies
-      working-directory: ./server
-      run: npm install
-
-
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: '**/package-lock.json' # THIS PATTERN did the trick for me.
- 
-    - run: npm ci
-    - run: pm2 reload all
-    - run: npm run build --if-present
-
-
-
 # name: Node.js CI
 
 # on:
@@ -57,26 +19,77 @@ jobs:
 #     strategy:
 #       matrix:
 #         node-version: [16.x] # Are you are missing this specification?
-        
 #     steps:
-#      # Pipe Frontend
+#     - uses: actions/checkout@v2
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v2
+#       with:
+#         node-version: ${{ matrix.node-version }}
+#         cache: 'npm'
+#         cache-dependency-path: '**/package-lock.json' # THIS PATTERN did the trick for me.
+ 
+#     - run: npm ci
+#     - run: pm2 reload all
+#     - run: npm run build --if-present
+
+
+
+
+
+
+
+
+
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: 'clients' # Here the path to the folder where package-lock.json is located.
+    strategy:
+      matrix:
+        node-version: [16.x] # Are you are missing this specification?
+        
+    steps:
+     # Pipe Frontend
+
      
-#     - name: Install dependencies
-#       working-directory: ./server
-#       run: npm install
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: '**/package-lock.json' # THIS PATTERN did the trick for me.
+
+
+
+     
+    - name: Install dependencies
+      working-directory: ./server
+      run: npm install
       
-#     - name: Restart Server
-#       working-directory: ./server
-#       run: pm2 reload all      
+    - name: Restart Server
+      working-directory: ./server
+      run: pm2 reload all      
       
       
-#     - name: Install dependencies
-#       working-directory: ./clients
-#       run: npm install
+    - name: Install dependencies
+      working-directory: ./clients
+      run: npm ci
     
-#     - name: Making Build
-#       working-directory: ./clients
-#       run: npm run build --if-present
+    - name: Making Build
+      working-directory: ./clients
+      run: npm run build --if-present
       
  
  
