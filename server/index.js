@@ -25,6 +25,13 @@ app.get("/", (req, res) => {
   res.json("Hello to my app");
 });
 
+
+// Default
+app.get("/health-check", (req, res) => {
+  res.json("working....");
+});
+
+
 // google sign up
 
 app.post("/googleSignUp", async (req, res) => {
