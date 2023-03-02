@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 
 // Default
 app.get("/health-check", (req, res) => {
-  res.json("working....");
+  res.json("working....tested");
 });
 
 
