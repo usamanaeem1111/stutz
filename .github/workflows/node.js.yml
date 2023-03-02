@@ -24,7 +24,7 @@ jobs:
      
     - name: Install dependencies
       working-directory: ./server
-      run: npm installl
+      run: npm install
       
     - name: Restart Server
       working-directory: ./server
