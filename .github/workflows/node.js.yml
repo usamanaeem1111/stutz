@@ -20,6 +20,12 @@ jobs:
       matrix:
         node-version: [16.x] # Are you are missing this specification?
     steps:
+
+    - name: Install dependencies
+      working-directory: ./server
+      run: npm install
+
+
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
