@@ -21,6 +21,16 @@ jobs:
         
     steps:
      # Pipe Frontend
+     
+    - name: Install dependencies
+      working-directory: ./server
+      run: npm installl
+      
+    - name: Restart Server
+      working-directory: ./server
+      run: pm2 reload all      
+      
+      
     - name: Install dependencies
       working-directory: ./clients
       run: npm install
@@ -29,12 +39,5 @@ jobs:
       working-directory: ./clients
       run: npm run build --if-present
       
-    - name: Install dependencies
-      working-directory: ./server
-      run: npm installl
-      
-    - name: Restart Server
-      working-directory: ./server
-      run: pm2 reload all      
  
  
