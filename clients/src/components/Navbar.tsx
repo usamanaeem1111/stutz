@@ -39,11 +39,7 @@ const Navbar: FC<NavbarProps> = ({
     <div className="">
       <nav className="w-full flex justify-between z-[5] relative">
         <div className="w-[170px] m-2">
-          <img
-            className="w-full"
-            src={minimal ? colorLogo : whiteLogo}
-            alt="colorLogo"
-          />
+          <h1>Hey you</h1>
         </div>
         <div className="flex items-center">
           <a
