@@ -109,13 +109,13 @@ const OnBoarding = () => {
 
       <div className="border-t  mt-4 bg-[gray]/50">
         <div className="flex items-center justify-between max-w-[1150px] w-full mx-auto">
-          <h2 className="text-[72px] font-bold">CREATE ACCOUNT</h2>
           <button
             onClick={() => setIsEditable(!isEditable)}
             className="p-2 bg-blue-500 rounded-md  text-white active:translate-y-[1px]"
           >
-            {!isEditable ? "Click Here To Edit Your Profile" : "Editing Mode"}
+            {!isEditable ? "ערוך" : "שמור!"}
           </button>
+          <h2 className="text-[72px] font-bold">הפרופיל שלי</h2>
         </div>
 
         <form
@@ -142,63 +142,66 @@ const OnBoarding = () => {
             <div className="text-white bg-orange-500 w-full">
               <p>{`${formData.first_name} joined Stutz ${daysAgo} days ago`}</p>
             </div>
-            <label className="font-semibold my-3" htmlFor="first_name">
-              First Name
-            </label>
-            <input
-              className="border-2 border-black/30 p-2 rounded-lg w-full mb-3"
-              id="first_name"
-              type="text"
-              name="first_name"
-              placeholder="First Name"
-              required={false}
-              value={formData.first_name}
-              onChange={handleChange}
-            />
-
-            <label className="font-semibold my-3">Birthday</label>
-            <div className="flex w-full">
+            <div className="w-full text-right">
+              <label htmlFor="first_name" className="text-lg text-[#656565]">
+                שם
+              </label>
               <input
-                className="border-2 border-black/30 p-2 rounded-lg w-full mr-2"
-                id="dob_day"
-                type="number"
-                name="dob_day"
-                placeholder="DD"
-                required={false}
-                min="1"
-                max="31"
-                value={formData.dob_day}
+                type="text"
+                name="first_name"
+                id="first_name"
+                value={formData.first_name}
                 onChange={handleChange}
-              />
-
-              <input
-                className="border-2 border-black/30 p-2 rounded-lg w-full mr-2"
-                id="dob_month"
-                type="number"
-                name="dob_month"
-                placeholder="MM"
-                required={false}
-                min="1"
-                max="12"
-                value={formData.dob_month}
-                onChange={handleChange}
-              />
-
-              <input
-                className="border-2 border-black/30 p-2 rounded-lg w-full mr-2"
-                id="dob_year"
-                type="number"
-                name="dob_year"
-                placeholder="YYYY"
-                required={false}
-                min="1900"
-                max={`${new Date().getFullYear() - 18}`}
-                value={formData.dob_year}
-                onChange={handleChange}
+                placeholder=""
+                className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
               />
             </div>
 
-            <label className="font-semibold my-3">Gender</label>
+            <div className="w-full text-right">
+              <label className="text-lg text-[#656565]">גיל</label>
+              <div className="flex w-full">
+                <input
+                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
+                  id="dob_day"
+                  type="number"
+                  name="dob_day"
+                  placeholder="DD"
+                  required={false}
+                  min="1"
+                  max="31"
+                  value={formData.dob_day}
+                  onChange={handleChange}
+                />
+
+                <input
+                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
+                  id="dob_month"
+                  type="number"
+                  name="dob_month"
+                  placeholder="MM"
+                  required={false}
+                  min="1"
+                  max="12"
+                  value={formData.dob_month}
+                  onChange={handleChange}
+                />
+
+                <input
+                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
+                  id="dob_year"
+                  type="number"
+                  name="dob_year"
+                  placeholder="YYYY"
+                  required={false}
+                  min="1900"
+                  max={`${new Date().getFullYear() - 18}`}
+                  value={formData.dob_year}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <label className="text-lg text-[#656565]">Gender</label>
             <div className="onBoarding flex w-full items-start mb-4">
               <input
                 className=""
@@ -248,7 +251,7 @@ const OnBoarding = () => {
             </div>
 
             <div className="flex items-center justify-center flex-row-reverse shadow-sm py-2 px-4 rounded-lg my-4">
-              <label className="ml-2 font-semibold" htmlFor="show-gender">
+              <label className="text-lg text-[#656565]" htmlFor="show-gender">
                 Show Gender on my Profile
               </label>
 
@@ -262,7 +265,7 @@ const OnBoarding = () => {
               />
             </div>
 
-            <label className="font-semibold my-3">Show Me</label>
+            <label className="text-lg text-[#656565]">Show Me</label>
 
             <div className="onBoarding flex w-full items-start mb-4">
               <input
@@ -312,7 +315,7 @@ const OnBoarding = () => {
               </label>
             </div>
 
-            <label className="font-semibold my-3" htmlFor="about">
+            <label className="text-lg text-[#656565]" htmlFor="about">
               About me
             </label>
             <input
@@ -334,7 +337,7 @@ const OnBoarding = () => {
           </section>
 
           <section className=" w-[35%] flex flex-col items-start  ml-3">
-            <label className="font-semibold my-3" htmlFor="url">
+            <label className="text-lg text-[#656565]" htmlFor="url">
               Profile Photo
             </label>
             {/* <input

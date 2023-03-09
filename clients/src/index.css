@@ -10,6 +10,7 @@ html {
 
 body {
   text-align: center;
+  background: #faf7f8;
 }
 
 input::-webkit-inner-spin-button,
