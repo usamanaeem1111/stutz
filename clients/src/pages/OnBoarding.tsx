@@ -5,10 +5,13 @@ import Navbar from "../components/Navbar";
 import { useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import ImageUploader from "../components/ImageUploader";
+import InputField from "../components/InputField";
+import AgeCalculator from "../components/AgeCalculator";
 
 const OnBoarding = () => {
   const [cookies] = useCookies(["AuthToken", "UserId"]);
   const [isEditable, setIsEditable] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     user_id: cookies.UserId,
     first_name: "",
@@ -65,6 +68,7 @@ const OnBoarding = () => {
   }, [cookies.AuthToken, cookies.UserId]);
 
   const handleSubmit = async (e: any) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       console.log("formData ready to upload ", formData);
@@ -82,6 +86,7 @@ const OnBoarding = () => {
       const success = response.status === 200;
       console.log("success", success);
       setIsEditable(false);
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -103,31 +108,25 @@ const OnBoarding = () => {
   const differenceInMs = currentDate.getTime() - signUpDate.getTime();
   const daysAgo = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
   console.log(formData);
+
   return (
     <>
       <Navbar minimal={true} setShowModal={() => {}} showModal={false} />
 
       <div className="bg-[#F5F5F5] ">
         <div className="flex items-center justify-between max-w-[1150px] w-full mx-auto">
-          {!isEditable && (
-            <button
-              onClick={() => setIsEditable(!isEditable)}
-              className="p-2 bg-blue-500 rounded-md   active:translate-y-[1px]"
-            >
-              ערוך
-            </button>
-          )}
           <h2 className="text-[72px] font-bold">הפרופיל שלי</h2>
         </div>
 
         <form
-          className={`flex text-[#100307] font-medium font-noto-sans text-base leading-6 text-right   max-w-[1150px] w-full mx-auto ${
-            !isEditable &&
-            "bg-black/50 backdrop-blur-[7px] pointer-events-none cursor cursor-progress"
-          }`}
+          className={`flex text-[#100307] font-medium font-noto-sans text-base leading-6 text-right   max-w-[1150px] w-full mx-auto backdrop-blur-[7px]`}
           onSubmit={handleSubmit}
         >
-          <section className="w-[35%] flex flex-col items-center mr-3">
+          <section
+            className={`${
+              !isEditable && " pointer-events-none bg-[grey]/20"
+            } w-full flex flex-col items-center mr-3 p-2 rounded-2xl`}
+          >
             <label className="text-4xl text-gray-600" htmlFor="url">
               הוסף תמונת פרופיל
             </label>
@@ -139,92 +138,125 @@ const OnBoarding = () => {
             </div>
           </section>
 
-          <section className=" w-full flex flex-col items-start  ml-3 bg-white p-4 rounded-2xl">
-            <div className="w-full ">
-              <input
-                type="submit"
-                value="עדכן פרופיל"
-                className="py-2 px-4 bg-gray-800 text-white rounded-lg my-4 transition-all cursor-pointer hover:bg-gray-700 active:bg-pink-600 float-right"
-              />
-            </div>
-            <div className="flex justify-end w-full text-lg font-bold items-center">
-              <p className="text-gray-500">{formData.email}</p>
-              <h3 className="text-gray-700 font-medium ml-3">:נרשמת עם</h3>
-            </div>
-            <div className="flex justify-end w-full text-lg font-bold">
-              {!formData.email_verified && (
-                <p className="text-red-500">אנא אמת את האימייל שלך</p>
-              )}
-              {formData.email_verified && (
-                <p className="text-green-500">האימייל מאומת</p>
-              )}
-              <h3 className="ml-3">:מצב אימות האימייל</h3>
-            </div>
-            <div className="bg-orange-500 w-full p-4 rounded-lg">
-              <p className="text-white font-medium text-lg">
-                {`${formData.first_name} הצטרף לסטוץ לפני ${daysAgo} ימים`}
-              </p>
-            </div>
-            <div className="w-full text-right">
-              <label htmlFor="first_name" className="text-lg text-[#656565]">
-                שם
-              </label>
-              <input
-                type="text"
-                name="first_name"
-                id="first_name"
-                value={formData.first_name}
-                onChange={handleChange}
-                placeholder=""
-                className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
-              />
-            </div>
+          <section className=" w-full flex flex-col items-start  ml-3  p-4 rounded-2xl">
+            {/* Top section  */}
+            <div className="w-full">
+              <div className="flex w-full justify-between items-start">
+                <div className="flex flex-col">
+                  <h3 className="text-gray-700 font-medium ml-3">:נרשמת עם</h3>
+                  <p className="text-gray-500">{formData.email}</p>
+                </div>
 
-            <div className="w-full text-right">
-              <label className="text-lg text-[#656565]">גיל</label>
-              <div className="flex w-full">
-                <input
-                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
-                  id="dob_day"
-                  type="number"
-                  name="dob_day"
-                  placeholder="DD"
-                  required={false}
-                  min="1"
-                  max="31"
-                  value={formData.dob_day}
-                  onChange={handleChange}
-                />
+                <div className="flex flex-col">
+                  <h3 className="ml-3">:מצב אימות האימייל</h3>
+                  {!formData.email_verified && (
+                    <p className="text-red-500">אנא אמת את האימייל שלך</p>
+                  )}
+                  {formData.email_verified && (
+                    <p className="text-green-500">האימייל מאומת</p>
+                  )}
+                </div>
+                {isEditable ? (
+                  <div
+                    onClick={handleSubmit}
+                    className="py-2 px-4 text-center rounded-2xl border border-black/20 cursor-pointer"
+                  >
+                    Save Changes
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setIsEditable(true)}
+                    className="py-2 px-4 text-center rounded-2xl border border-black/20"
+                  >
+                    Edit
+                  </button>
+                )}
+              </div>
 
-                <input
-                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
-                  id="dob_month"
-                  type="number"
-                  name="dob_month"
-                  placeholder="MM"
-                  required={false}
-                  min="1"
-                  max="12"
-                  value={formData.dob_month}
-                  onChange={handleChange}
-                />
-
-                <input
-                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
-                  id="dob_year"
-                  type="number"
-                  name="dob_year"
-                  placeholder="YYYY"
-                  required={false}
-                  min="1900"
-                  max={`${new Date().getFullYear() - 18}`}
-                  value={formData.dob_year}
-                  onChange={handleChange}
-                />
+              <div className="w-full flex items-center justify-center my-2">
+                {isLoading && <span className="loader"></span>}
+              </div>
+              <div className="bg-orange-500 w-full p-4 rounded-lg">
+                <p className="text-white font-medium text-lg">
+                  {`${formData.first_name} הצטרף לסטוץ לפני ${daysAgo} ימים`}
+                </p>
               </div>
             </div>
+            <div
+              className={`${
+                !isEditable && " pointer-events-none bg-[grey]/20"
+              } w-full text-right p-2 m-1`}
+            >
+              <InputField
+                label="שם"
+                name="first_name"
+                value={formData.first_name}
+                onChange={handleChange}
+              />
+            </div>
 
-            <div className="w-full text-right">
+            {/* Date Of birth */}
+            <div
+              className={`${
+                !isEditable && " pointer-events-none bg-[grey]/20"
+              } w-full text-right p-2 m-1`}
+            >
+              <label className="text-lg text-[#656565]">גיל</label>
+              {!isEditable ? (
+                <AgeCalculator
+                  dob_day={formData.dob_day}
+                  dob_month={formData.dob_month}
+                  dob_year={formData.dob_year}
+                />
+              ) : (
+                <div className="flex w-full">
+                  <input
+                    className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
+                    id="dob_day"
+                    type="number"
+                    name="dob_day"
+                    placeholder="יום"
+                    required={false}
+                    min="1"
+                    max="31"
+                    value={formData.dob_day}
+                    onChange={handleChange}
+                  />
+
+                  <input
+                    className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
+                    id="dob_month"
+                    type="number"
+                    name="dob_month"
+                    placeholder="חודש"
+                    required={false}
+                    min="1"
+                    max="12"
+                    value={formData.dob_month}
+                    onChange={handleChange}
+                  />
+
+                  <input
+                    className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
+                    id="dob_year"
+                    type="number"
+                    name="dob_year"
+                    placeholder="שנה"
+                    required={false}
+                    min="1900"
+                    max={`${new Date().getFullYear() - 18}`}
+                    value={formData.dob_year}
+                    onChange={handleChange}
+                  />
+                </div>
+              )}
+            </div>
+
+            <div
+              className={`${
+                !isEditable && " pointer-events-none bg-[grey]/20"
+              } w-full text-right p-2 m-1`}
+            >
               <label className="text-lg text-[#656565]">מין</label>
               <div className="onBoarding flex w-full justify-end mb-4">
                 <input
@@ -274,25 +306,11 @@ const OnBoarding = () => {
                 </label>
               </div>
             </div>
-
-            <div className="flex flex-row-reverse items-center w-full justify-between my-4 px-4 py-2 rounded-lg shadow-sm bg-gray-100">
-              <label
-                htmlFor="show-gender"
-                className=" text-lg text-gray-600  ml-3"
-              >
-                הראה איזה מין אני
-              </label>
-              <input
-                type="checkbox"
-                id="show-gender"
-                name="show_gender"
-                checked={formData.show_gender}
-                onChange={handleChange}
-                className="ml-2 w-5 h-5 rounded-full bg-gray-300 border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 "
-              />
-            </div>
-
-            <div className="w-full text-right">
+            <div
+              className={`${
+                !isEditable && " pointer-events-none bg-[grey]/20"
+              } w-full text-right p-2 m-1`}
+            >
               <label className="text-lg text-[#656565]">מעוניין לראות</label>
 
               <div className="onBoarding flex w-full justify-end mb-4">
@@ -343,7 +361,12 @@ const OnBoarding = () => {
                 </label>
               </div>
             </div>
-            <div className="w-full text-right">
+
+            <div
+              className={`${
+                !isEditable && " pointer-events-none bg-[grey]/20"
+              } w-full text-right p-2 m-1`}
+            >
               <label
                 htmlFor="about"
                 className="text-lg text-gray-600 mt-4 block"
