@@ -135,6 +135,7 @@ const OnBoarding = ({ user }: any) => {
             </label>
             <div className="">
               <ImageUploader
+                saved={isEditable}
                 images={formData.images}
                 setFormData={setFormData}
               />

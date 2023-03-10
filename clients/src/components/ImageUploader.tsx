@@ -3,11 +3,12 @@ import React, { useState } from "react";
 interface Props {
   setFormData: (formData: any) => void;
   images: any;
+  saved: any;
 }
 
 const MAX_IMAGE_SIZE = 1024 * 1024 * 10; // 1MB in bytes
 
-const ImageUploader: React.FC<Props> = ({ setFormData, images }) => {
+const ImageUploader: React.FC<Props> = ({ setFormData, images, saved }) => {
   const [newImages, setNewImages] = useState<File[]>([]);
 
   const handleRemoveImage = (index: number) => {
@@ -44,14 +45,16 @@ const ImageUploader: React.FC<Props> = ({ setFormData, images }) => {
 
   return (
     <div>
-      <div className="h-[110px] w-[96px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
-        <label
-          className="h-[100px] w-[85px] bg-[#F9F3F5] rounded-2xl flex items-center justify-center text-[#100307] text-3xl cursor-pointer"
-          htmlFor="image-upload"
-        >
-          +
-        </label>
-      </div>
+      {saved && (
+        <div className="h-[110px] w-[96px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
+          <label
+            className="h-[100px] w-[85px] bg-[#F9F3F5] rounded-2xl flex items-center justify-center text-[#100307] text-3xl cursor-pointer"
+            htmlFor="image-upload"
+          >
+            +
+          </label>
+        </div>
+      )}
       <input
         type="file"
         accept="image/*"

@@ -38,31 +38,30 @@ const Navbar: FC<NavbarProps> = ({
     window.location.href = "/";
   };
 
-  if (!user) {
-    return <p>Loading no user</p>;
-  }
-  console.log(user);
-
   return (
-    <div className="bg-gray-100">
-      <nav className="container mx-auto flex justify-between items-center py-3">
+    <div className="bg-gray-100 ">
+      <nav className="container mx-auto  py-3 w-full flex items-center justify-end">
         {/* profile section */}
-        <div className="flex">
-          {user && (
-            <img
-              className="h-12 w-12 rounded-full shadow-sm shadow-black/50 m-1"
-              src={user.images[0] ?? ""}
-              alt=""
-            />
-          )}
 
-          <div className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center m-1 relative">
-            <img src={envelopIcon} alt="envelopIcon" />
-            <p className="absolute top-0 right-0 h-3 w-3 rounded-full bg-[#FE316E]"></p>
-          </div>
-        </div>
+        {user && (
+          <section>
+            <div className="flex">
+              (
+              <img
+                className="h-12 w-12 rounded-full shadow-sm shadow-black/50 m-1"
+                src={user.images[0] ?? ""}
+                alt=""
+              />
+              )
+              <div className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center m-1 relative">
+                <img src={envelopIcon} alt="envelopIcon" />
+                <p className="absolute top-0 right-0 h-3 w-3 rounded-full bg-[#FE316E]"></p>
+              </div>
+            </div>
 
-        <ProfileCompletion formData={user} />
+            <ProfileCompletion formData={user} />
+          </section>
+        )}
         <div className="flex items-center">
           <a
             href="/dashboard"
