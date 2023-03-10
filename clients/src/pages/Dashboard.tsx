@@ -5,8 +5,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 
-const Dashboard = () => {
-  const [user, setUser] = useState<any>(null);
+const Dashboard = ({ user }: any) => {
   const [genderedUsers, setGenderedUsers] = useState<any>(null);
   const [lastDirection, setLastDirection] = useState();
   const [cookies, setCookie, removeCookie] = useCookies(["UserId"]);
@@ -14,16 +13,6 @@ const Dashboard = () => {
 
   const userId = cookies.UserId;
 
-  const getUser = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/user", {
-        params: { userId },
-      });
-      setUser(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const getGenderedUsers = async () => {
     try {
       const response = await axios.get("http://localhost:8000/gendered-users", {
@@ -34,10 +23,6 @@ const Dashboard = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    getUser();
-  }, []);
 
   useEffect(() => {
     if (user) {
@@ -75,17 +60,21 @@ const Dashboard = () => {
     (genderedUser: any) => !matchedUserIds.includes(genderedUser.user_id)
   );
 
-  console.log(filteredGenderedUsers.length > 0);
-
   return (
     <>
-      <Navbar minimal={true} setShowModal={() => {}} showModal={false} />
+      <Navbar
+        formData={""}
+        minimal={true}
+        setShowModal={() => {}}
+        showModal={false}
+        user={user}
+      />
       {user && (
         <div className="dashboard flex justify-between">
           <ChatContainer user={user} />
           <div className="swipe-container w-[70%] flex flex-col justify-center items-center h-[100vh]">
             <div className="card-container w-[400px] h-[650px]">
-              {!(filteredGenderedUsers.length > 0) && (
+              {!(filteredGenderedUsers && filteredGenderedUsers.length > 0) && (
                 <h1>There is No Ppl inside the DB</h1>
               )}
               {filteredGenderedUsers?.map((genderedUser: any) => (

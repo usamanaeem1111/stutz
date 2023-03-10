@@ -26,6 +26,7 @@ function Home() {
   return (
     <div className="overlay flex flex-col">
       <Navbar
+        formData=""
         authToken={authToken}
         minimal={false}
         setShowModal={setShowModal}

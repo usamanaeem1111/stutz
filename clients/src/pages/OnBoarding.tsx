@@ -7,7 +7,7 @@ import ImageUploader from "../components/ImageUploader";
 import InputField from "../components/InputField";
 import AgeCalculator from "../components/AgeCalculator";
 
-const OnBoarding = () => {
+const OnBoarding = ({ user }: any) => {
   const [cookies] = useCookies(["AuthToken", "UserId"]);
   const [isEditable, setIsEditable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -107,7 +107,13 @@ const OnBoarding = () => {
 
   return (
     <>
-      <Navbar minimal={true} setShowModal={() => {}} showModal={false} />
+      <Navbar
+        formData={formData}
+        minimal={true}
+        setShowModal={() => {}}
+        showModal={false}
+        user={user}
+      />
 
       <div className="bg-[#F5F5F5] ">
         <div className="flex items-center justify-center max-w-[1150px] w-full mx-auto">
@@ -173,7 +179,7 @@ const OnBoarding = () => {
               <div className="w-full flex items-center justify-center my-2">
                 {isLoading && <span className="loader"></span>}
               </div>
-              <div className="bg-orange-500 w-full p-4 rounded-lg">
+              <div className="bg-[#FE316E] w-full p-4 rounded-lg">
                 <p className="text-white font-medium text-lg">
                   {`${formData.first_name} הצטרף לסטוץ לפני ${daysAgo} ימים`}
                 </p>

@@ -50,7 +50,12 @@ const AdminStats: React.FC<AdminStatsProps> = () => {
 
   return (
     <div className="bg-black/90 text-white flex flex-col justify-end ">
-      <Navbar minimal={true} setShowModal={() => {}} showModal={false} />
+      <Navbar
+        formData=""
+        minimal={true}
+        setShowModal={() => {}}
+        showModal={false}
+      />
       {Object.entries(stats).map(([fieldKey, fieldValue]: any) => (
         <div key={fieldKey} className="bg-red-500 p-2 m-1">
           <p>name: {fieldValue["first_name"]}</p>
