@@ -44,22 +44,41 @@ const ImageUploader: React.FC<Props> = ({ setFormData, images }) => {
 
   return (
     <div>
-      <input type="file" accept="image/*" multiple onChange={handleChange} />
+      <div className="h-[110px] w-[96px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
+        <label
+          className="h-[100px] w-[85px] bg-[#F9F3F5] rounded-2xl flex items-center justify-center text-[#100307] text-3xl cursor-pointer"
+          htmlFor="image-upload"
+        >
+          +
+        </label>
+      </div>
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleChange}
+        id="image-upload"
+        lang="he"
+        aria-label="בחר קבצים"
+        style={{ display: "none" }}
+      />
 
       <div className="flex justify-start mt-5 bg-black/10 p-4 rounded-lg shadow-md">
         {images.map((imageUrl: any, index: number) => (
           <div key={imageUrl} className="relative inline-block">
             <button
-              className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center"
+              className="absolute bottom-[10px] right-[10px] bg-white text-[#100307] rounded-full w-7 h-7 flex items-center justify-center"
               onClick={() => handleRemoveImage(index)}
             >
               &times;
             </button>
-            <img
-              className="w-[100px] h-[100px] m-1 rounded-lg"
-              src={imageUrl}
-              alt={imageUrl}
-            />
+            <div className="h-[110px] w-[96px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
+              <img
+                className="w-full h-full m-1 rounded-lg"
+                src={imageUrl}
+                alt={imageUrl}
+              />
+            </div>
           </div>
         ))}
       </div>

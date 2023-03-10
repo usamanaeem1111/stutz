@@ -107,40 +107,63 @@ const OnBoarding = () => {
     <>
       <Navbar minimal={true} setShowModal={() => {}} showModal={false} />
 
-      <div className="border-t  mt-4 bg-[gray]/50">
+      <div className="bg-[#F5F5F5] ">
         <div className="flex items-center justify-between max-w-[1150px] w-full mx-auto">
-          <button
-            onClick={() => setIsEditable(!isEditable)}
-            className="p-2 bg-blue-500 rounded-md  text-white active:translate-y-[1px]"
-          >
-            {!isEditable ? "ערוך" : "שמור!"}
-          </button>
+          {!isEditable && (
+            <button
+              onClick={() => setIsEditable(!isEditable)}
+              className="p-2 bg-blue-500 rounded-md   active:translate-y-[1px]"
+            >
+              ערוך
+            </button>
+          )}
           <h2 className="text-[72px] font-bold">הפרופיל שלי</h2>
         </div>
 
         <form
-          className={`flex justify-center  p-5 ${
+          className={`flex text-[#100307] font-medium font-noto-sans text-base leading-6 text-right   max-w-[1150px] w-full mx-auto ${
             !isEditable &&
-            "bg-black/50 backdrop-blur-[7px] pointer-events-none cursor cursor-progress "
+            "bg-black/50 backdrop-blur-[7px] pointer-events-none cursor cursor-progress"
           }`}
           onSubmit={handleSubmit}
         >
-          <section className=" w-[35%] flex flex-col items-start  mr-3 bg-black/40 p-4 rounded-2xl">
-            <div className="flex justify-between text-[22px] text-white font-bold ">
-              <h3 className="mr-3">Email Sign UP : </h3>
-              <p className="text-white/50">{formData.email}</p>
+          <section className="w-[35%] flex flex-col items-center mr-3">
+            <label className="text-4xl text-gray-600" htmlFor="url">
+              הוסף תמונת פרופיל
+            </label>
+            <div className="">
+              <ImageUploader
+                images={formData.images}
+                setFormData={setFormData}
+              />
             </div>
-            <div className="flex justify-between text-[22px] text-white font-bold">
-              <h3 className="mr-3">Email Verified status : </h3>
+          </section>
+
+          <section className=" w-full flex flex-col items-start  ml-3 bg-white p-4 rounded-2xl">
+            <div className="w-full ">
+              <input
+                type="submit"
+                value="עדכן פרופיל"
+                className="py-2 px-4 bg-gray-800 text-white rounded-lg my-4 transition-all cursor-pointer hover:bg-gray-700 active:bg-pink-600 float-right"
+              />
+            </div>
+            <div className="flex justify-end w-full text-lg font-bold items-center">
+              <p className="text-gray-500">{formData.email}</p>
+              <h3 className="text-gray-700 font-medium ml-3">:נרשמת עם</h3>
+            </div>
+            <div className="flex justify-end w-full text-lg font-bold">
               {!formData.email_verified && (
-                <p className="text-red-500">Please Go verified your emails</p>
+                <p className="text-red-500">אנא אמת את האימייל שלך</p>
               )}
               {formData.email_verified && (
-                <p className="text-green-500">Email Is Verified</p>
+                <p className="text-green-500">האימייל מאומת</p>
               )}
+              <h3 className="ml-3">:מצב אימות האימייל</h3>
             </div>
-            <div className="text-white bg-orange-500 w-full">
-              <p>{`${formData.first_name} joined Stutz ${daysAgo} days ago`}</p>
+            <div className="bg-orange-500 w-full p-4 rounded-lg">
+              <p className="text-white font-medium text-lg">
+                {`${formData.first_name} הצטרף לסטוץ לפני ${daysAgo} ימים`}
+              </p>
             </div>
             <div className="w-full text-right">
               <label htmlFor="first_name" className="text-lg text-[#656565]">
@@ -201,169 +224,140 @@ const OnBoarding = () => {
               </div>
             </div>
 
-            <label className="text-lg text-[#656565]">Gender</label>
-            <div className="onBoarding flex w-full items-start mb-4">
-              <input
-                className=""
-                id="man-gender-identity"
-                type="radio"
-                name="gender_identity"
-                value="man"
-                onChange={handleChange}
-                checked={formData.gender_identity === "man"}
-              />
-              <label
-                className="border border-black/30 p-2 rounded-lg mr-2"
-                htmlFor="man-gender-identity"
-              >
-                Man
-              </label>
-              <input
-                className=""
-                id="woman-gender-identity"
-                type="radio"
-                name="gender_identity"
-                value="woman"
-                onChange={handleChange}
-                checked={formData.gender_identity === "woman"}
-              />
-              <label
-                className="border border-black/30 p-2 rounded-lg mr-2"
-                htmlFor="woman-gender-identity"
-              >
-                Woman
-              </label>
-              <input
-                className=""
-                id="more-gender-identity"
-                type="radio"
-                name="gender_identity"
-                value="more"
-                onChange={handleChange}
-                checked={formData.gender_identity === "more"}
-              />
-              <label
-                className="border border-black/30 p-2 rounded-lg mr-2"
-                htmlFor="more-gender-identity"
-              >
-                More
-              </label>
-            </div>
-
-            <div className="flex items-center justify-center flex-row-reverse shadow-sm py-2 px-4 rounded-lg my-4">
-              <label className="text-lg text-[#656565]" htmlFor="show-gender">
-                Show Gender on my Profile
-              </label>
-
-              <input
-                className=""
-                id="show-gender"
-                type="checkbox"
-                name="show_gender"
-                onChange={handleChange}
-                checked={formData.show_gender}
-              />
-            </div>
-
-            <label className="text-lg text-[#656565]">Show Me</label>
-
-            <div className="onBoarding flex w-full items-start mb-4">
-              <input
-                className=""
-                id="man-gender-interest"
-                type="radio"
-                name="gender_interest"
-                value="man"
-                onChange={handleChange}
-                checked={formData.gender_interest === "man"}
-              />
-              <label
-                className="border border-black/30 p-2 rounded-lg mr-2"
-                htmlFor="man-gender-interest"
-              >
-                Man
-              </label>
-              <input
-                className=""
-                id="woman-gender-interest"
-                type="radio"
-                name="gender_interest"
-                value="woman"
-                onChange={handleChange}
-                checked={formData.gender_interest === "woman"}
-              />
-              <label
-                className="border border-black/30 p-2 rounded-lg mr-2"
-                htmlFor="woman-gender-interest"
-              >
-                Woman
-              </label>
-              <input
-                className=""
-                id="everyone-gender-interest"
-                type="radio"
-                name="gender_interest"
-                value="everyone"
-                onChange={handleChange}
-                checked={formData.gender_interest === "everyone"}
-              />
-              <label
-                className="border border-black/30 p-2 rounded-lg mr-2"
-                htmlFor="everyone-gender-interest"
-              >
-                Everyone
-              </label>
-            </div>
-
-            <label className="text-lg text-[#656565]" htmlFor="about">
-              About me
-            </label>
-            <input
-              className="border-2 border-black/30 p-2 rounded-lg w-full mb-3"
-              id="about"
-              type="text"
-              name="about"
-              required={false}
-              placeholder="I like long walks..."
-              value={formData.about}
-              onChange={handleChange}
-            />
-
-            <input
-              className="py-2 px-4 border border-black/30 rounded-lg my-4 transition-all cursor-pointer hover:bg-[rgb(235,235,235)] active:bg-[rgb(226,115,155)]"
-              type="submit"
-              value="Update Profile"
-            />
-          </section>
-
-          <section className=" w-[35%] flex flex-col items-start  ml-3">
-            <label className="text-lg text-[#656565]" htmlFor="url">
-              Profile Photo
-            </label>
-            {/* <input
-              className="border-2 border-black/30 p-2 rounded-lg w-full mb-3"
-              type="url"
-              name="url"
-              id="url"
-              placeholder="Image URL "
-              onChange={handleChange}
-              required={false}
-            />
-            <div className="max-w-[400px] mx-auto">
-              {formData.url && (
-                <img
-                  className=" rounded-2xl shadow-sm"
-                  src={formData.url}
-                  alt="profile pic preview"
+            <div className="w-full text-right">
+              <label className="text-lg text-[#656565]">מין</label>
+              <div className="onBoarding flex w-full justify-end mb-4">
+                <input
+                  className=""
+                  id="man-gender-identity"
+                  type="radio"
+                  name="gender_identity"
+                  value="man"
+                  onChange={handleChange}
+                  checked={formData.gender_identity === "man"}
                 />
-              )}
-            </div> */}
+                <label
+                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                  htmlFor="man-gender-identity"
+                >
+                  זכר
+                </label>
+                <input
+                  className=""
+                  id="woman-gender-identity"
+                  type="radio"
+                  name="gender_identity"
+                  value="woman"
+                  onChange={handleChange}
+                  checked={formData.gender_identity === "woman"}
+                />
+                <label
+                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                  htmlFor="woman-gender-identity"
+                >
+                  נקבה
+                </label>
+                <input
+                  className=""
+                  id="more-gender-identity"
+                  type="radio"
+                  name="gender_identity"
+                  value="more"
+                  onChange={handleChange}
+                  checked={formData.gender_identity === "more"}
+                />
+                <label
+                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                  htmlFor="more-gender-identity"
+                >
+                  חייזר
+                </label>
+              </div>
+            </div>
 
-            <div className="">
-              <ImageUploader
-                images={formData.images}
-                setFormData={setFormData}
+            <div className="flex flex-row-reverse items-center w-full justify-between my-4 px-4 py-2 rounded-lg shadow-sm bg-gray-100">
+              <label
+                htmlFor="show-gender"
+                className=" text-lg text-gray-600  ml-3"
+              >
+                הראה איזה מין אני
+              </label>
+              <input
+                type="checkbox"
+                id="show-gender"
+                name="show_gender"
+                checked={formData.show_gender}
+                onChange={handleChange}
+                className="ml-2 w-5 h-5 rounded-full bg-gray-300 border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600 "
               />
+            </div>
+
+            <div className="w-full text-right">
+              <label className="text-lg text-[#656565]">מעוניין לראות</label>
+
+              <div className="onBoarding flex w-full justify-end mb-4">
+                <input
+                  className=""
+                  id="man-gender-interest"
+                  type="radio"
+                  name="gender_interest"
+                  value="man"
+                  onChange={handleChange}
+                  checked={formData.gender_interest === "man"}
+                />
+                <label
+                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                  htmlFor="man-gender-interest"
+                >
+                  בחורים
+                </label>
+                <input
+                  className=""
+                  id="woman-gender-interest"
+                  type="radio"
+                  name="gender_interest"
+                  value="woman"
+                  onChange={handleChange}
+                  checked={formData.gender_interest === "woman"}
+                />
+                <label
+                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                  htmlFor="woman-gender-interest"
+                >
+                  בחורות
+                </label>
+                <input
+                  className=""
+                  id="everyone-gender-interest"
+                  type="radio"
+                  name="gender_interest"
+                  value="everyone"
+                  onChange={handleChange}
+                  checked={formData.gender_interest === "everyone"}
+                />
+                <label
+                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                  htmlFor="everyone-gender-interest"
+                >
+                  חייזרים
+                </label>
+              </div>
+            </div>
+            <div className="w-full text-right">
+              <label
+                htmlFor="about"
+                className="text-lg text-gray-600 mt-4 block"
+              >
+                על עצמי
+              </label>
+              <textarea
+                id="about"
+                name="about"
+                value={formData.about}
+                onChange={handleChange}
+                className="border-2 border-gray-300 p-2 rounded-lg w-full h-32 resize-none mb-3 block text-right"
+                placeholder="...אני אוהב לטייל"
+              ></textarea>
             </div>
           </section>
         </form>

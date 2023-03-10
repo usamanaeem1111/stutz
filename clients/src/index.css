@@ -35,7 +35,7 @@ input::-webkit-outer-spin-button {
 }
 
 .onBoarding input[type="radio"]:checked + label {
-  background: rgba(255, 68, 0, 0.595);
+  background: #4bae4f;
   border: none;
   color: white;
   backdrop-filter: 7px;
