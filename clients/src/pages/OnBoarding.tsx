@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useCookies } from "react-cookie";
@@ -30,8 +29,7 @@ const OnBoarding = () => {
     email_verified: false,
     signUpDate: "",
   });
-  const navigate = useNavigate();
-  console.log(cookies);
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {

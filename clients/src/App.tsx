@@ -6,11 +6,11 @@ import { useCookies } from "react-cookie";
 import AdminStats from "./pages/AdminStats";
 
 const App = () => {
-  const [cookies, setCookie, removeCookie] = useCookies(["AuthToken"]);
+  const [cookies] = useCookies(["AuthToken"]);
 
   const authToken = cookies.AuthToken;
-
   console.log(authToken);
+
   return (
     <BrowserRouter>
       <Routes>

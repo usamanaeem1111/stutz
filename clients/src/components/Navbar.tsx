@@ -1,5 +1,3 @@
-import colorLogo from "./imgs/color-logo-tinder.png";
-import whiteLogo from "./imgs/tinder_logo_white.png";
 import React, { FC, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -27,10 +25,7 @@ const Navbar: FC<NavbarProps> = ({
     }
   };
 
-  const [cookies, setCookie, removeCookie] = useCookies([
-    "UserId",
-    "AuthToken",
-  ]);
+  const [cookies, removeCookie] = useCookies(["UserId", "AuthToken"]);
 
   const handleLogout = () => {
     removeCookie("UserId", cookies.UserId);
@@ -41,7 +36,6 @@ const Navbar: FC<NavbarProps> = ({
   const [user, setUser] = useState<any>(null);
   const userId = cookies.UserId;
 
-  console.log(cookies.UserId, "cookies");
   const getUser = async () => {
     try {
       // check if the image URL is already stored in localStorage
