@@ -114,7 +114,7 @@ const OnBoarding = () => {
       <Navbar minimal={true} setShowModal={() => {}} showModal={false} />
 
       <div className="bg-[#F5F5F5] ">
-        <div className="flex items-center justify-between max-w-[1150px] w-full mx-auto">
+        <div className="flex items-center justify-center max-w-[1150px] w-full mx-auto">
           <h2 className="text-[72px] font-bold">הפרופיל שלי</h2>
         </div>
 
@@ -124,7 +124,8 @@ const OnBoarding = () => {
         >
           <section
             className={`${
-              !isEditable && " pointer-events-none bg-[grey]/20"
+              !isEditable &&
+              " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
             } w-full flex flex-col items-center mr-3 p-2 rounded-2xl`}
           >
             <label className="text-4xl text-gray-600" htmlFor="url">
@@ -159,16 +160,16 @@ const OnBoarding = () => {
                 {isEditable ? (
                   <div
                     onClick={handleSubmit}
-                    className="py-2 px-4 text-center rounded-2xl border border-black/20 cursor-pointer"
+                    className="py-2 px-4 text-center rounded-2xl border border-black/20 cursor-pointer bg-blue-500 text-white"
                   >
-                    Save Changes
+                    שמור שינויים
                   </div>
                 ) : (
                   <button
                     onClick={() => setIsEditable(true)}
-                    className="py-2 px-4 text-center rounded-2xl border border-black/20"
+                    className="py-2 px-4 text-center rounded-2xl border border-black/20 "
                   >
-                    Edit
+                    ערוך פרופיל
                   </button>
                 )}
               </div>
@@ -184,7 +185,8 @@ const OnBoarding = () => {
             </div>
             <div
               className={`${
-                !isEditable && " pointer-events-none bg-[grey]/20"
+                !isEditable &&
+                " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
               } w-full text-right p-2 m-1`}
             >
               <InputField
@@ -198,7 +200,8 @@ const OnBoarding = () => {
             {/* Date Of birth */}
             <div
               className={`${
-                !isEditable && " pointer-events-none bg-[grey]/20"
+                !isEditable &&
+                " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
               } w-full text-right p-2 m-1`}
             >
               <label className="text-lg text-[#656565]">גיל</label>
@@ -254,7 +257,8 @@ const OnBoarding = () => {
 
             <div
               className={`${
-                !isEditable && " pointer-events-none bg-[grey]/20"
+                !isEditable &&
+                " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
               } w-full text-right p-2 m-1`}
             >
               <label className="text-lg text-[#656565]">מין</label>
@@ -308,7 +312,8 @@ const OnBoarding = () => {
             </div>
             <div
               className={`${
-                !isEditable && " pointer-events-none bg-[grey]/20"
+                !isEditable &&
+                " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
               } w-full text-right p-2 m-1`}
             >
               <label className="text-lg text-[#656565]">מעוניין לראות</label>
@@ -364,7 +369,8 @@ const OnBoarding = () => {
 
             <div
               className={`${
-                !isEditable && " pointer-events-none bg-[grey]/20"
+                !isEditable &&
+                " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
               } w-full text-right p-2 m-1`}
             >
               <label
