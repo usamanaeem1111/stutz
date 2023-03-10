@@ -31,7 +31,7 @@ const OnBoarding = () => {
     signUpDate: "",
   });
   const navigate = useNavigate();
-
+  console.log(cookies);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -39,7 +39,6 @@ const OnBoarding = () => {
           `http://localhost:8000/user?userId=${cookies.UserId}`
         );
 
-        console.log(cookies.UserId);
         const user = response.data;
         const userObject: any = jwt_decode(cookies.AuthToken);
         setFormData({
@@ -107,7 +106,6 @@ const OnBoarding = () => {
   const currentDate = new Date();
   const differenceInMs = currentDate.getTime() - signUpDate.getTime();
   const daysAgo = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
-  console.log(formData);
 
   return (
     <>

@@ -1,7 +1,9 @@
 import colorLogo from "./imgs/color-logo-tinder.png";
 import whiteLogo from "./imgs/tinder_logo_white.png";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import axios from "axios";
+import envelopIcon from "./imgs/envelopeIcon.svg";
 
 interface NavbarProps {
   minimal: boolean;
@@ -35,25 +37,71 @@ const Navbar: FC<NavbarProps> = ({
     removeCookie("AuthToken", cookies.AuthToken);
     window.location.href = "/";
   };
+
+  const [user, setUser] = useState<any>(null);
+  const userId = cookies.UserId;
+
+  console.log(cookies.UserId, "cookies");
+  const getUser = async () => {
+    try {
+      // check if the image URL is already stored in localStorage
+      const storedImage = localStorage.getItem(`userImage-${userId}`);
+
+      if (storedImage) {
+        // if the image URL is found, use it directly
+        setUser({ ...user, images: [storedImage] });
+      } else {
+        // if the image URL is not found, fetch the user data from the database
+        const response = await axios.get("http://localhost:8000/user", {
+          params: { userId },
+        });
+        const userData = response.data;
+        setUser(userData);
+
+        // store the image URL in localStorage for future use
+        localStorage.setItem(`userImage-${userId}`, userData.images[0]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <div className="">
-      <nav className="w-full flex justify-between z-[5] relative">
-        <div className="w-[170px] m-2">
-          <h1>Hey you</h1>
+      <nav className="w-full flex justify-between z-[5] relative py-3">
+        {/* profile section */}
+        <div className="flex bg-[green] px-4">
+          {user && (
+            <img
+              className=" h-[60px] w-[60px] overflow-hidden rounded-full shadow-sm shadow-black/50 m-1"
+              src={user.images[0] ?? ""}
+              alt=""
+            />
+          )}
+
+          <div className="h-[60px] w-[60px] bg-[#F4F4F4] rounded-full flex items-center justify-center m-1 relative">
+            <img src={envelopIcon} alt="envelopIcon" />
+            <p className="absolute top-0 right-0 h-[15px] w-[15px] rounded-full bg-[#FF0000]"></p>
+          </div>
         </div>
+
         <div className="flex items-center">
           <a
             href="/dashboard"
             className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#c73232] hover:bg-red-800"
           >
-            Dashboard
+            הודעות
           </a>
 
           <a
-            href="/onboarding"
+            href="/Onboarding"
             className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#c73232] hover:bg-red-800"
           >
-            Onboarding
+            הפרופיל שלי
           </a>
           <a
             href="/adminStats"

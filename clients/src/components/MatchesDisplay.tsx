@@ -74,6 +74,7 @@ const MatchesDisplay = ({ matches, setClickedUser }: Props) => {
 
   return (
     <div className="matches-display ">
+      {matchedProfiles && <p>No matches yet</p>}
       {matchedProfiles?.map((match, index) => (
         <div
           key={index}

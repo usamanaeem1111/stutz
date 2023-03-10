@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
@@ -11,13 +10,14 @@ const App = () => {
 
   const authToken = cookies.AuthToken;
 
+  console.log(authToken);
   return (
     <BrowserRouter>
       <Routes>
         <Route path={"/"} element={<Home />} />
         <Route path={"/AdminStats"} element={<AdminStats />} />
         {authToken && <Route path={"/Dashboard"} element={<Dashboard />} />}
-        {authToken && <Route path={"/onboarding"} element={<OnBoarding />} />}
+        {authToken && <Route path={"/Onboarding"} element={<OnBoarding />} />}
       </Routes>
     </BrowserRouter>
   );
