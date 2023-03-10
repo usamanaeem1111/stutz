@@ -1,14 +1,13 @@
 import TinderCard from "react-tinder-card";
 import { useEffect, useState } from "react";
 import ChatContainer from "../components/ChatContainer";
-import { useCookies } from "react-cookie";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 
-const Dashboard = ({ user }: any) => {
+const Dashboard = ({ user, cookies, removeCookie, setCookie }: any) => {
   const [genderedUsers, setGenderedUsers] = useState<any>(null);
   const [lastDirection, setLastDirection] = useState();
-  const [cookies, setCookie, removeCookie] = useCookies(["UserId"]);
+
   const [selectedImage, setSelectedImage] = useState<number | null>(0);
 
   const userId = cookies.UserId;

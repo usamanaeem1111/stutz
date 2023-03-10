@@ -34,13 +34,53 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={<Home />} />
-        <Route path={"/AdminStats"} element={<AdminStats />} />
+        <Route
+          path={"/"}
+          element={
+            <Home
+              user={user}
+              cookies={cookies}
+              removeCookie={removeCookie}
+              setCookie={setCookie}
+            />
+          }
+        />
+        <Route
+          path={"/AdminStats"}
+          element={
+            <AdminStats
+              user={user}
+              cookies={cookies}
+              removeCookie={removeCookie}
+              setCookie={setCookie}
+            />
+          }
+        />
         {authToken && (
-          <Route path={"/Dashboard"} element={<Dashboard user={user} />} />
+          <Route
+            path={"/Dashboard"}
+            element={
+              <Dashboard
+                user={user}
+                cookies={cookies}
+                removeCookie={removeCookie}
+                setCookie={setCookie}
+              />
+            }
+          />
         )}
         {authToken && (
-          <Route path={"/Onboarding"} element={<OnBoarding user={user} />} />
+          <Route
+            path={"/Onboarding"}
+            element={
+              <OnBoarding
+                user={user}
+                cookies={cookies}
+                removeCookie={removeCookie}
+                setCookie={setCookie}
+              />
+            }
+          />
         )}
       </Routes>
     </BrowserRouter>

@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import AuthModal from "../components/AuthModal";
 import Navbar from "../components/Navbar";
-import { useCookies } from "react-cookie";
 
-function Home() {
+function Home({ user, cookies, removeCookie, setCookie }: any) {
   const [showModal, setShowModal] = useState(false);
   const [isSignUp, setIsSignUp] = useState(true);
-  const [cookies, setCookie, removeCookie] = useCookies([
-    "UserId",
-    "AuthToken",
-  ]);
+
   const authToken = cookies.AuthToken;
 
   const handleClick = () => {
@@ -32,6 +28,9 @@ function Home() {
         setShowModal={setShowModal}
         showModal={showModal}
         setIsSignUp={setIsSignUp}
+        user={user}
+        removeCookie={removeCookie}
+        cookies={cookies}
       />
 
       <div className="z-[10] relative">

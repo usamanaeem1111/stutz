@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import ImageUploader from "../components/ImageUploader";
 import InputField from "../components/InputField";
 import AgeCalculator from "../components/AgeCalculator";
 
-const OnBoarding = ({ user }: any) => {
-  const [cookies] = useCookies(["AuthToken", "UserId"]);
+const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
   const [isEditable, setIsEditable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({

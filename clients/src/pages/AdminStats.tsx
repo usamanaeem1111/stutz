@@ -23,9 +23,19 @@ type StatsData = {
   _id: string;
 };
 
-type AdminStatsProps = {};
+type AdminStatsProps = {
+  user: any;
+  cookies: any;
+  removeCookie: any;
+  setCookie: any;
+};
 
-const AdminStats: React.FC<AdminStatsProps> = () => {
+const AdminStats: React.FC<AdminStatsProps> = ({
+  user,
+  cookies,
+  removeCookie,
+  setCookie,
+}) => {
   const [stats, setStats] = useState<StatsData>();
 
   useEffect(() => {

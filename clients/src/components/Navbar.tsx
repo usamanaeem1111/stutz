@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useCookies } from "react-cookie";
-import axios from "axios";
+
 import envelopIcon from "./imgs/envelopeIcon.svg";
 import ProfileCompletion from "./ProfileCompletion";
 
@@ -12,6 +12,8 @@ interface NavbarProps {
   setIsSignUp?: (show: boolean) => void;
   formData: any;
   user?: any;
+  removeCookie?: any;
+  cookies?: any;
 }
 
 const Navbar: FC<NavbarProps> = ({
@@ -22,6 +24,8 @@ const Navbar: FC<NavbarProps> = ({
   setIsSignUp,
   formData,
   user,
+  removeCookie,
+  cookies,
 }) => {
   const handleClick = () => {
     setShowModal(true);
@@ -30,12 +34,10 @@ const Navbar: FC<NavbarProps> = ({
     }
   };
 
-  const [cookies, removeCookie] = useCookies(["UserId", "AuthToken"]);
-
   const handleLogout = () => {
+    window.location.href = "/";
     removeCookie("UserId", cookies.UserId);
     removeCookie("AuthToken", cookies.AuthToken);
-    window.location.href = "/";
   };
 
   return (
