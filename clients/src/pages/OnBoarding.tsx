@@ -111,6 +111,8 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
         setShowModal={() => {}}
         showModal={false}
         user={user}
+        removeCookie={removeCookie}
+        cookies={cookies}
       />
 
       <div className="bg-[#F5F5F5] ">

@@ -8,14 +8,15 @@ import AdminStats from "./pages/AdminStats";
 import axios from "axios";
 
 const App = () => {
+  const [user, setUser] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies([
     "AuthToken",
     "UserId",
   ]);
-  const authToken = cookies.AuthToken;
-  const [user, setUser] = useState(null);
 
+  const authToken = "aviad";
   const userId = cookies.UserId;
+
   const getUser = async () => {
     try {
       const response = await axios.get("http://localhost:8000/user", {
@@ -58,7 +59,7 @@ const App = () => {
         />
         {authToken && (
           <Route
-            path={"/Dashboard"}
+            path={"/dashboard"}
             element={
               <Dashboard
                 user={user}

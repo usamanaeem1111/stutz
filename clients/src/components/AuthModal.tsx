@@ -7,19 +7,26 @@ const { v4: uuidv4 } = require("uuid");
 interface AuthModalProps {
   setShowModal: (show: boolean) => void;
   isSignUp: boolean;
+  user: any;
+  cookies: any;
+  removeCookie: any;
+  setCookie: any;
 }
 
-const AuthModal: React.FC<AuthModalProps> = ({ setShowModal, isSignUp }) => {
+const AuthModal: React.FC<AuthModalProps> = ({
+  setShowModal,
+  isSignUp,
+  user,
+  cookies,
+  removeCookie,
+  setCookie,
+}) => {
   const [email, setEmail] = useState<String | null>(null);
   const [password, setPassword] = useState<String | null>(null);
   const [confirmPassword, setConfirmPassword] = useState<String | null>(null);
   const [error, setError] = useState<String | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies([
-    "AuthToken",
-    "UserId",
-  ]);
 
   let navigate = useNavigate();
 
@@ -30,7 +37,6 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowModal, isSignUp }) => {
       var userObject: any = jwt_decode(authToken);
       let email = userObject.email;
 
-      console.log(userObject);
       const response = await axios.post(`http://localhost:8000/googleSignUp`, {
         email,
         authToken,
@@ -39,9 +45,11 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowModal, isSignUp }) => {
       setCookie("AuthToken", authToken);
       setCookie("UserId", userObject.sub);
 
-      console.log("response.status", response.status);
       const success = response.status === 200 || response.status === 201;
       if (success) navigate("./onboarding");
+      return;
+    } else {
+      console.log("there is auth token");
     }
   };
   /*@ts-ignore*/
@@ -99,16 +107,18 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowModal, isSignUp }) => {
         }
       );
 
-      setCookie("AuthToken", response.data.token);
-      setCookie("UserId", response.data.userId);
-
       const success = response.status === 201;
+      const authToken = response.data.token;
+      const userId = response.data.userId;
+
+      setCookie("UserId", userId);
+      setCookie("AuthToken", authToken);
 
       if (success && isSignUp) navigate("./onboarding");
-      if (success && !isSignUp) navigate("./dashboard");
-
+      if (success && !isSignUp) navigate("./Dashboard");
       window.location.reload();
       setIsLoading(false);
+      return;
     } catch (err: any) {
       if (err.response && err.response.status === 409) {
         setError(
@@ -127,6 +137,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ setShowModal, isSignUp }) => {
       setIsSubmitting(false);
     }
   };
+  console.log("cookies auth", cookies);
 
   return (
     <div className="absolute left-[50%] top-[80%] translate-x-[-50%] max-w-[360px] w-full h-[600px] bg-white rounded-[10px] p-[10px]">

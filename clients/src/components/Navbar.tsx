@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useCookies } from "react-cookie";
 
 import envelopIcon from "./imgs/envelopeIcon.svg";
 import ProfileCompletion from "./ProfileCompletion";
@@ -11,9 +10,9 @@ interface NavbarProps {
   authToken?: string;
   setIsSignUp?: (show: boolean) => void;
   formData: any;
-  user?: any;
-  removeCookie?: any;
-  cookies?: any;
+  user: any;
+  removeCookie: any;
+  cookies: any;
 }
 
 const Navbar: FC<NavbarProps> = ({
@@ -35,9 +34,9 @@ const Navbar: FC<NavbarProps> = ({
   };
 
   const handleLogout = () => {
-    window.location.href = "/";
     removeCookie("UserId", cookies.UserId);
     removeCookie("AuthToken", cookies.AuthToken);
+    window.location.href = "/";
   };
 
   return (

@@ -65,6 +65,9 @@ const AdminStats: React.FC<AdminStatsProps> = ({
         minimal={true}
         setShowModal={() => {}}
         showModal={false}
+        user={user}
+        removeCookie={removeCookie}
+        cookies={cookies}
       />
       {Object.entries(stats).map(([fieldKey, fieldValue]: any) => (
         <div key={fieldKey} className="bg-red-500 p-2 m-1">

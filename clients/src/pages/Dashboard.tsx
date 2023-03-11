@@ -51,9 +51,9 @@ const Dashboard = ({ user, cookies, removeCookie, setCookie }: any) => {
     console.log(name + " left the screen!");
   };
 
-  const matchedUserIds = user?.matches
-    .map(({ user_id }: any) => user_id)
-    .concat(userId);
+  const matchedUserIds = user?.matches?.map(({ user_id }: any) => user_id) ?? [
+    userId,
+  ];
 
   const filteredGenderedUsers = genderedUsers?.filter(
     (genderedUser: any) => !matchedUserIds.includes(genderedUser.user_id)
@@ -67,6 +67,8 @@ const Dashboard = ({ user, cookies, removeCookie, setCookie }: any) => {
         setShowModal={() => {}}
         showModal={false}
         user={user}
+        removeCookie={removeCookie}
+        cookies={cookies}
       />
       {user && (
         <div className="dashboard flex justify-between">

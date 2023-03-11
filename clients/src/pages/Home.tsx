@@ -43,7 +43,14 @@ function Home({ user, cookies, removeCookie, setCookie }: any) {
         </button>
 
         {showModal && (
-          <AuthModal setShowModal={setShowModal} isSignUp={isSignUp} />
+          <AuthModal
+            user={user}
+            cookies={cookies}
+            removeCookie={removeCookie}
+            setCookie={setCookie}
+            setShowModal={setShowModal}
+            isSignUp={isSignUp}
+          />
         )}
       </div>
     </div>
