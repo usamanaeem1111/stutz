@@ -39,21 +39,24 @@ const Navbar: FC<NavbarProps> = ({
     window.location.href = "/";
   };
 
+  const handleLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    // handle the click event here
+  };
+
   return (
     <div className="bg-gray-100 ">
-      <nav className="container mx-auto  py-3 w-full flex items-center justify-end">
+      <nav className="container mx-auto  py-3 w-full flex items-start justify-between">
         {/* profile section */}
-
         {user && (
-          <section>
+          <section className="flex  justify-around w-full">
             <div className="flex">
-              (
               <img
                 className="h-12 w-12 rounded-full shadow-sm shadow-black/50 m-1"
                 src={user.images[0] ?? ""}
                 alt=""
               />
-              )
+
               <div className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center m-1 relative">
                 <img src={envelopIcon} alt="envelopIcon" />
                 <p className="absolute top-0 right-0 h-3 w-3 rounded-full bg-[#FE316E]"></p>
@@ -65,22 +68,24 @@ const Navbar: FC<NavbarProps> = ({
         )}
         <div className="flex items-center">
           <a
+            onClick={handleLinkClick}
             href="/dashboard"
-            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] hover:bg-red-800"
+            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-red-800"
           >
             הודעות
           </a>
 
           <a
+            onClick={handleLinkClick}
             href="/Onboarding"
-            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] hover:bg-red-800"
+            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-red-800"
           >
             הפרופיל שלי
           </a>
 
           <a
             href="/adminStats"
-            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] hover:bg-red-800"
+            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-red-800"
           >
             AdminStats
           </a>
@@ -89,7 +94,7 @@ const Navbar: FC<NavbarProps> = ({
             <button
               disabled={showModal}
               onClick={handleClick}
-              className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 hover:bg-gray-100"
+              className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
             >
               Log In
             </button>
@@ -99,7 +104,7 @@ const Navbar: FC<NavbarProps> = ({
             <button
               disabled={showModal}
               onClick={handleLogout}
-              className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 hover:bg-gray-100"
+              className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
             >
               Log out
             </button>
