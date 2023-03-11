@@ -163,14 +163,14 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
                 {isEditable ? (
                   <div
                     onClick={handleSubmit}
-                    className="py-2 px-4 text-center rounded-2xl border border-black/20 cursor-pointer bg-blue-500 text-white"
+                    className="py-2 px-4 text-center rounded-2xl border border-black/20 cursor-pointer hover:bg-[#ff5b95] bg-[#6300ffa3] text-white transition-all active:translate-y-[1px]"
                   >
                     שמור שינויים
                   </div>
                 ) : (
                   <button
                     onClick={() => setIsEditable(true)}
-                    className="py-2 px-4 text-center rounded-2xl border border-black/20 "
+                    className="py-2 px-4 text-center rounded-2xl border border-black/20 transition-all active:translate-y-[1px] hover:bg-[#ff5b95] hover:text-white"
                   >
                     ערוך פרופיל
                   </button>

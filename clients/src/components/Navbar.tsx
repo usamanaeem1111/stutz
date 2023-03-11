@@ -65,21 +65,21 @@ const Navbar: FC<NavbarProps> = ({
         <div className="flex items-center">
           <Link
             to="/dashboard"
-            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-red-800"
+            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
           >
             הודעות
           </Link>
 
           <Link
             to="/Onboarding"
-            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-red-800"
+            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
           >
             הפרופיל שלי
           </Link>
 
           <Link
             to="/adminStats"
-            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-red-800"
+            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
           >
             AdminStats
           </Link>
