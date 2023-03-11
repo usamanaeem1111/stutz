@@ -13,8 +13,9 @@ const App = () => {
     "AuthToken",
     "UserId",
   ]);
+  const [userDataLoaded, setUserDataLoaded] = useState(false);
 
-  const authToken = "aviad";
+  const authToken = cookies.AuthToken;
   const userId = cookies.UserId;
 
   const getUser = async () => {
@@ -23,6 +24,7 @@ const App = () => {
         params: { userId },
       });
       setUser(response.data);
+      setUserDataLoaded(true);
     } catch (error) {
       console.log(error);
     }
@@ -38,35 +40,41 @@ const App = () => {
         <Route
           path={"/"}
           element={
-            <Home
-              user={user}
-              cookies={cookies}
-              removeCookie={removeCookie}
-              setCookie={setCookie}
-            />
+            userDataLoaded && (
+              <Home
+                user={user}
+                cookies={cookies}
+                removeCookie={removeCookie}
+                setCookie={setCookie}
+              />
+            )
           }
         />
         <Route
           path={"/AdminStats"}
           element={
-            <AdminStats
-              user={user}
-              cookies={cookies}
-              removeCookie={removeCookie}
-              setCookie={setCookie}
-            />
+            userDataLoaded && (
+              <AdminStats
+                user={user}
+                cookies={cookies}
+                removeCookie={removeCookie}
+                setCookie={setCookie}
+              />
+            )
           }
         />
         {authToken && (
           <Route
             path={"/dashboard"}
             element={
-              <Dashboard
-                user={user}
-                cookies={cookies}
-                removeCookie={removeCookie}
-                setCookie={setCookie}
-              />
+              userDataLoaded && (
+                <Dashboard
+                  user={user}
+                  cookies={cookies}
+                  removeCookie={removeCookie}
+                  setCookie={setCookie}
+                />
+              )
             }
           />
         )}
@@ -74,12 +82,14 @@ const App = () => {
           <Route
             path={"/Onboarding"}
             element={
-              <OnBoarding
-                user={user}
-                cookies={cookies}
-                removeCookie={removeCookie}
-                setCookie={setCookie}
-              />
+              userDataLoaded && (
+                <OnBoarding
+                  user={user}
+                  cookies={cookies}
+                  removeCookie={removeCookie}
+                  setCookie={setCookie}
+                />
+              )
             }
           />
         )}

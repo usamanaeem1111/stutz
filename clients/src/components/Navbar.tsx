@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 
 import envelopIcon from "./imgs/envelopeIcon.svg";
 import ProfileCompletion from "./ProfileCompletion";
@@ -39,11 +40,6 @@ const Navbar: FC<NavbarProps> = ({
     window.location.href = "/";
   };
 
-  const handleLinkClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    // handle the click event here
-  };
-
   return (
     <div className="bg-gray-100 ">
       <nav className="container mx-auto  py-3 w-full flex items-start justify-between">
@@ -67,28 +63,26 @@ const Navbar: FC<NavbarProps> = ({
           </section>
         )}
         <div className="flex items-center">
-          <a
-            onClick={handleLinkClick}
-            href="/dashboard"
+          <Link
+            to="/dashboard"
             className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-red-800"
           >
             הודעות
-          </a>
+          </Link>
 
-          <a
-            onClick={handleLinkClick}
-            href="/Onboarding"
+          <Link
+            to="/Onboarding"
             className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-red-800"
           >
             הפרופיל שלי
-          </a>
+          </Link>
 
-          <a
-            href="/adminStats"
+          <Link
+            to="/adminStats"
             className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-red-800"
           >
             AdminStats
-          </a>
+          </Link>
 
           {!authToken && !minimal && (
             <button
