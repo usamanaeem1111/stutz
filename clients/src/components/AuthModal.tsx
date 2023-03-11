@@ -37,10 +37,13 @@ const AuthModal: React.FC<AuthModalProps> = ({
       var userObject: any = jwt_decode(authToken);
       let email = userObject.email;
 
-      const response = await axios.post(`https://api.stutz.co.il/googleSignUp`, {
-        email,
-        authToken,
-      });
+      const response = await axios.post(
+        `https://api.stutz.co.il/googleSignUp`,
+        {
+          email,
+          authToken,
+        }
+      );
 
       setCookie("AuthToken", authToken);
       setCookie("UserId", userObject.sub);
@@ -111,6 +114,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       const authToken = response.data.token;
       const userId = response.data.userId;
 
+      console.log("response.data.token", authToken);
       setCookie("UserId", userId);
       setCookie("AuthToken", authToken);
 

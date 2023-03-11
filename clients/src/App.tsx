@@ -14,11 +14,9 @@ const App = () => {
     "UserId",
   ]);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
-  // console.log(cookies.AuthToken);
 
-  const authToken = cookies.AuthToken ?? "Im dummy auth token";
   const userId = cookies.UserId;
-  // console.log("authToken", authToken);
+
   const getUser = async () => {
     try {
       const response = await axios.get("https://api.stutz.co.il/user", {
@@ -64,7 +62,7 @@ const App = () => {
             )
           }
         />
-        {authToken && (
+        {cookies.AuthToken && (
           <Route
             path={"/Dashboard"}
             element={
@@ -79,7 +77,7 @@ const App = () => {
             }
           />
         )}
-        {authToken && (
+        {cookies.AuthToken && (
           <Route
             path={"/Onboarding"}
             element={
