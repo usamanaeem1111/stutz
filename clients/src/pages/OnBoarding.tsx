@@ -9,23 +9,28 @@ import AgeCalculator from "../components/AgeCalculator";
 const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
   const [isEditable, setIsEditable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    user_id: cookies.UserId,
-    first_name: "",
-    dob_day: "",
-    dob_month: "",
-    dob_year: "",
-    show_gender: false,
-    gender_identity: "man",
-    gender_interest: "woman",
-    images: [],
-    url: "",
-    about: "",
-    matches: [],
-    likes: [],
-    email: "",
-    email_verified: false,
-    signUpDate: "",
+  const [formData, setFormData] = useState(() => {
+    const savedFormData = localStorage.getItem("formData");
+    return savedFormData
+      ? JSON.parse(savedFormData)
+      : {
+          user_id: cookies.UserId,
+          first_name: "",
+          dob_day: "",
+          dob_month: "",
+          dob_year: "",
+          show_gender: false,
+          gender_identity: "man",
+          gender_interest: "woman",
+          images: [],
+          url: "",
+          about: "",
+          matches: [],
+          likes: [],
+          email: "",
+          email_verified: false,
+          signUpDate: "",
+        };
   });
 
   useEffect(() => {
@@ -62,6 +67,10 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
     fetchUserData();
   }, [cookies.AuthToken, cookies.UserId]);
 
+  useEffect(() => {
+    localStorage.setItem("formData", JSON.stringify(formData));
+  }, [formData]);
+
   const handleSubmit = async (e: any) => {
     setIsLoading(true);
     e.preventDefault();
@@ -92,7 +101,7 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     const name = e.target.name;
 
-    setFormData((prevState) => ({
+    setFormData((prevState: any) => ({
       ...prevState,
       [name]: value,
     }));
