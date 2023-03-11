@@ -117,8 +117,6 @@ const AuthModal: React.FC<AuthModalProps> = ({
       setCookie("UserId", userId);
       setCookie("AuthToken", authToken);
 
-      console.log("response.data.token", authToken);
-      console.log("cookies", cookies);
       if (success && isSignUp) navigate("./onboarding");
       if (success && !isSignUp) navigate("./Dashboard");
       // window.location.reload();
