@@ -19,6 +19,7 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
           dob_day: "",
           dob_month: "",
           dob_year: "",
+          dob: "",
           city: "",
           show_gender: false,
           gender_identity: "man",
@@ -50,6 +51,7 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
           dob_day: user.dob_day || "",
           dob_month: user.dob_month || "",
           dob_year: user.dob_year || "",
+          dob: user.dob || "",
           show_gender: user.show_gender || false,
           gender_identity: user.gender_identity,
           gender_interest: user.gender_interest,
@@ -109,6 +111,20 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
       [name]: value,
     }));
   };
+
+  function getAge(dateOfBirth: any) {
+    const today = new Date();
+    const birthDate = new Date(dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  }
 
   const signUpDate = new Date(formData.signUpDate);
   const currentDate = new Date();
@@ -198,92 +214,74 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
                 </p>
               </div>
             </div>
-            <div
-              className={`${
-                !isEditable &&
-                " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
-              } w-full text-right p-2 m-1`}
-            >
-              <InputField
-                label="שם"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleChange}
-              />
-            </div>
 
+            {/* name */}
             <div
               className={`${
-                !isEditable &&
-                " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
+                !isEditable && "pointer-events-none rounded-2xl mt-2"
               } w-full text-right p-2 m-1`}
             >
-              <InputField
-                label="עיר"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-              />
+              {isEditable ? (
+                <InputField
+                  label="שם"
+                  name="first_name"
+                  value={formData.first_name}
+                  onChange={handleChange}
+                />
+              ) : (
+                <h2 className="text-4xl font-bold text-רןעיא">
+                  {formData.first_name}
+                </h2>
+              )}
             </div>
 
             {/* Date Of birth */}
             <div
               className={`${
                 !isEditable &&
-                " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
+                "pointer-events-none rounded-2xl mt-2 flex w-full justify-start flex-row-reverse"
               } w-full text-right p-2 m-1`}
             >
-              <label className="text-lg text-[#656565]">גיל</label>
-              {!isEditable ? (
-                <AgeCalculator
-                  dob_day={formData.dob_day}
-                  dob_month={formData.dob_month}
-                  dob_year={formData.dob_year}
+              <label className="text-lg text-[#656565] w-[150px] ">
+                {isEditable ? "תאריך לידה" : ":גיל"}
+              </label>
+              {isEditable ? (
+                <input
+                  className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
+                  id="dob"
+                  type="date"
+                  name="dob"
+                  required // added required prop
+                  min="1900-01-01"
+                  max={`${new Date().getFullYear() - 18}-12-31`}
+                  value={formData.dob}
+                  onChange={handleChange}
                 />
               ) : (
-                <div className="flex w-full">
-                  <input
-                    className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
-                    id="dob_day"
-                    type="number"
-                    name="dob_day"
-                    placeholder="יום"
-                    required={false}
-                    min="1"
-                    max="31"
-                    value={formData.dob_day}
-                    onChange={handleChange}
-                  />
-
-                  <input
-                    className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
-                    id="dob_month"
-                    type="number"
-                    name="dob_month"
-                    placeholder="חודש"
-                    required={false}
-                    min="1"
-                    max="12"
-                    value={formData.dob_month}
-                    onChange={handleChange}
-                  />
-
-                  <input
-                    className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
-                    id="dob_year"
-                    type="number"
-                    name="dob_year"
-                    placeholder="שנה"
-                    required={false}
-                    min="1900"
-                    max={`${new Date().getFullYear() - 18}`}
-                    value={formData.dob_year}
-                    onChange={handleChange}
-                  />
-                </div>
+                <p className="text-xl">{getAge(formData.dob)}</p>
               )}
             </div>
 
+            {/* city */}
+
+            <div
+              className={`${
+                !isEditable && "pointer-events-none rounded-2xl mt-2"
+              } w-full text-right p-2 m-1`}
+            >
+              {isEditable ? (
+                <InputField
+                  label="עיר"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                />
+              ) : (
+                <h2 className="text-4xl font-bold text-רןעיא">
+                  {formData.city}
+                </h2>
+              )}
+            </div>
             <div
               className={`${
                 !isEditable &&
