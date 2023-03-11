@@ -229,8 +229,12 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
                   onChange={handleChange}
                 />
               ) : (
-                <h2 className="text-4xl font-bold text-רןעיא">
-                  {formData.first_name}
+                <h2 className="text-4xl font-bold text-[42px]">
+                  (
+                  {formData.gender_identity === ""
+                    ? "hey you"
+                    : formData.gender_identity}
+                  ) {formData.first_name}
                 </h2>
               )}
             </div>
@@ -242,7 +246,7 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
                 "pointer-events-none rounded-2xl mt-2 flex w-full justify-start flex-row-reverse"
               } w-full text-right p-2 m-1`}
             >
-              <label className="text-lg text-[#656565] w-[150px] ">
+              <label className="text-[#656565] w-[150px] text-2xl ">
                 {isEditable ? "תאריך לידה" : ":גיל"}
               </label>
               {isEditable ? (
@@ -258,17 +262,20 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
                   onChange={handleChange}
                 />
               ) : (
-                <p className="text-xl">{getAge(formData.dob)}</p>
+                <p className="text-2xl">{getAge(formData.dob)}</p>
               )}
             </div>
 
             {/* city */}
-
             <div
               className={`${
-                !isEditable && "pointer-events-none rounded-2xl mt-2"
+                !isEditable &&
+                "pointer-events-none rounded-2xl mt-2 flex w-full justify-start flex-row-reverse"
               } w-full text-right p-2 m-1`}
             >
+              <label className="text-[#656565] w-[150px] text-2xl ">
+                {isEditable ? "" : ":עיר"}
+              </label>
               {isEditable ? (
                 <InputField
                   label="עיר"
@@ -277,11 +284,37 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
                   onChange={handleChange}
                 />
               ) : (
-                <h2 className="text-4xl font-bold text-רןעיא">
-                  {formData.city}
-                </h2>
+                <h2 className="font-bold text-2xl">{formData.city}</h2>
               )}
             </div>
+
+            {/* about me */}
+            <div
+              className={`${
+                !isEditable &&
+                "pointer-events-none rounded-2xl mt-2  w-full justify-start flex-row-reverse"
+              } w-full text-right p-2 m-1`}
+            >
+              <label
+                htmlFor="about"
+                className="text-2xl text-gray-600 mt-4 block mb-2"
+              >
+                {":על עצמי"}
+              </label>
+              {isEditable ? (
+                <textarea
+                  id="about"
+                  name="about"
+                  value={formData.about}
+                  onChange={handleChange}
+                  className="border-2 border-gray-300 p-2 rounded-lg w-full h-32 resize-none mb-3 block  text-right"
+                  placeholder="...אני אוהב לטייל"
+                ></textarea>
+              ) : (
+                <h2 className="text-xl">{formData.about}</h2>
+              )}
+            </div>
+
             <div
               className={`${
                 !isEditable &&
@@ -343,7 +376,7 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
                 " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
               } w-full text-right p-2 m-1`}
             >
-              <label className="text-lg text-[#656565]">מעוניין לראות</label>
+              <label className="text-lg text-[#656565]">מעוניין להכיר</label>
 
               <div className="onBoarding flex w-full justify-end mb-4">
                 <input
@@ -392,28 +425,6 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
                   חייזרים
                 </label>
               </div>
-            </div>
-
-            <div
-              className={`${
-                !isEditable &&
-                " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
-              } w-full text-right p-2 m-1`}
-            >
-              <label
-                htmlFor="about"
-                className="text-lg text-gray-600 mt-4 block"
-              >
-                על עצמי
-              </label>
-              <textarea
-                id="about"
-                name="about"
-                value={formData.about}
-                onChange={handleChange}
-                className="border-2 border-gray-300 p-2 rounded-lg w-full h-32 resize-none mb-3 block text-right"
-                placeholder="...אני אוהב לטייל"
-              ></textarea>
             </div>
           </section>
         </form>
