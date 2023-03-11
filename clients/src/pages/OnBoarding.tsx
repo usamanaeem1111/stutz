@@ -19,6 +19,7 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
           dob_day: "",
           dob_month: "",
           dob_year: "",
+          city: "",
           show_gender: false,
           gender_identity: "man",
           gender_interest: "woman",
@@ -42,6 +43,7 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
 
         const user = response.data;
         const userObject: any = jwt_decode(cookies.AuthToken);
+
         setFormData({
           user_id: cookies.UserId,
           first_name: user.first_name || userObject.given_name || "",
@@ -56,6 +58,7 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
           about: user.about || "",
           matches: user.matches || [],
           email: user.email,
+          city: user.city,
           email_verified: user.email_verified,
           signUpDate: user.signUpDate,
           likes: user.likes,
@@ -205,6 +208,20 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
                 label="שם"
                 name="first_name"
                 value={formData.first_name}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div
+              className={`${
+                !isEditable &&
+                " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
+              } w-full text-right p-2 m-1`}
+            >
+              <InputField
+                label="עיר"
+                name="city"
+                value={formData.city}
                 onChange={handleChange}
               />
             </div>
