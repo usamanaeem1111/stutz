@@ -154,18 +154,18 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
         >
           <section
             className={`${
-              !isEditable &&
-              " pointer-events-none bg-[grey]/20 rounded-2xl mt-2"
+              !isEditable && " pointer-events-none  rounded-2xl mt-2"
             } w-full flex flex-col items-center mr-3 p-2 rounded-2xl`}
           >
             <label className="text-4xl text-gray-600" htmlFor="url">
-              הוסף תמונת פרופיל
+              {isEditable && "הוסף תמונת פרופיל"}
             </label>
             <div className="">
               <ImageUploader
                 saved={isEditable}
                 images={formData.images}
                 setFormData={setFormData}
+                isEditable={isEditable}
               />
             </div>
           </section>

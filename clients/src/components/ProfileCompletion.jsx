@@ -40,7 +40,12 @@ const ProfileCompletion = ({ formData }) => {
   return (
     <div className="w-64">
       <div className="text-xs text-gray-500 mb-1">
-        {`${completionPercentage}% completed`}
+        {completionPercentage < 100 ? (
+          <span>אנא השלם את פרופילך</span>
+        ) : (
+          <span>הפרופיל שלך הושלם בהצלחה</span>
+        )}
+        {` ${completionPercentage}% `}
       </div>
       <ProgressBar percentCompleted={completionPercentage} />
     </div>
