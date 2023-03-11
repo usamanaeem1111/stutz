@@ -15,7 +15,7 @@ const App = () => {
   ]);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
 
-  const authToken = cookies.AuthToken;
+  const authToken = "sjfalsdnflkajsndflkajsndflkjansdsafasdfsafdfasfdasdfsa";
   const userId = cookies.UserId;
 
   const getUser = async () => {
@@ -65,7 +65,7 @@ const App = () => {
         />
         {authToken && (
           <Route
-            path={"/dashboard"}
+            path={"/Dashboard"}
             element={
               userDataLoaded && (
                 <Dashboard
