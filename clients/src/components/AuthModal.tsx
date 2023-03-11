@@ -114,13 +114,14 @@ const AuthModal: React.FC<AuthModalProps> = ({
       const authToken = response.data.token;
       const userId = response.data.userId;
 
-      console.log("response.data.token", authToken);
       setCookie("UserId", userId);
       setCookie("AuthToken", authToken);
 
+      console.log("response.data.token", authToken);
+      console.log("cookies", cookies);
       if (success && isSignUp) navigate("./onboarding");
       if (success && !isSignUp) navigate("./Dashboard");
-      window.location.reload();
+      // window.location.reload();
       setIsLoading(false);
       return;
     } catch (err: any) {
@@ -141,7 +142,6 @@ const AuthModal: React.FC<AuthModalProps> = ({
       setIsSubmitting(false);
     }
   };
-  console.log("cookies auth", cookies);
 
   return (
     <div className="absolute left-[50%] top-[80%] translate-x-[-50%] max-w-[360px] w-full h-[600px] bg-white rounded-[10px] p-[10px]">

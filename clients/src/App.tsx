@@ -14,6 +14,12 @@ const App = () => {
     "UserId",
   ]);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
+  const [authToken, setAuthToken] = useState("dummyToken");
+
+  useEffect(() => {
+    const authTokenCookie = cookies.AuthToken;
+    setAuthToken(authTokenCookie);
+  }, [cookies.AuthToken]);
 
   const userId = cookies.UserId;
 
@@ -31,7 +37,7 @@ const App = () => {
 
   useEffect(() => {
     getUser();
-  }, [user]);
+  }, [cookies]);
 
   return (
     <BrowserRouter>
@@ -62,7 +68,7 @@ const App = () => {
             )
           }
         />
-        {cookies.AuthToken && (
+        {authToken !== "dummyToken" && (
           <Route
             path={"/Dashboard"}
             element={
@@ -77,7 +83,7 @@ const App = () => {
             }
           />
         )}
-        {cookies.AuthToken && (
+        {authToken !== "dummyToken" && (
           <Route
             path={"/Onboarding"}
             element={
@@ -92,6 +98,10 @@ const App = () => {
             }
           />
         )}
+        This way, the authToken state variable is updated with the value of the
+        AuthToken cookie once it is set in the handleSubmit function. The routes
+        that require authentication are then conditionally rendered based on
+        whether the authToken state variable is still a dummy token or not.
       </Routes>
     </BrowserRouter>
   );
