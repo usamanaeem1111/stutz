@@ -4,11 +4,17 @@ interface Props {
   setFormData: (formData: any) => void;
   images: any;
   saved: any;
+  isEditable: boolean;
 }
 
 const MAX_IMAGE_SIZE = 1024 * 1024 * 10; // 1MB in bytes
 
-const ImageUploader: React.FC<Props> = ({ setFormData, images, saved }) => {
+const ImageUploader: React.FC<Props> = ({
+  setFormData,
+  images,
+  saved,
+  isEditable,
+}) => {
   const [newImages, setNewImages] = useState<File[]>([]);
 
   const handleRemoveImage = (index: number) => {
@@ -42,13 +48,13 @@ const ImageUploader: React.FC<Props> = ({ setFormData, images, saved }) => {
       });
     }
   };
-
+  // console.log(images[0]);
   return (
     <div>
       {saved && (
-        <div className="h-[110px] w-[96px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
+        <div className=" bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
           <label
-            className="h-[100px] w-[85px] bg-[#F9F3F5] rounded-2xl flex items-center justify-center text-[#100307] text-3xl cursor-pointer"
+            className=" rounded-2xl flex items-center justify-center text-[#100307] text-3xl cursor-pointer"
             htmlFor="image-upload"
           >
             +
@@ -66,18 +72,30 @@ const ImageUploader: React.FC<Props> = ({ setFormData, images, saved }) => {
         style={{ display: "none" }}
       />
 
-      <div className="flex justify-start mt-5 bg-black/10 p-4 rounded-lg shadow-md">
+      {!isEditable && images.length > 0 && (
+        <div className="bg-white rounded-md shadow-md overflow-hidden max-w-[1080px] max-h-[1350px] mx-auto my-5">
+          <img
+            className="h-full w-full object-contain"
+            src={images[0]}
+            alt={images[0]}
+          />
+        </div>
+      )}
+      <div className="flex justify-start mt-5 p-4 rounded-lg">
         {images.map((imageUrl: any, index: number) => (
           <div key={imageUrl} className="relative inline-block">
-            <button
-              className="absolute bottom-[10px] right-[10px] bg-white text-[#100307] rounded-full w-7 h-7 flex items-center justify-center"
-              onClick={() => handleRemoveImage(index)}
-            >
-              &times;
-            </button>
-            <div className="h-[110px] w-[96px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
+            {isEditable && (
+              <button
+                className="absolute bottom-[10px] right-[10px] bg-white text-[#100307] rounded-full w-7 h-7 flex items-center justify-center hover:translate-y-[-2px] active:translate-y-[1px] transition-all"
+                onClick={() => handleRemoveImage(index)}
+              >
+                &times;
+              </button>
+            )}
+
+            <div className="h-[80px] w-[80px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
               <img
-                className="w-full h-full m-1 rounded-lg"
+                className="w-full h-full object-contain"
                 src={imageUrl}
                 alt={imageUrl}
               />
