@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import Chat from "./Chat";
 
-const socket = io("http://localhost:8000");
+const socket = io("https://api.stutz.co.il");
 
 const ChatInput = ({
   user,

@@ -20,7 +20,7 @@ const App = () => {
 
   const getUser = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/user", {
+      const response = await axios.get("https://api.stutz.co.il/user", {
         params: { userId },
       });
       setUser(response.data);

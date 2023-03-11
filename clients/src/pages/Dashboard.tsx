@@ -14,7 +14,7 @@ const Dashboard = ({ user, cookies, removeCookie, setCookie }: any) => {
 
   const getGenderedUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/gendered-users", {
+      const response = await axios.get("https://api.stutz.co.il/gendered-users", {
         params: { gender: user?.gender_interest },
       });
       setGenderedUsers(response.data);
@@ -31,7 +31,7 @@ const Dashboard = ({ user, cookies, removeCookie, setCookie }: any) => {
 
   const updateMatches = async (matchedUserId: any) => {
     try {
-      await axios.put("http://localhost:8000/addmatch", {
+      await axios.put("https://api.stutz.co.il/addmatch", {
         userId,
         matchedUserId,
       });

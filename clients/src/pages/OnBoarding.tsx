@@ -38,7 +38,7 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/user?userId=${cookies.UserId}`
+          `https://api.stutz.co.il/user?userId=${cookies.UserId}`
         );
 
         const user = response.data;
@@ -80,7 +80,7 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
     try {
       console.log("formData ready to upload ", formData);
       const response = await axios.put(
-        "http://localhost:8000/user",
+        "https://api.stutz.co.il/user",
         {
           formData,
         },

@@ -15,7 +15,7 @@ interface Props {
   setClickedUser: any;
 }
 
-const socket: Socket = io("http://localhost:8000");
+const socket: Socket = io("https://api.stutz.co.il");
 
 const MatchesDisplay = ({ matches, setClickedUser }: Props) => {
   const [matchedProfiles, setMatchedProfiles] = useState<User[] | null>(null);
@@ -26,7 +26,7 @@ const MatchesDisplay = ({ matches, setClickedUser }: Props) => {
 
   const getMatches = async () => {
     try {
-      const response = await axios.get<User[]>("http://localhost:8000/users", {
+      const response = await axios.get<User[]>("https://api.stutz.co.il/users", {
         params: { userIds: JSON.stringify(matchedUserIds) },
       });
       setMatchedProfiles(response.data);

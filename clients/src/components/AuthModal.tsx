@@ -37,7 +37,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       var userObject: any = jwt_decode(authToken);
       let email = userObject.email;
 
-      const response = await axios.post(`http://localhost:8000/googleSignUp`, {
+      const response = await axios.post(`https://api.stutz.co.il/googleSignUp`, {
         email,
         authToken,
       });
@@ -100,7 +100,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       setIsSubmitting(true);
 
       const response = await axios.post(
-        `http://localhost:8000/${isSignUp ? "signup" : "login"}`,
+        `https://api.stutz.co.il/${isSignUp ? "signup" : "login"}`,
         {
           email,
           password,
