@@ -15,7 +15,7 @@ const App = () => {
   ]);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
 
-  const authToken = "sjfalsdnflkajsndflkajsndflkjansdsafasdfsafdfasfdasdfsa";
+  const authToken = cookies.AuthToken;
   const userId = cookies.UserId;
 
   const getUser = async () => {
