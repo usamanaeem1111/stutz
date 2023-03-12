@@ -102,7 +102,6 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
         minimal={true}
         setShowModal={() => {}}
         showModal={false}
-        user={user}
         removeCookie={removeCookie}
         cookies={cookies}
       />

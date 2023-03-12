@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import axios, { AxiosResponse } from "axios";
+import { RootState, useSelector } from "../store";
 
 type StatsData = {
   mostPopularMan: object;
@@ -31,11 +32,14 @@ type AdminStatsProps = {
 };
 
 const AdminStats: React.FC<AdminStatsProps> = ({
-  user,
   cookies,
   removeCookie,
   setCookie,
 }) => {
+
+  // SELECTORS
+  // const user = useSelector((state: RootState) => state.user.user)
+  
   const [stats, setStats] = useState<StatsData>();
 
   useEffect(() => {
@@ -65,7 +69,6 @@ const AdminStats: React.FC<AdminStatsProps> = ({
         minimal={true}
         setShowModal={() => {}}
         showModal={false}
-        user={user}
         removeCookie={removeCookie}
         cookies={cookies}
       />

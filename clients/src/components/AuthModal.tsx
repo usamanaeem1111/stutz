@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
+import { RootState, useSelector } from "../store";
 const { v4: uuidv4 } = require("uuid");
 interface AuthModalProps {
   setShowModal: (show: boolean) => void;
   isSignUp: boolean;
-  user: any;
   cookies: any;
   removeCookie: any;
   setCookie: any;
@@ -16,11 +16,14 @@ interface AuthModalProps {
 const AuthModal: React.FC<AuthModalProps> = ({
   setShowModal,
   isSignUp,
-  user,
   cookies,
   removeCookie,
   setCookie,
 }) => {
+
+
+  // const user = useSelector((state: RootState) => state.user.user)
+
   const [email, setEmail] = useState<String | null>(null);
   const [password, setPassword] = useState<String | null>(null);
   const [confirmPassword, setConfirmPassword] = useState<String | null>(null);

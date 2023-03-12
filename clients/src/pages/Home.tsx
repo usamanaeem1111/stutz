@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AuthModal from "../components/AuthModal";
 import Navbar from "../components/Navbar";
 
-function Home({ user, cookies, removeCookie, setCookie }: any) {
+function Home({ cookies, removeCookie, setCookie }: any) {
   const [showModal, setShowModal] = useState(false);
   const [isSignUp, setIsSignUp] = useState(true);
 
@@ -28,7 +28,6 @@ function Home({ user, cookies, removeCookie, setCookie }: any) {
         setShowModal={setShowModal}
         showModal={showModal}
         setIsSignUp={setIsSignUp}
-        user={user}
         removeCookie={removeCookie}
         cookies={cookies}
       />
@@ -44,7 +43,6 @@ function Home({ user, cookies, removeCookie, setCookie }: any) {
 
         {showModal && (
           <AuthModal
-            user={user}
             cookies={cookies}
             removeCookie={removeCookie}
             setCookie={setCookie}

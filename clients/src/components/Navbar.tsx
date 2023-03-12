@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
+import { RootState, useSelector } from "../store";
 
 import envelopIcon from "./imgs/envelopeIcon.svg";
 import siteLogo from "./imgs/logo.png";
@@ -12,22 +13,30 @@ interface NavbarProps {
   authToken?: string;
   setIsSignUp?: (show: boolean) => void;
   formData: any;
-  user: any;
+  // user: any;
   removeCookie: any;
   cookies: any;
 }
 
-const Navbar: FC<NavbarProps> = ({
-  minimal,
-  setShowModal,
-  showModal,
-  authToken,
-  setIsSignUp,
-  formData,
-  user,
-  removeCookie,
-  cookies,
-}) => {
+const Navbar: FC<NavbarProps> = (props) => {
+
+  // PROPS
+  const {
+    minimal,
+    setShowModal,
+    showModal,
+    authToken,
+    setIsSignUp,
+    formData,
+    // user,
+    removeCookie,
+    cookies,
+  } = props;
+
+  // SELECTORS
+  const user = useSelector((state: RootState) => state.user.user)
+
+
   const handleClick = () => {
     setShowModal(true);
     if (setIsSignUp) {
@@ -66,7 +75,7 @@ const Navbar: FC<NavbarProps> = ({
           </section>
         )}
         <div className="flex w-full justify-between items-center">
-          <div className={`${user === "" && "hidden"}`}>
+          <div className={`${user === null && "hidden"}`}>
             <Link
               to="/dashboard"
               className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"

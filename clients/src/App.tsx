@@ -6,15 +6,33 @@ import OnBoarding from "./pages/OnBoarding";
 import { useCookies } from "react-cookie";
 import AdminStats from "./pages/AdminStats";
 import axios from "axios";
-
+import { useSelector, useDispatch } from 'react-redux'
+import { userActions } from './store/reducers/user/user.reducer'
+import { RootState } from "./store";
 const App = () => {
-  const [user, setUser] = useState(null);
+  // TOOLS
+  const dispatch = useDispatch()
+
+
+
+  // STATE
+  // const [user, setUser] = useState(null);
   const [cookies, setCookie, removeCookie] = useCookies([
     "AuthToken",
     "UserId",
   ]);
   const [userDataLoaded, setUserDataLoaded] = useState(false);
   const [authToken, setAuthToken] = useState("dummyToken");
+
+
+
+  // SELECTORS
+  const user = useSelector((state: RootState) => state.user.user)
+
+  console.log('user from selectors', user);
+
+
+
 
   useEffect(() => {
     const authTokenCookie = cookies.AuthToken;
@@ -24,12 +42,15 @@ const App = () => {
   const userId = cookies.UserId;
 
   // console.log("user from App", user);
-  const getUser = async () => {
+  const fetchUser = async () => {
     try {
       const response = await axios.get("https://api.stutz.co.il/user", {
         params: { userId },
       });
-      setUser(response.data);
+      const _user = response.data;
+      debugger
+      dispatch(userActions.setUser({ value: _user }))
+      // setUser(response.data);
       setUserDataLoaded(true);
     } catch (error) {
       console.log(error);
@@ -37,8 +58,8 @@ const App = () => {
   };
 
   useEffect(() => {
-    getUser();
-  }, [user, cookies]);
+    fetchUser();
+  }, [cookies]);
 
   return (
     <BrowserRouter>
@@ -71,7 +92,7 @@ const App = () => {
         />
 
         <Route
-          path={`${user === "" ? "/" : "/dashboard"}`}
+          path={`${user === null ? "/" : "/dashboard"}`}
           element={
             userDataLoaded && (
               <Dashboard
@@ -85,7 +106,7 @@ const App = () => {
         />
 
         <Route
-          path={`${user === "" ? "/" : "/Onboarding"}`}
+          path={`${user === null ? "/" : "/Onboarding"}`}
           element={
             userDataLoaded && (
               <OnBoarding
