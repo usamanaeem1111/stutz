@@ -113,6 +113,9 @@ const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
   };
 
   function getAge(dateOfBirth: any) {
+    if (!dateOfBirth) {
+      return;
+    }
     const today = new Date();
     const birthDate = new Date(dateOfBirth);
     let age = today.getFullYear() - birthDate.getFullYear();
