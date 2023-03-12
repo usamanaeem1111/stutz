@@ -23,7 +23,7 @@ const App = () => {
 
   const userId = cookies.UserId;
 
-  console.log("user from App", user == "");
+  // console.log("user from App", user);
   const getUser = async () => {
     try {
       const response = await axios.get("https://api.stutz.co.il/user", {
