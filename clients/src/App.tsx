@@ -23,6 +23,7 @@ const App = () => {
 
   const userId = cookies.UserId;
 
+  console.log("user from App", user == "");
   const getUser = async () => {
     try {
       const response = await axios.get("https://api.stutz.co.il/user", {
@@ -37,7 +38,7 @@ const App = () => {
 
   useEffect(() => {
     getUser();
-  }, [cookies]);
+  }, [user, cookies]);
 
   return (
     <BrowserRouter>
@@ -68,40 +69,34 @@ const App = () => {
             )
           }
         />
-        {authToken !== "dummyToken" && (
-          <Route
-            path={"/Dashboard"}
-            element={
-              userDataLoaded && (
-                <Dashboard
-                  user={user}
-                  cookies={cookies}
-                  removeCookie={removeCookie}
-                  setCookie={setCookie}
-                />
-              )
-            }
-          />
-        )}
-        {authToken !== "dummyToken" && (
-          <Route
-            path={"/Onboarding"}
-            element={
-              userDataLoaded && (
-                <OnBoarding
-                  user={user}
-                  cookies={cookies}
-                  removeCookie={removeCookie}
-                  setCookie={setCookie}
-                />
-              )
-            }
-          />
-        )}
-        This way, the authToken state variable is updated with the value of the
-        AuthToken cookie once it is set in the handleSubmit function. The routes
-        that require authentication are then conditionally rendered based on
-        whether the authToken state variable is still a dummy token or not.
+
+        <Route
+          path={`${user === "" ? "/" : "/dashboard"}`}
+          element={
+            userDataLoaded && (
+              <Dashboard
+                user={user}
+                cookies={cookies}
+                removeCookie={removeCookie}
+                setCookie={setCookie}
+              />
+            )
+          }
+        />
+
+        <Route
+          path={`${user === "" ? "/" : "/Onboarding"}`}
+          element={
+            userDataLoaded && (
+              <OnBoarding
+                user={user}
+                cookies={cookies}
+                removeCookie={removeCookie}
+                setCookie={setCookie}
+              />
+            )
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

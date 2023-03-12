@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 
 import envelopIcon from "./imgs/envelopeIcon.svg";
+import siteLogo from "./imgs/logo.png";
 import ProfileCompletion from "./ProfileCompletion";
 
 interface NavbarProps {
@@ -37,12 +38,14 @@ const Navbar: FC<NavbarProps> = ({
   const handleLogout = () => {
     removeCookie("UserId", cookies.UserId);
     removeCookie("AuthToken", cookies.AuthToken);
+    console.log("Loging you out ");
+    localStorage.removeItem("formData");
     window.location.href = "/";
   };
 
   return (
     <div className="bg-gray-100 ">
-      <nav className="container mx-auto  py-3 w-full flex items-start justify-between">
+      <nav className="container mx-auto  py-3 w-full flex items-start justify-end">
         {/* profile section */}
         {user && (
           <section className="flex  justify-around w-full">
@@ -62,47 +65,55 @@ const Navbar: FC<NavbarProps> = ({
             <ProfileCompletion formData={user} />
           </section>
         )}
-        <div className="flex items-center">
-          <Link
-            to="/dashboard"
-            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
-          >
-            הודעות
-          </Link>
-
-          <Link
-            to="/Onboarding"
-            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
-          >
-            הפרופיל שלי
-          </Link>
-
-          <Link
-            to="/adminStats"
-            className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
-          >
-            AdminStats
-          </Link>
-
-          {!authToken && !minimal && (
-            <button
-              disabled={showModal}
-              onClick={handleClick}
-              className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
+        <div className="flex w-full justify-between items-center">
+          <div className={`${user === "" && "hidden"}`}>
+            <Link
+              to="/dashboard"
+              className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
             >
-              Log In
-            </button>
-          )}
+              הודעות
+            </Link>
 
-          {!authToken && minimal && (
-            <button
-              disabled={showModal}
-              onClick={handleLogout}
-              className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
+            <Link
+              to="/onboarding"
+              className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
             >
-              Log out
-            </button>
-          )}
+              הפרופיל שלי
+            </Link>
+
+            <Link
+              to="/adminStats"
+              className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
+            >
+              AdminStats
+            </Link>
+          </div>
+
+          <div className="mr-3">
+            {!authToken && !minimal && (
+              <button
+                disabled={showModal}
+                onClick={handleClick}
+                className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
+              >
+                התחבר
+              </button>
+            )}
+
+            {!authToken && minimal && (
+              <button
+                disabled={showModal}
+                onClick={handleLogout}
+                className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
+              >
+                התנתק
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="w-[300px]">
+          <img src={siteLogo} alt="siteLogo" />
         </div>
       </nav>
     </div>
