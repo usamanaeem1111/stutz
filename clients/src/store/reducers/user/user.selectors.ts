@@ -1,6 +1,6 @@
-import { createSelector } from '@reduxjs/toolkit';
+import { createSelector } from "@reduxjs/toolkit";
 
-import { RootState } from '../../store';
+import { RootState } from "../../store";
 
 const selectUserState = (state: RootState) => state.user;
 

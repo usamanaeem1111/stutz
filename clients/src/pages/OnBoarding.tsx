@@ -13,7 +13,6 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
 
   // SELECTORS
   const user = useSelector((state: RootState) => state.user.user);
-  console.log("User from onboarding", user);
 
   const [formData, setFormData] = useState(() => ({
     user_id: cookies.UserId,
@@ -21,6 +20,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
     dob_day: user?.dob_day || "",
     dob_month: user?.dob_month || "",
     dob_year: user?.dob_year || "",
+    email_verified: user?.email_verified || "",
     dob: user?.dob || "",
     city: user?.city || "",
     show_gender: false,
@@ -32,7 +32,6 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
     matches: user?.matches || [],
     likes: user?.likes || [],
     email: user?.email || "",
-    email_verified: false,
     signUpDate: user?.signUpDate || "",
   }));
 
@@ -44,6 +43,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
       dob_month: user?.dob_month || "",
       dob_year: user?.dob_year || "",
       dob: user?.dob || "",
+      email_verified: user?.email_verified || "",
       city: user?.city || "",
       gender_identity: user?.gender_identity || "",
       gender_interest: user?.gender_interest || "",
@@ -77,6 +77,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
       console.log("success", success);
       setIsEditable(false);
       setIsLoading(false);
+      localStorage.removeItem("formData");
     } catch (err) {
       console.log(err);
     }
@@ -118,6 +119,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   if (!user) {
     return <span className="loader"></span>;
   }
+
   return (
     <>
       <Navbar

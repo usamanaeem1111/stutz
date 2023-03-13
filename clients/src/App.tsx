@@ -25,8 +25,6 @@ const App = () => {
   // SELECTORS
   const user = useSelector((state: RootState) => state.user.user);
 
-  // console.log("user from selectors", user);
-
   useEffect(() => {
     const authTokenCookie = cookies.AuthToken;
     setAuthToken(authTokenCookie);

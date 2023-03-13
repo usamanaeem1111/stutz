@@ -20,8 +20,6 @@ const AuthModal: React.FC<AuthModalProps> = ({
   removeCookie,
   setCookie,
 }) => {
-
-
   // const user = useSelector((state: RootState) => state.user.user)
 
   const [email, setEmail] = useState<String | null>(null);
