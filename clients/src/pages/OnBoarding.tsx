@@ -13,32 +13,49 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
 
   // SELECTORS
   const user = useSelector((state: RootState) => state.user.user);
-  console.log(user);
-  const [formData, setFormData] = useState(() => {
-    const savedFormData = localStorage.getItem("formData");
-    return savedFormData
-      ? JSON.parse(savedFormData)
-      : {
-          user_id: cookies.UserId,
-          first_name: user?.first_name || "",
-          dob_day: user?.dob_day || "",
-          dob_month: user?.dob_month || "",
-          dob_year: user?.dob_year || "",
-          dob: user?.dob || "",
-          city: user?.city || "",
-          show_gender: false,
-          gender_identity: user?.gender_identity || "",
-          gender_interest: user?.gender_interest || "",
-          images: user?.images || [],
-          url: user?.url || "",
-          about: user?.about || "",
-          matches: user?.matches || [],
-          likes: user?.likes || [],
-          email: user?.email || "",
-          email_verified: false,
-          signUpDate: user?.signUpDate || "",
-        };
-  });
+  console.log("User from onboarding", user);
+
+  const [formData, setFormData] = useState(() => ({
+    user_id: cookies.UserId,
+    first_name: user?.first_name || "",
+    dob_day: user?.dob_day || "",
+    dob_month: user?.dob_month || "",
+    dob_year: user?.dob_year || "",
+    dob: user?.dob || "",
+    city: user?.city || "",
+    show_gender: false,
+    gender_identity: user?.gender_identity || "",
+    gender_interest: user?.gender_interest || "",
+    images: user?.images || [],
+    url: user?.url || "",
+    about: user?.about || "",
+    matches: user?.matches || [],
+    likes: user?.likes || [],
+    email: user?.email || "",
+    email_verified: false,
+    signUpDate: user?.signUpDate || "",
+  }));
+
+  useEffect(() => {
+    setFormData((prevState) => ({
+      ...prevState,
+      first_name: user?.first_name || "",
+      dob_day: user?.dob_day || "",
+      dob_month: user?.dob_month || "",
+      dob_year: user?.dob_year || "",
+      dob: user?.dob || "",
+      city: user?.city || "",
+      gender_identity: user?.gender_identity || "",
+      gender_interest: user?.gender_interest || "",
+      images: user?.images || [],
+      url: user?.url || "",
+      about: user?.about || "",
+      matches: user?.matches || [],
+      likes: user?.likes || [],
+      email: user?.email || "",
+      signUpDate: user?.signUpDate || "",
+    }));
+  }, [user]);
 
   const handleSubmit = async (e: any) => {
     setIsLoading(true);
@@ -98,6 +115,9 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   const differenceInMs = currentDate.getTime() - signUpDate.getTime();
   const daysAgo = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
 
+  if (!user) {
+    return <span className="loader"></span>;
+  }
   return (
     <>
       <Navbar
