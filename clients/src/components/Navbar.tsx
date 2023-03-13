@@ -1,6 +1,7 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { RootState, useSelector } from "../store";
+import io from "socket.io-client";
 
 import envelopIcon from "./imgs/envelopeIcon.svg";
 import siteLogo from "./imgs/logo.png";
@@ -13,14 +14,14 @@ interface NavbarProps {
   authToken?: string;
   setIsSignUp?: (show: boolean) => void;
   formData: any;
-  // user: any;
   removeCookie: any;
   cookies: any;
 }
 
 const Navbar: FC<NavbarProps> = (props) => {
+  const [newMessage, setNewMessage] = useState(false);
+  const [newMatch, setNewMatch] = useState(false);
 
-  // PROPS
   const {
     minimal,
     setShowModal,
@@ -28,14 +29,31 @@ const Navbar: FC<NavbarProps> = (props) => {
     authToken,
     setIsSignUp,
     formData,
-    // user,
     removeCookie,
     cookies,
   } = props;
 
-  // SELECTORS
-  const user = useSelector((state: RootState) => state.user.user)
+  const socket = io("https://api.stutz.co.il");
+  const user = useSelector((state: RootState) => state.user.user);
 
+  socket.on("recive_msg", (data) => {
+    // Check if the message is not sent by the current user
+    // console.log(user, data);
+    if (data.from_userId !== user?.user_id) {
+      console.log("Message received:", data);
+      setNewMessage(true);
+    }
+  });
+
+  socket.on("new_match", (userId) => {
+    console.log(`New match found for user ${userId}`);
+    setNewMatch(true);
+  });
+
+  const handleNotificationClose = () => {
+    setNewMessage(false);
+    setNewMatch(false);
+  };
 
   const handleClick = () => {
     setShowModal(true);
@@ -55,7 +73,6 @@ const Navbar: FC<NavbarProps> = (props) => {
   return (
     <div className="bg-gray-100 ">
       <nav className="container mx-auto  py-3 w-full flex items-start justify-end">
-        {/* profile section */}
         {user && (
           <section className="flex  justify-around w-full">
             <div className="flex">
@@ -67,13 +84,16 @@ const Navbar: FC<NavbarProps> = (props) => {
 
               <div className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center m-1 relative">
                 <img src={envelopIcon} alt="envelopIcon" />
-                <p className="absolute top-0 right-0 h-3 w-3 rounded-full bg-[#FE316E]"></p>
+                {newMessage && (
+                  <p className="absolute top-0 right-0 h-3 w-3 rounded-full bg-[#FE316E]"></p>
+                )}
               </div>
             </div>
 
             <ProfileCompletion formData={user} />
           </section>
         )}
+
         <div className="flex w-full justify-between items-center">
           <div className={`${user === null && "hidden"}`}>
             <Link
@@ -125,6 +145,20 @@ const Navbar: FC<NavbarProps> = (props) => {
           <img src={siteLogo} alt="siteLogo" />
         </div>
       </nav>
+
+      {newMessage && (
+        <div className="fixed bottom-0 left-0 right-0 p-3 bg-white text-gray-800 border-t-2 border-[#FE316E]">
+          You have a new message
+          <button onClick={handleNotificationClose}>Close</button>
+        </div>
+      )}
+
+      {newMatch && (
+        <div className="fixed bottom-0 left-0 right-0 p-3 bg-white text-gray-800 border-t-2 border-[#FE316E]">
+          You have a new match
+          <button onClick={handleNotificationClose}>Close</button>
+        </div>
+      )}
     </div>
   );
 };
