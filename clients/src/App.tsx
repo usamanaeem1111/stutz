@@ -6,9 +6,11 @@ import OnBoarding from "./pages/OnBoarding";
 import { useCookies } from "react-cookie";
 import AdminStats from "./pages/AdminStats";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 
 const App = () => {
   const [user, setUser] = useState(null);
+
   const [cookies, setCookie, removeCookie] = useCookies([
     "AuthToken",
     "UserId",
@@ -38,7 +40,18 @@ const App = () => {
 
   useEffect(() => {
     getUser();
-  }, [user, cookies]);
+  }, [cookies]);
+
+  if (!user && cookies.AuthToken) {
+    return (
+      <div className="fixed flex flex-col items-center justify-center  top-0 bottom-0 left-0 right-0 h-full w-full overflow-hidden ">
+        <h2 className=" capitalize text-2xl max-w-[400px] mb-5 p-2">
+          Please wait ...
+        </h2>
+        <span className="loader"></span>
+      </div>
+    );
+  }
 
   return (
     <BrowserRouter>
