@@ -5,35 +5,38 @@ import jwt_decode from "jwt-decode";
 import ImageUploader from "../components/ImageUploader";
 import InputField from "../components/InputField";
 import AgeCalculator from "../components/AgeCalculator";
+import { RootState, useSelector } from "../store";
 
-const OnBoarding = ({ user, cookies, removeCookie, setCookie }: any) => {
+const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   const [isEditable, setIsEditable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // console.log(user);
+  // SELECTORS
+  const user = useSelector((state: RootState) => state.user.user);
+  console.log(user);
   const [formData, setFormData] = useState(() => {
     const savedFormData = localStorage.getItem("formData");
     return savedFormData
       ? JSON.parse(savedFormData)
       : {
           user_id: cookies.UserId,
-          first_name: user.first_name,
-          dob_day: user.dob_day,
-          dob_month: user.dob_month,
-          dob_year: user.dob_year,
-          dob: user.dob,
-          city: user.city,
+          first_name: user?.first_name || "",
+          dob_day: user?.dob_day || "",
+          dob_month: user?.dob_month || "",
+          dob_year: user?.dob_year || "",
+          dob: user?.dob || "",
+          city: user?.city || "",
           show_gender: false,
-          gender_identity: user.gender_identity,
-          gender_interest: user.gender_interest,
-          images: user.images,
-          url: user.url,
-          about: user.about,
-          matches: user.matches,
-          likes: user.likes,
-          email: user.email,
+          gender_identity: user?.gender_identity || "",
+          gender_interest: user?.gender_interest || "",
+          images: user?.images || [],
+          url: user?.url || "",
+          about: user?.about || "",
+          matches: user?.matches || [],
+          likes: user?.likes || [],
+          email: user?.email || "",
           email_verified: false,
-          signUpDate: user.signUpDate,
+          signUpDate: user?.signUpDate || "",
         };
   });
 

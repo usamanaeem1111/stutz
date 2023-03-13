@@ -48,7 +48,7 @@ const ImageUploader: React.FC<Props> = ({
       });
     }
   };
-  // console.log(images[0]);
+
   return (
     <div>
       {saved && (
@@ -72,7 +72,7 @@ const ImageUploader: React.FC<Props> = ({
         style={{ display: "none" }}
       />
 
-      {!isEditable && images.length > 0 && (
+      {!isEditable && images && images.length > 0 && (
         <div className="bg-white rounded-md shadow-md overflow-hidden max-w-[1080px] max-h-[1350px] mx-auto my-5">
           <img
             className="h-full w-full object-contain"
@@ -82,26 +82,27 @@ const ImageUploader: React.FC<Props> = ({
         </div>
       )}
       <div className="flex justify-start mt-5 p-4 rounded-lg">
-        {images.map((imageUrl: any, index: number) => (
-          <div key={imageUrl} className="relative inline-block">
-            {isEditable && (
-              <button
-                className="absolute bottom-[10px] right-[10px] bg-white text-[#100307] rounded-full w-7 h-7 flex items-center justify-center hover:translate-y-[-2px] active:translate-y-[1px] transition-all"
-                onClick={() => handleRemoveImage(index)}
-              >
-                &times;
-              </button>
-            )}
+        {images &&
+          images.map((imageUrl: any, index: number) => (
+            <div key={imageUrl} className="relative inline-block">
+              {isEditable && (
+                <button
+                  className="absolute bottom-[10px] right-[10px] bg-white text-[#100307] rounded-full w-7 h-7 flex items-center justify-center hover:translate-y-[-2px] active:translate-y-[1px] transition-all"
+                  onClick={() => handleRemoveImage(index)}
+                >
+                  &times;
+                </button>
+              )}
 
-            <div className="h-[80px] w-[80px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
-              <img
-                className="w-full h-full object-contain"
-                src={imageUrl}
-                alt={imageUrl}
-              />
+              <div className="h-[80px] w-[80px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
+                <img
+                  className="w-full h-full object-contain"
+                  src={imageUrl}
+                  alt={imageUrl}
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );

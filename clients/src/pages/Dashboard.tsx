@@ -3,20 +3,26 @@ import { useEffect, useState } from "react";
 import ChatContainer from "../components/ChatContainer";
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import { RootState, useSelector } from "../store";
 
-const Dashboard = ({ user, cookies, removeCookie, setCookie }: any) => {
+const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
   const [genderedUsers, setGenderedUsers] = useState<any>(null);
   const [lastDirection, setLastDirection] = useState();
 
   const [selectedImage, setSelectedImage] = useState<number | null>(0);
 
+  // SELECTORS
+  const user = useSelector((state: RootState) => state.user.user);
   const userId = cookies.UserId;
 
   const getGenderedUsers = async () => {
     try {
-      const response = await axios.get("https://api.stutz.co.il/gendered-users", {
-        params: { gender: user?.gender_interest },
-      });
+      const response = await axios.get(
+        "https://api.stutz.co.il/gendered-users",
+        {
+          params: { gender: user?.gender_interest },
+        }
+      );
       setGenderedUsers(response.data);
     } catch (error) {
       console.log(error);

@@ -25,7 +25,6 @@ type StatsData = {
 };
 
 type AdminStatsProps = {
-  user: any;
   cookies: any;
   removeCookie: any;
   setCookie: any;
@@ -36,10 +35,9 @@ const AdminStats: React.FC<AdminStatsProps> = ({
   removeCookie,
   setCookie,
 }) => {
-
   // SELECTORS
   // const user = useSelector((state: RootState) => state.user.user)
-  
+
   const [stats, setStats] = useState<StatsData>();
 
   useEffect(() => {

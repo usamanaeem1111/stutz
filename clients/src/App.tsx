@@ -6,14 +6,12 @@ import OnBoarding from "./pages/OnBoarding";
 import { useCookies } from "react-cookie";
 import AdminStats from "./pages/AdminStats";
 import axios from "axios";
-import { useSelector, useDispatch } from 'react-redux'
-import { userActions } from './store/reducers/user/user.reducer'
+import { useSelector, useDispatch } from "react-redux";
+import { userActions } from "./store/reducers/user/user.reducer";
 import { RootState } from "./store";
 const App = () => {
   // TOOLS
-  const dispatch = useDispatch()
-
-
+  const dispatch = useDispatch();
 
   // STATE
   // const [user, setUser] = useState(null);
@@ -24,15 +22,10 @@ const App = () => {
   const [userDataLoaded, setUserDataLoaded] = useState(false);
   const [authToken, setAuthToken] = useState("dummyToken");
 
-
-
   // SELECTORS
-  const user = useSelector((state: RootState) => state.user.user)
+  const user = useSelector((state: RootState) => state.user.user);
 
-  console.log('user from selectors', user);
-
-
-
+  // console.log("user from selectors", user);
 
   useEffect(() => {
     const authTokenCookie = cookies.AuthToken;
@@ -41,15 +34,13 @@ const App = () => {
 
   const userId = cookies.UserId;
 
-  // console.log("user from App", user);
   const fetchUser = async () => {
     try {
       const response = await axios.get("https://api.stutz.co.il/user", {
         params: { userId },
       });
       const _user = response.data;
-      debugger
-      dispatch(userActions.setUser({ value: _user }))
+      dispatch(userActions.setUser({ value: _user }));
       // setUser(response.data);
       setUserDataLoaded(true);
     } catch (error) {
@@ -69,7 +60,6 @@ const App = () => {
           element={
             userDataLoaded && (
               <Home
-                user={user}
                 cookies={cookies}
                 removeCookie={removeCookie}
                 setCookie={setCookie}
@@ -82,7 +72,6 @@ const App = () => {
           element={
             userDataLoaded && (
               <AdminStats
-                user={user}
                 cookies={cookies}
                 removeCookie={removeCookie}
                 setCookie={setCookie}
