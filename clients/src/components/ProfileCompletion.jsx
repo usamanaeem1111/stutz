@@ -39,7 +39,7 @@ const ProfileCompletion = ({ formData }) => {
 
   return (
     <div className="w-64">
-      <div className="text-xs text-gray-500 mb-1">
+      <div className="text-xs text-[#100307] mb-1">
         {completionPercentage < 100 ? (
           <span>אנא השלם את פרופילך</span>
         ) : (

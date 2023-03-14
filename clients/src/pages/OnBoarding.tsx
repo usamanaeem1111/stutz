@@ -9,6 +9,7 @@ import { RootState, useSelector } from "../store";
 import ProfileCompletion from "../components/ProfileCompletion";
 import envelopUnverifiedEmail from "./imgs/envelopUnverified.svg";
 import envelopVerifiedEmail from "./imgs/envelopUnverifiedGreen.svg";
+import joinTheAppIcon from "./imgs/joinTheAppIcon.svg";
 
 const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   const [isEditable, setIsEditable] = useState(false);
@@ -161,7 +162,6 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
             </div>
           </section>
 
-          {/* <ProfileCompletion formData={user} /> */}
           <section className=" w-full flex flex-col items-start  ml-3  p-4 rounded-2xl">
             {/* Top section  */}
 
@@ -186,7 +186,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
               </div>
 
               <div className="flex justify-end  items-center  ">
-                {formData.email_verified ? (
+                {!formData.email_verified ? (
                   <div className="flex   mr-2 ">
                     <div className="mr-2">
                       <p className="font-semibold text-xl">
@@ -222,14 +222,20 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
               </div>
             </div>
 
+            {/* user joined and profile progress */}
+            <div className="flex items-center justify-between bg-[#FEF3F6] py-2">
+              <ProfileCompletion formData={user} />
+              <div className="px-1 py-3 rounded-lg w-[75%]">
+                <p className="text-[#100307] font-medium text-lg">
+                  {`${formData.first_name} הצטרף לסטוץ לפני ${daysAgo} ימים`}
+                </p>
+              </div>
+              <img src={joinTheAppIcon} alt="joinTheAppIcon" />
+            </div>
+
             <div className="w-full">
               <div className="w-full flex items-center justify-center my-2">
                 {isLoading && <span className="loader"></span>}
-              </div>
-              <div className="bg-[#FE316E] w-full p-4 rounded-lg">
-                <p className="text-white font-medium text-lg">
-                  {`${formData.first_name} הצטרף לסטוץ לפני ${daysAgo} ימים`}
-                </p>
               </div>
             </div>
 
