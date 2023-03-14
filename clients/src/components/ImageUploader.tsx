@@ -50,16 +50,17 @@ const ImageUploader: React.FC<Props> = ({
   };
 
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center">
       {saved && (
-        <div className=" bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
-          <label
-            className=" rounded-2xl flex items-center justify-center text-[#100307] text-3xl cursor-pointer"
-            htmlFor="image-upload"
-          >
-            +
-          </label>
-        </div>
+        <label
+          className="relative flex flex-col  w-[335px] h-[180px] border-dashed border-2 border-[#FE316E]  justify-center items-center rounded-xl  text-[#100307] font-thin  text-7xl cursor-pointer p-1"
+          htmlFor="image-upload"
+        >
+          <div className="bg-[#FEF3F6] flex items-center justify-center flex-col  rounded-xl w-full h-full">
+            <p>+</p>
+            <p className="text-sm">העלה או גרור לכאן</p>
+          </div>
+        </label>
       )}
       <input
         type="file"
@@ -81,7 +82,7 @@ const ImageUploader: React.FC<Props> = ({
           />
         </div>
       )}
-      <div className="flex justify-start mt-5 p-4 rounded-lg">
+      <div className="grid grid-cols-3 gap-4 my-5">
         {images &&
           images.map((imageUrl: any, index: number) => (
             <div key={imageUrl} className="relative inline-block">
@@ -94,9 +95,10 @@ const ImageUploader: React.FC<Props> = ({
                 </button>
               )}
 
-              <div className="h-[80px] w-[80px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px]">
+              <div className="h-[120px] w-[105px] bg-white m-1 rounded-2xl border border-[#E2E2E2] flex items-center justify-center cursor-pointer active:translate-y-[1px] overflow-hidden p-1 ">
                 <img
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-cover rounded-xl"
+                  style={{ objectFit: "contain" }}
                   src={imageUrl}
                   alt={imageUrl}
                 />

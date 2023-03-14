@@ -6,6 +6,7 @@ import ImageUploader from "../components/ImageUploader";
 import InputField from "../components/InputField";
 import AgeCalculator from "../components/AgeCalculator";
 import { RootState, useSelector } from "../store";
+import ProfileCompletion from "../components/ProfileCompletion";
 
 const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   const [isEditable, setIsEditable] = useState(false);
@@ -145,8 +146,8 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
               !isEditable && " pointer-events-none  rounded-2xl mt-2"
             } w-full flex flex-col items-center mr-3 p-2 rounded-2xl`}
           >
-            <label className="text-4xl text-gray-600" htmlFor="url">
-              {isEditable && "הוסף תמונת פרופיל"}
+            <label className="text-2xl text-[#100307] mb-2" htmlFor="url">
+              {isEditable && "הוסף/עדכן תמונת פרופיל"}
             </label>
             <div className="">
               <ImageUploader
@@ -159,6 +160,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
           </section>
 
           <section className=" w-full flex flex-col items-start  ml-3  p-4 rounded-2xl">
+            <ProfileCompletion formData={user} />
             {/* Top section  */}
             <div className="w-full">
               <div className="flex w-full justify-between items-start">

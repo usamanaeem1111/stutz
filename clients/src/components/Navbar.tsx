@@ -89,8 +89,6 @@ const Navbar: FC<NavbarProps> = (props) => {
                 )}
               </div>
             </div>
-
-            <ProfileCompletion formData={user} />
           </section>
         )}
 
