@@ -7,6 +7,8 @@ import InputField from "../components/InputField";
 import AgeCalculator from "../components/AgeCalculator";
 import { RootState, useSelector } from "../store";
 import ProfileCompletion from "../components/ProfileCompletion";
+import envelopUnverifiedEmail from "./imgs/envelopUnverified.svg";
+import envelopVerifiedEmail from "./imgs/envelopUnverifiedGreen.svg";
 
 const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   const [isEditable, setIsEditable] = useState(false);
@@ -159,29 +161,17 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
             </div>
           </section>
 
+          {/* <ProfileCompletion formData={user} /> */}
           <section className=" w-full flex flex-col items-start  ml-3  p-4 rounded-2xl">
-            <ProfileCompletion formData={user} />
             {/* Top section  */}
-            <div className="w-full">
-              <div className="flex w-full justify-between items-start">
-                <div className="flex flex-col">
-                  <h3 className="text-gray-700 font-medium ml-3">:נרשמת עם</h3>
-                  <p className="text-gray-500">{formData.email}</p>
-                </div>
 
-                <div className="flex flex-col">
-                  <h3 className="ml-3">:מצב אימות האימייל</h3>
-                  {!formData.email_verified && (
-                    <p className="text-red-500">אנא אמת את האימייל שלך</p>
-                  )}
-                  {formData.email_verified && (
-                    <p className="text-green-500">האימייל מאומת</p>
-                  )}
-                </div>
+            {/* verify email section */}
+            <div className="flex w-full justify-between bg-[#FFF6E8] p-1">
+              <div className="flex  justify-between items-center">
                 {isEditable ? (
                   <div
                     onClick={handleSubmit}
-                    className="py-2 px-4 text-center rounded-2xl border border-black/20 cursor-pointer hover:bg-[#ff5b95] bg-[#6300ffa3] text-white transition-all active:translate-y-[1px]"
+                    className="py-2 px-4 text-center rounded-2xl border border-black/20 cursor-pointer hover:bg-[#ff5b95] bg-[#100307] text-white transition-all active:translate-y-[1px]"
                   >
                     שמור שינויים
                   </div>
@@ -195,6 +185,44 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
                 )}
               </div>
 
+              <div className="flex justify-end  items-center  ">
+                {formData.email_verified ? (
+                  <div className="flex   mr-2 ">
+                    <div className="mr-2">
+                      <p className="font-semibold text-xl">
+                        אנא אמת את האימייל שלך
+                      </p>
+                      <div className="flex text-[#FE316E] text-xl whitespace-no-wrap">
+                        <p className="">{formData.email}</p>
+                        <h3 className="font-medium ml-3 ">:נרשמת עם</h3>
+                      </div>
+                    </div>
+                    <img
+                      width={40}
+                      src={envelopUnverifiedEmail}
+                      alt="envelopUnverifiedEmail"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex   mr-2 ">
+                    <div className="mr-2">
+                      <p className="font-semibold text-xl">!האמייל שלך מאומת</p>
+                      <div className="flex text-[#00C853] text-xl whitespace-no-wrap">
+                        <p className="">{formData.email}</p>
+                        <h3 className="font-medium ml-3 ">:נרשמת עם</h3>
+                      </div>
+                    </div>
+                    <img
+                      width={40}
+                      src={envelopVerifiedEmail}
+                      alt="envelopUnverifiedEmail"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="w-full">
               <div className="w-full flex items-center justify-center my-2">
                 {isLoading && <span className="loader"></span>}
               </div>
