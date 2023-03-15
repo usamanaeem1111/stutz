@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
@@ -9,46 +9,36 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { userActions } from "./store/reducers/user/user.reducer";
 import { RootState } from "./store";
+
 const App = () => {
   // TOOLS
   const dispatch = useDispatch();
 
-  // STATE
-  // const [user, setUser] = useState(null);
+  // PROPS
   const [cookies, setCookie, removeCookie] = useCookies([
     "AuthToken",
     "UserId",
   ]);
-  const [userDataLoaded, setUserDataLoaded] = useState(false);
-  const [authToken, setAuthToken] = useState("dummyToken");
 
   // SELECTORS
   const user = useSelector((state: RootState) => state.user.user);
-
-  useEffect(() => {
-    const authTokenCookie = cookies.AuthToken;
-    setAuthToken(authTokenCookie);
-  }, [cookies.AuthToken]);
-
   const userId = cookies.UserId;
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     try {
       const response = await axios.get("https://api.stutz.co.il/user", {
         params: { userId },
       });
       const _user = response.data;
       dispatch(userActions.setUser({ value: _user }));
-      // setUser(response.data);
-      setUserDataLoaded(true);
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [dispatch, userId]);
 
   useEffect(() => {
     fetchUser();
-  }, [cookies]);
+  }, [fetchUser]);
 
   return (
     <div className="background-image">
@@ -57,53 +47,45 @@ const App = () => {
           <Route
             path={"/"}
             element={
-              userDataLoaded && (
-                <Home
-                  cookies={cookies}
-                  removeCookie={removeCookie}
-                  setCookie={setCookie}
-                />
-              )
+              <Home
+                cookies={cookies}
+                removeCookie={removeCookie}
+                setCookie={setCookie}
+              />
             }
           />
           <Route
             path={"/AdminStats"}
             element={
-              userDataLoaded && (
-                <AdminStats
-                  cookies={cookies}
-                  removeCookie={removeCookie}
-                  setCookie={setCookie}
-                />
-              )
+              <AdminStats
+                cookies={cookies}
+                removeCookie={removeCookie}
+                setCookie={setCookie}
+              />
             }
           />
 
           <Route
             path={`${user === null ? "/" : "/dashboard"}`}
             element={
-              userDataLoaded && (
-                <Dashboard
-                  user={user}
-                  cookies={cookies}
-                  removeCookie={removeCookie}
-                  setCookie={setCookie}
-                />
-              )
+              <Dashboard
+                user={user}
+                cookies={cookies}
+                removeCookie={removeCookie}
+                setCookie={setCookie}
+              />
             }
           />
 
           <Route
             path={`${user === null ? "/" : "/Onboarding"}`}
             element={
-              userDataLoaded && (
-                <OnBoarding
-                  user={user}
-                  cookies={cookies}
-                  removeCookie={removeCookie}
-                  setCookie={setCookie}
-                />
-              )
+              <OnBoarding
+                user={user}
+                cookies={cookies}
+                removeCookie={removeCookie}
+                setCookie={setCookie}
+              />
             }
           />
         </Routes>

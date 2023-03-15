@@ -51,22 +51,29 @@ const Navbar: FC<NavbarProps> = ({
   }, []);
 
   useEffect(() => {
-    socket.on("recive_msg", (data: Message) => {
+    const handleNewMessage = (data: Message) => {
       if (data.from_userId !== user?.user_id) {
         setMessageList((prevList) => [...prevList, data]);
         setNumUnreadMessages(
           (prevNumUnreadMessages) => prevNumUnreadMessages + 1
         );
       }
-    });
+    };
 
-    socket.on("new_match", (userId) => {
+    const handleNewMatch = (userId: any) => {
       setNewMatch(true);
-    });
+    };
+
+    if (socket && user) {
+      socket.on("recive_msg", handleNewMessage);
+      socket.on("new_match", handleNewMatch);
+    }
 
     return () => {
-      socket.off("recive_msg");
-      socket.off("new_match");
+      if (socket && user) {
+        socket.off("recive_msg", handleNewMessage);
+        socket.off("new_match", handleNewMatch);
+      }
     };
   }, [socket, user]);
 
