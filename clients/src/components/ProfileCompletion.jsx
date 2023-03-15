@@ -10,7 +10,7 @@ const ProgressBar = ({ percentCompleted }) => {
 
   const progressBarFillStyles = {
     height: "100%",
-    backgroundColor: percentCompleted < 100 ? "#FE316E" : "#4BAE4F", // use different color for percentages less than 100
+    backgroundColor: percentCompleted < 100 ? "#FE316E" : "#00C853", // use different color for percentages less than 100
     borderRadius: "4px",
     width: `${percentCompleted}%`,
   };

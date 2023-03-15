@@ -53,10 +53,10 @@ const ImageUploader: React.FC<Props> = ({
     <div className="flex flex-col justify-center items-center">
       {saved && (
         <label
-          className="relative flex flex-col w-full h-[180px]  border-dashed border-2 border-[#FE316E]  justify-center items-center rounded-xl  text-[#100307] font-thin  text-7xl cursor-pointer p-1"
+          className="relative flex flex-col w-full h-[180px]  border-dashed border-2 border-[#FE316E] bg-[#FEF3F6]  justify-center items-center rounded-xl  text-[#100307] font-thin  text-7xl cursor-pointer p-1"
           htmlFor="image-upload"
         >
-          <div className="bg-[#FEF3F6] text-[#585858] flex items-center justify-center flex-col  rounded-xl ">
+          <div className=" text-[#585858] flex items-center justify-center flex-col  rounded-xl ">
             <p>+</p>
             <p className="text-sm">העלה או גרור לכאן</p>
           </div>
