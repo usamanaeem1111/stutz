@@ -61,7 +61,7 @@ const AdminStats: React.FC<AdminStatsProps> = ({
   console.log(stats);
 
   return (
-    <div className="bg-black/90 text-white flex flex-col justify-end ">
+    <div className=" text-white flex flex-col justify-end ">
       <Navbar
         formData=""
         minimal={true}

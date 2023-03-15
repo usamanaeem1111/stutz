@@ -51,62 +51,64 @@ const App = () => {
   }, [cookies]);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path={"/"}
-          element={
-            userDataLoaded && (
-              <Home
-                cookies={cookies}
-                removeCookie={removeCookie}
-                setCookie={setCookie}
-              />
-            )
-          }
-        />
-        <Route
-          path={"/AdminStats"}
-          element={
-            userDataLoaded && (
-              <AdminStats
-                cookies={cookies}
-                removeCookie={removeCookie}
-                setCookie={setCookie}
-              />
-            )
-          }
-        />
+    <div className="background-image">
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path={"/"}
+            element={
+              userDataLoaded && (
+                <Home
+                  cookies={cookies}
+                  removeCookie={removeCookie}
+                  setCookie={setCookie}
+                />
+              )
+            }
+          />
+          <Route
+            path={"/AdminStats"}
+            element={
+              userDataLoaded && (
+                <AdminStats
+                  cookies={cookies}
+                  removeCookie={removeCookie}
+                  setCookie={setCookie}
+                />
+              )
+            }
+          />
 
-        <Route
-          path={`${user === null ? "/" : "/dashboard"}`}
-          element={
-            userDataLoaded && (
-              <Dashboard
-                user={user}
-                cookies={cookies}
-                removeCookie={removeCookie}
-                setCookie={setCookie}
-              />
-            )
-          }
-        />
+          <Route
+            path={`${user === null ? "/" : "/dashboard"}`}
+            element={
+              userDataLoaded && (
+                <Dashboard
+                  user={user}
+                  cookies={cookies}
+                  removeCookie={removeCookie}
+                  setCookie={setCookie}
+                />
+              )
+            }
+          />
 
-        <Route
-          path={`${user === null ? "/" : "/Onboarding"}`}
-          element={
-            userDataLoaded && (
-              <OnBoarding
-                user={user}
-                cookies={cookies}
-                removeCookie={removeCookie}
-                setCookie={setCookie}
-              />
-            )
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+          <Route
+            path={`${user === null ? "/" : "/Onboarding"}`}
+            element={
+              userDataLoaded && (
+                <OnBoarding
+                  user={user}
+                  cookies={cookies}
+                  removeCookie={removeCookie}
+                  setCookie={setCookie}
+                />
+              )
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 };
 

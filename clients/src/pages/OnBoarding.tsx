@@ -135,7 +135,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
         cookies={cookies}
       />
 
-      <div className="bg-[#F5F5F5] ">
+      <div className="">
         <div className="flex items-center justify-center max-w-[1150px] w-full mx-auto">
           <h2 className="text-[72px] font-bold">הפרופיל שלי</h2>
         </div>

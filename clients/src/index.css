@@ -10,7 +10,14 @@ html {
 
 body {
   text-align: center;
-  background: #faf7f8;
+}
+
+.background-image {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+    url("../public/backgroundImage.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 input::-webkit-inner-spin-button,

@@ -71,7 +71,7 @@ const Navbar: FC<NavbarProps> = (props) => {
   };
 
   return (
-    <div className="bg-gray-100 ">
+    <div className=" ">
       <nav className="container mx-auto  py-3 w-full flex items-start justify-end">
         {user && (
           <section className="flex  justify-around w-full">
