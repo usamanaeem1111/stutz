@@ -5,6 +5,7 @@ import io from "socket.io-client";
 
 import envelopIcon from "./imgs/envelopeIcon.svg";
 import siteLogo from "./imgs/logo.png";
+import MessageDropdown from "./MessageDropdown";
 
 interface NavbarProps {
   minimal: boolean;
@@ -17,10 +18,13 @@ interface NavbarProps {
   cookies: any;
 }
 
-interface Message {
+type Message = {
+  timestamp: string;
   from_userId: string;
+  to_userId: string;
   message: string;
-}
+  currentUser: boolean;
+};
 
 const Navbar: FC<NavbarProps> = (props) => {
   const [newMessage, setNewMessage] = useState(false);
@@ -28,6 +32,7 @@ const Navbar: FC<NavbarProps> = (props) => {
   const [numUnreadMessages, setNumUnreadMessages] = useState(0);
   const [notificationClicked, setNotificationClicked] = useState(false);
   const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
+  const [messageList, setMessageList] = useState<Message[]>([]);
 
   const {
     minimal,
@@ -47,7 +52,7 @@ const Navbar: FC<NavbarProps> = (props) => {
     socket.on("recive_msg", (data: Message) => {
       if (data.from_userId !== user?.user_id) {
         console.log("Message received:", data);
-        setCurrentMessage(data);
+        setMessageList((prevList) => [...prevList, data]);
         setNumUnreadMessages(
           (prevNumUnreadMessages) => prevNumUnreadMessages + 1
         );
@@ -70,6 +75,10 @@ const Navbar: FC<NavbarProps> = (props) => {
     setNumUnreadMessages(0);
     setNewMatch(false);
     setNotificationClicked(true);
+  };
+
+  const handleEnvelopIconClick = () => {
+    setNewMessage(false);
   };
 
   const handleClick = () => {
@@ -99,14 +108,7 @@ const Navbar: FC<NavbarProps> = (props) => {
                 alt=""
               />
 
-              <div className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center m-1 relative">
-                <img src={envelopIcon} alt="envelopIcon" />
-                {numUnreadMessages > 0 && (
-                  <p className="absolute top-0 right-0 h-4 w-4 rounded-full bg-[#FE316E] text-white text-center text-xs flex items-center justify-center">
-                    {numUnreadMessages}
-                  </p>
-                )}
-              </div>
+              <MessageDropdown messages={messageList} />
             </div>
           </section>
         )}
@@ -166,10 +168,17 @@ const Navbar: FC<NavbarProps> = (props) => {
       </nav>
 
       {currentMessage && (
-        <div className="fixed bottom-0 left-0 right-0 p-3 bg-white text-gray-800 border-t-2 border-[#FE316E]">
-          <p>You have a new message from {currentMessage.from_userId}</p>
+        <div className="fixed bottom-0 left-0 right-0 p-3 bg-gray-100 text-gray-800 shadow-lg z-[999]">
+          <p className="text-pink-500 font-bold mb-1">
+            You have a new message from {currentMessage.from_userId}
+          </p>
           <p>{currentMessage.message}</p>
-          <button onClick={() => setCurrentMessage(null)}>Close</button>
+          <button
+            className="bg-pink-500 text-white px-4 py-2 rounded mt-2 hover:bg-pink-600"
+            onClick={() => setCurrentMessage(null)}
+          >
+            Close
+          </button>
         </div>
       )}
 
@@ -177,6 +186,26 @@ const Navbar: FC<NavbarProps> = (props) => {
         <div className="fixed bottom-0 left-0 right-0 p-3 bg-white text-gray-800 border-t-2 border-[#FE316E]">
           You have a new match
           <button onClick={handleNotificationClose}>Close</button>
+        </div>
+      )}
+
+      {newMessage && (
+        <div className="fixed bottom-0 left-0 right-0 p-3 bg-gray-100 text-gray-800 shadow-lg z-[999]">
+          <h2 className="text-pink-500 font-bold mb-2">New Messages</h2>
+          <ul className="space-y-2">
+            {messageList.map((message) => (
+              <li key={message.from_userId}>
+                <p className="font-bold">{message.from_userId}</p>
+                <p>{message.message}</p>
+              </li>
+            ))}
+          </ul>
+          <button
+            className="bg-pink-500 text-white px-4 py-2 rounded mt-2 hover:bg-pink-600"
+            onClick={() => setNewMessage(false)}
+          >
+            Close
+          </button>
         </div>
       )}
     </div>
