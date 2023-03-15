@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { RootState, useSelector } from "../store";
 import io from "socket.io-client";
@@ -26,32 +26,33 @@ type Message = {
   currentUser: boolean;
 };
 
-const Navbar: FC<NavbarProps> = (props) => {
+const Navbar: FC<NavbarProps> = ({
+  minimal,
+  setShowModal,
+  showModal,
+  authToken,
+  setIsSignUp,
+  formData,
+  removeCookie,
+  cookies,
+}) => {
   const [newMessage, setNewMessage] = useState(false);
   const [newMatch, setNewMatch] = useState(false);
   const [numUnreadMessages, setNumUnreadMessages] = useState(0);
-  const [notificationClicked, setNotificationClicked] = useState(false);
   const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
   const [messageList, setMessageList] = useState<Message[]>([]);
-
-  const {
-    minimal,
-    setShowModal,
-    showModal,
-    authToken,
-    setIsSignUp,
-    formData,
-    removeCookie,
-    cookies,
-  } = props;
 
   const socket = io("https://api.stutz.co.il");
   const user = useSelector((state: RootState) => state.user.user);
 
+  const handleNotificationClose = useCallback(() => {
+    setNumUnreadMessages(0);
+    setNewMatch(false);
+  }, []);
+
   useEffect(() => {
     socket.on("recive_msg", (data: Message) => {
       if (data.from_userId !== user?.user_id) {
-        console.log("Message received:", data);
         setMessageList((prevList) => [...prevList, data]);
         setNumUnreadMessages(
           (prevNumUnreadMessages) => prevNumUnreadMessages + 1
@@ -60,41 +61,32 @@ const Navbar: FC<NavbarProps> = (props) => {
     });
 
     socket.on("new_match", (userId) => {
-      console.log(`New match found for user ${userId}`);
       setNewMatch(true);
     });
 
-    // Remove event listeners when component is unmounted
     return () => {
       socket.off("recive_msg");
       socket.off("new_match");
     };
   }, [socket, user]);
 
-  const handleNotificationClose = () => {
-    setNumUnreadMessages(0);
-    setNewMatch(false);
-    setNotificationClicked(true);
-  };
-
-  const handleEnvelopIconClick = () => {
+  const handleEnvelopIconClick = useCallback(() => {
     setNewMessage(false);
-  };
+  }, []);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setShowModal(true);
     if (setIsSignUp) {
       setIsSignUp(false);
     }
-  };
+  }, [setIsSignUp, setShowModal]);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     removeCookie("UserId", cookies.UserId);
     removeCookie("AuthToken", cookies.AuthToken);
-    console.log("Loging you out ");
     localStorage.removeItem("formData");
     window.location.href = "/";
-  };
+  }, [cookies.UserId, cookies.AuthToken, removeCookie]);
 
   return (
     <div className=" ">
@@ -104,7 +96,7 @@ const Navbar: FC<NavbarProps> = (props) => {
             <div className="flex">
               <img
                 className="h-12 w-12 rounded-full shadow-sm shadow-black/50 m-1"
-                src={user.images[0] ?? ""}
+                src={user?.images?.[0] ?? ""}
                 alt=""
               />
 
