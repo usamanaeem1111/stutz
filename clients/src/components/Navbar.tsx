@@ -140,7 +140,9 @@ const Navbar: FC<NavbarProps> = (props) => {
         </div>
 
         <div className="w-[300px]">
-          <img src={siteLogo} alt="siteLogo" />
+          <Link to="/">
+            <img src={siteLogo} alt="siteLogo" />
+          </Link>
         </div>
       </nav>
 
