@@ -1,11 +1,10 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { RootState, useSelector } from "../store";
 import io from "socket.io-client";
 
 import envelopIcon from "./imgs/envelopeIcon.svg";
 import siteLogo from "./imgs/logo.png";
-import ProfileCompletion from "./ProfileCompletion";
 
 interface NavbarProps {
   minimal: boolean;
@@ -18,9 +17,17 @@ interface NavbarProps {
   cookies: any;
 }
 
+interface Message {
+  from_userId: string;
+  message: string;
+}
+
 const Navbar: FC<NavbarProps> = (props) => {
   const [newMessage, setNewMessage] = useState(false);
   const [newMatch, setNewMatch] = useState(false);
+  const [numUnreadMessages, setNumUnreadMessages] = useState(0);
+  const [notificationClicked, setNotificationClicked] = useState(false);
+  const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
 
   const {
     minimal,
@@ -36,23 +43,33 @@ const Navbar: FC<NavbarProps> = (props) => {
   const socket = io("https://api.stutz.co.il");
   const user = useSelector((state: RootState) => state.user.user);
 
-  socket.on("recive_msg", (data) => {
-    // Check if the message is not sent by the current user
-    // console.log(user, data);
-    if (data.from_userId !== user?.user_id) {
-      console.log("Message received:", data);
-      setNewMessage(true);
-    }
-  });
+  useEffect(() => {
+    socket.on("recive_msg", (data: Message) => {
+      if (data.from_userId !== user?.user_id) {
+        console.log("Message received:", data);
+        setCurrentMessage(data);
+        setNumUnreadMessages(
+          (prevNumUnreadMessages) => prevNumUnreadMessages + 1
+        );
+      }
+    });
 
-  socket.on("new_match", (userId) => {
-    console.log(`New match found for user ${userId}`);
-    setNewMatch(true);
-  });
+    socket.on("new_match", (userId) => {
+      console.log(`New match found for user ${userId}`);
+      setNewMatch(true);
+    });
+
+    // Remove event listeners when component is unmounted
+    return () => {
+      socket.off("recive_msg");
+      socket.off("new_match");
+    };
+  }, [socket, user]);
 
   const handleNotificationClose = () => {
-    setNewMessage(false);
+    setNumUnreadMessages(0);
     setNewMatch(false);
+    setNotificationClicked(true);
   };
 
   const handleClick = () => {
@@ -84,8 +101,10 @@ const Navbar: FC<NavbarProps> = (props) => {
 
               <div className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center m-1 relative">
                 <img src={envelopIcon} alt="envelopIcon" />
-                {newMessage && (
-                  <p className="absolute top-0 right-0 h-3 w-3 rounded-full bg-[#FE316E]"></p>
+                {numUnreadMessages > 0 && (
+                  <p className="absolute top-0 right-0 h-4 w-4 rounded-full bg-[#FE316E] text-white text-center text-xs flex items-center justify-center">
+                    {numUnreadMessages}
+                  </p>
                 )}
               </div>
             </div>
@@ -98,7 +117,7 @@ const Navbar: FC<NavbarProps> = (props) => {
               to="/dashboard"
               className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
             >
-              הודעות
+              הודעות{numUnreadMessages > 0 ? ` (${numUnreadMessages})` : ""}
             </Link>
 
             <Link
@@ -146,10 +165,11 @@ const Navbar: FC<NavbarProps> = (props) => {
         </div>
       </nav>
 
-      {newMessage && (
+      {currentMessage && (
         <div className="fixed bottom-0 left-0 right-0 p-3 bg-white text-gray-800 border-t-2 border-[#FE316E]">
-          You have a new message
-          <button onClick={handleNotificationClose}>Close</button>
+          <p>You have a new message from {currentMessage.from_userId}</p>
+          <p>{currentMessage.message}</p>
+          <button onClick={() => setCurrentMessage(null)}>Close</button>
         </div>
       )}
 
