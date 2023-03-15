@@ -1,6 +1,10 @@
 import React from "react";
 
-const ProgressBar = ({ percentCompleted }) => {
+interface ProgressBarProps {
+  percentCompleted: number;
+}
+
+const ProgressBar: React.FC<ProgressBarProps> = ({ percentCompleted }) => {
   const progressBarStyles = {
     height: "8px",
     width: "100%",
@@ -22,7 +26,11 @@ const ProgressBar = ({ percentCompleted }) => {
   );
 };
 
-const ProfileCompletion = ({ formData }) => {
+interface ProfileCompletionProps {
+  formData: any;
+}
+
+const ProfileCompletion: React.FC<ProfileCompletionProps> = ({ formData }) => {
   const totalFields = 14; // total number of fields in the form
   let filledFields = 0;
 
@@ -35,7 +43,9 @@ const ProfileCompletion = ({ formData }) => {
   });
 
   // calculate the percentage completed
-  const completionPercentage = parseInt((filledFields / totalFields) * 100);
+  const completionPercentage = parseInt(
+    String((filledFields / totalFields) * 100)
+  );
 
   return (
     <div className="w-64">

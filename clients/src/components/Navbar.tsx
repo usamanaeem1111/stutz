@@ -6,6 +6,8 @@ import io from "socket.io-client";
 import envelopIcon from "./imgs/envelopeIcon.svg";
 import siteLogo from "./imgs/logo.png";
 import MessageDropdown from "./MessageDropdown";
+import NavigationLinks from "./NavigationLinks";
+import UserActions from "./UserActions";
 
 interface NavbarProps {
   minimal: boolean;
@@ -106,57 +108,21 @@ const Navbar: FC<NavbarProps> = ({
                 src={user?.images?.[0] ?? ""}
                 alt=""
               />
-
               <MessageDropdown messages={messageList} />
             </div>
           </section>
         )}
 
         <div className="flex w-full justify-between items-center">
-          <div className={`${user === null && "hidden"}`}>
-            <Link
-              to="/dashboard"
-              className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
-            >
-              הודעות{numUnreadMessages > 0 ? ` (${numUnreadMessages})` : ""}
-            </Link>
+          <NavigationLinks numUnreadMessages={numUnreadMessages} />
 
-            <Link
-              to="/onboarding"
-              className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
-            >
-              הפרופיל שלי
-            </Link>
-
-            <Link
-              to="/adminStats"
-              className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
-            >
-              AdminStats
-            </Link>
-          </div>
-
-          <div className="mr-3">
-            {!authToken && !minimal && (
-              <button
-                disabled={showModal}
-                onClick={handleClick}
-                className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
-              >
-                התחבר
-              </button>
-            )}
-
-            {!authToken && minimal && (
-              <button
-                disabled={showModal}
-                onClick={handleLogout}
-                className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
-              >
-                התנתק
-              </button>
-            )}
-          </div>
+          <UserActions
+            authToken={authToken}
+            minimal={minimal}
+            showModal={showModal}
+            handleClick={handleClick}
+            handleLogout={handleLogout}
+          />
         </div>
 
         <div className="w-[300px]">

@@ -17,30 +17,27 @@ function ChatHeader({ user }: Props) {
     window.location.reload();
   };
 
-  if (!user) {
-    return <p>Loading...</p>;
-  }
-
   return (
-    <div className="flex p-5 items-center justify-between bg-gradient-to-br from-[#fe3072] to-[#ff5940]/80 backdrop-blur-[7px]">
-      <div className="">
-        <div className="max-w-[150px] h-[150px] rounded-full overflow-hidden ">
+    <div className="flex p-5 items-center justify-between bg-gradient-to-br from-pink-500 to-orange-500/80 backdrop-blur-lg rounded-lg">
+      <div className="flex items-center space-x-4">
+        <div className="w-24 h-24 rounded-full overflow-hidden">
           <img
-            className="shadow-lg"
+            className="object-cover w-full h-full"
             src={user.images[0]}
             alt={"photo of " + user.first_name}
           />
         </div>
-        <h3 className="text-white capitalize font-bold py-2">
-          {"photo of " + user.first_name}
-        </h3>
+        <div>
+          <h3 className="text-lg font-bold text-white">{user.first_name}</h3>
+          <p className="text-sm text-gray-300">{user.bio}</p>
+        </div>
       </div>
-      <i
-        className="text-white font-semibold rounded-md border border-white/50 py-2 px-4 active:translate-y-[1px] cursor-pointer"
+      <button
+        className="px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
         onClick={handleLogout}
       >
         Log Out
-      </i>
+      </button>
     </div>
   );
 }
