@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  clearNotifications,
-  removeNotification,
-} from "../store/reducers/notification/notification.reducer";
+import { removeNotification } from "../store/reducers/notification/notification.reducer";
 import { RootState } from "../store";
 
 interface ChatMessage {
@@ -30,21 +27,19 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
   );
   const dispatch = useDispatch();
 
-  const counts: { [key: string]: number } = {};
-  messages.forEach((message) => {
-    const userId = message.from_userId;
-    if (counts[userId]) {
-      counts[userId]++;
+  const options: Option[] = messages.reduce((acc, curr) => {
+    const index = acc.findIndex((option) => option.value === curr.from_userId);
+    if (index === -1) {
+      acc.push({
+        label: curr.from_userId,
+        value: curr.from_userId,
+        count: 1,
+      });
     } else {
-      counts[userId] = 1;
+      acc[index].count++;
     }
-  });
-
-  const options: Option[] = Object.keys(counts).map((userId) => ({
-    label: userId,
-    value: userId,
-    count: counts[userId],
-  }));
+    return acc;
+  }, [] as Option[]);
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState("");
@@ -52,55 +47,52 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
   const handleClick = (optionValue: string) => {
     setSelectedOption(optionValue);
     setShowDropdown(false);
-    dispatch(clearNotifications());
   };
 
   return (
-    <div className="relative z-50">
+    <div className="relative z-[99]">
       <button
         type="button"
-        className="relative flex items-center bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        className="flex items-center bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         onClick={() => setShowDropdown(!showDropdown)}
       >
         <span>Notifications</span>
-        {notifications.length > 0 && (
-          <span className="absolute top-0 right-0 -mt-1 -mr-1 flex items-center justify-center bg-[#FE316E] text-white text-xs rounded-full w-5 h-5">
+        {options.length > 0 && notifications.length > 0 && (
+          <span className="ml-2 inline-block bg-[#FE316E] text-white text-xs rounded-full px-2 py-1">
+            {/* {options.reduce((total, option) => total + option.count, 0)} */}
             {notifications.length}
           </span>
         )}
       </button>
       {showDropdown && (
-        <div className="absolute top-full  mt-2 w-80 bg-white shadow-md border rounded-lg overflow-hidden">
-          <div className="px-4 py-3 font-medium border-b border-gray-200 text-gray-700">
-            Recent notifications
-          </div>
-          {options.map((option) => (
-            <div
-              key={option.value}
-              className="flex items-center px-4 py-3 border-b hover:bg-gray-100 cursor-pointer"
-              onClick={() => {
-                handleClick(option.value);
-              }}
-            >
-              <div className="flex-shrink-0">
-                <img
-                  className="h-8 w-8 rounded-full object-cover"
-                  src={`https://i.pravatar.cc/100?u=${option.value}`}
-                  alt=""
-                />
-              </div>
-              <div className="ml-3">
-                <div className="font-semibold text-gray-800">
-                  ({option.count}) New Messages from {option.label}
+        <div className="absolute  mt-2 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+          <div className="py-1">
+            <div className="text-gray-700 px-4 py-3 font-medium border-b border-gray-200">
+              Recent notifications
+            </div>
+            {notifications.map((notification) => (
+              <div
+                key={notification.id}
+                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                onClick={() => {
+                  dispatch(removeNotification(notification.id));
+                  handleClick(notification.id.toString());
+                }}
+              >
+                <div className="font-medium text-gray-900">
+                  New Message From : {notification.from_userId}{" "}
+                  {notification.message}
                 </div>
               </div>
-            </div>
-          ))}
-          {options.length === 0 && (
-            <div className="px-4 py-2 text-gray-500 text-sm">
-              You have no new notifications
-            </div>
-          )}
+            ))}
+            {notifications.length === 0 && (
+              <div className="px-4 py-2">
+                <div className="text-gray-500 text-sm">
+                  You have no new notifications
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
