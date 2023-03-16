@@ -75,7 +75,7 @@ const ImageUploader: React.FC<Props> = ({
       {!isEditable && images && images.length > 0 && (
         <div className="bg-white rounded-md shadow-md overflow-hidden max-w-[1080px] max-h-[1350px] mx-auto my-5">
           <img
-            className="max-w-[300px] object-contain"
+            className="max-w-[300px] max-h-[300px] object-contain"
             src={images[0]}
             alt={images[0]}
           />

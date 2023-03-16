@@ -157,12 +157,13 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
           <section
             className={`${
               !isEditable && " pointer-events-none  rounded-2xl mt-2"
-            } w-full flex flex-col items-center mr-3 p-2 rounded-2xl`}
+            } w-full flex flex-col items-center  mr-3  rounded-2xl `}
           >
-            <label className="text-2xl text-[#100307] mb-2" htmlFor="url">
-              {isEditable && "הוסף/עדכן תמונת פרופיל"}
-            </label>
-            <div className="">
+            <div className=" h-full">
+              <label className="text-2xl text-[#100307] mb-2" htmlFor="url">
+                {isEditable && "הוסף/עדכן תמונת פרופיל"}
+              </label>
+
               <ImageUploader
                 saved={isEditable}
                 images={formData.images}
