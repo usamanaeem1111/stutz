@@ -72,11 +72,10 @@ const ImageUploader: React.FC<Props> = ({
         aria-label="בחר קבצים"
         style={{ display: "none" }}
       />
-
       {!isEditable && images && images.length > 0 && (
         <div className="bg-white rounded-md shadow-md overflow-hidden max-w-[1080px] max-h-[1350px] mx-auto my-5">
           <img
-            className="h-full w-full object-contain"
+            className="max-w-[300px] object-contain"
             src={images[0]}
             alt={images[0]}
           />

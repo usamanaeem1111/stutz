@@ -10,6 +10,9 @@ import ProfileCompletion from "../components/ProfileCompletion";
 import envelopUnverifiedEmail from "./imgs/envelopUnverified.svg";
 import envelopVerifiedEmail from "./imgs/envelopUnverifiedGreen.svg";
 import joinTheAppIcon from "./imgs/joinTheAppIcon.svg";
+import ageIcon from "./imgs/ageIcon.svg";
+import locationIcon from "./imgs/LocationIcon.svg";
+import genderWoman from "./imgs/genderWoman.svg";
 
 const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   const [isEditable, setIsEditable] = useState(false);
@@ -98,21 +101,14 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
     }));
   };
 
-  function getAge(dateOfBirth: any) {
-    if (!dateOfBirth) {
-      return;
+  function getAge(dateString: any) {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return "N/A";
     }
-    const today = new Date();
-    const birthDate = new Date(dateOfBirth);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const monthDiff = today.getMonth() - birthDate.getMonth();
-    if (
-      monthDiff < 0 ||
-      (monthDiff === 0 && today.getDate() < birthDate.getDate())
-    ) {
-      age--;
-    }
-    return age;
+    const ageInMilliseconds = Date.now() - date.getTime();
+    const ageDate = new Date(ageInMilliseconds);
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
   }
 
   const signUpDate = new Date(formData.signUpDate);
@@ -162,7 +158,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
             </div>
           </section>
 
-          <section className=" min-w-fit flex flex-col items-start  rounded-2xl bg-white shadow-lg overflow-hidden">
+          <section className=" max-w-[850px] w-full flex flex-col items-start  rounded-2xl bg-white shadow-lg overflow-hidden">
             {/* Top section  */}
 
             {/* verify email section */}
@@ -240,164 +236,212 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
               </div>
             </div>
 
-            <div className="p-4">
-              {/* name field */}
-              <div
-                className={`${
-                  !isEditable && "pointer-events-none rounded-2xl mt-2"
-                } w-full text-right `}
-              >
-                {isEditable ? (
+            <div className="p-4 flex flex-col justify-end w-full">
+              {/* OnSaved Info*/}
+              {!isEditable && (
+                <div>
+                  {/* Name section  */}
+                  <h2 className="text-4xl font-bold text-[42px]">
+                    (
+                    {formData.gender_identity === ""
+                      ? ""
+                      : formData.gender_identity}
+                    ) {formData.first_name}
+                  </h2>
+
+                  {/* user Age */}
+                  <div className="flex w-full  my-2 justify-end py-1 text-xl">
+                    <h2>{getAge(formData.dob)}</h2>
+                    <img
+                      className=" h-[30px] ml-2"
+                      src={ageIcon}
+                      alt="ageIcon"
+                    />
+                  </div>
+
+                  {/* User City */}
+                  <div className="flex w-full  my-2 justify-end py-1 text-xl">
+                    <h2>{getAge(formData.city)}</h2>
+                    <img
+                      className=" h-[30px] ml-2"
+                      src={locationIcon}
+                      alt="locationIcon"
+                    />
+                  </div>
+
+                  {/* User Gender  */}
+                  <div className="flex w-full  my-2 justify-end py-1 text-xl">
+                    <h2>{formData.gender_identity}</h2>
+                    <img
+                      className="w-[30px] ml-2"
+                      src={genderWoman}
+                      alt="genderWoman"
+                    />
+                  </div>
+
+                  {/* About the user */}
+                  <div className="flex flex-col p-2 my-2">
+                    <h2 className="text-xl">על עצמי</h2>
+                    <p>{formData.about}</p>
+                  </div>
+
+                  {/* Gender Intrest  */}
+                  <div className="flex flex-col bg-[#F5EFFC] border-r-4 border-[#D1A8FF] p-2">
+                    <h2 className="text-xl">מעוניין להכיר</h2>
+                    <p>{formData.gender_interest}</p>
+                  </div>
+                </div>
+              )}
+
+              {/* name field editable*/}
+              {isEditable && (
+                <div className={`${"rounded-2xl mt-2"} w-full text-right `}>
                   <InputField
                     label="שם"
                     name="first_name"
                     value={formData.first_name}
                     onChange={handleChange}
                   />
-                ) : (
-                  <h2 className="text-4xl font-bold text-[42px]">
-                    (
-                    {formData.gender_identity === ""
-                      ? "hey you"
-                      : formData.gender_identity}
-                    ) {formData.first_name}
-                  </h2>
-                )}
-              </div>
+                </div>
+              )}
 
               {/* intrest and age info section */}
               <div className="flex items-stretch justify-between">
                 <div className="flex flex-col items-stretch justify-center">
                   {/* User Gender */}
-                  <div
-                    className={`${
-                      !isEditable &&
-                      " pointer-events-none bg-[grey]/20 rounded-2xl "
-                    } w-full text-right   h-[100px] my-2 pl-3`}
-                  >
-                    <label className="text-lg text-[#656565]">מין</label>
-                    <div className="onBoarding flex w-full justify-end mb-4">
-                      <input
-                        className=""
-                        id="man-gender-identity"
-                        type="radio"
-                        name="gender_identity"
-                        value="man"
-                        onChange={handleChange}
-                        checked={formData.gender_identity === "man"}
-                      />
-                      <label
-                        className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
-                        htmlFor="man-gender-identity"
-                      >
-                        זכר
-                      </label>
-                      <input
-                        className=""
-                        id="woman-gender-identity"
-                        type="radio"
-                        name="gender_identity"
-                        value="woman"
-                        onChange={handleChange}
-                        checked={formData.gender_identity === "woman"}
-                      />
-                      <label
-                        className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
-                        htmlFor="woman-gender-identity"
-                      >
-                        נקבה
-                      </label>
-                      <input
-                        className=""
-                        id="more-gender-identity"
-                        type="radio"
-                        name="gender_identity"
-                        value="more"
-                        onChange={handleChange}
-                        checked={formData.gender_identity === "more"}
-                      />
-                      <label
-                        className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
-                        htmlFor="more-gender-identity"
-                      >
-                        חייזר
-                      </label>
+                  {isEditable && (
+                    <div
+                      className={`${
+                        !isEditable &&
+                        " pointer-events-none bg-[grey]/20 rounded-2xl "
+                      } w-full text-right   h-[100px] my-2 pl-3`}
+                    >
+                      <label className="text-lg text-[#656565]">מין</label>
+                      <div className="onBoarding flex w-full justify-end mb-4">
+                        <input
+                          className=""
+                          id="man-gender-identity"
+                          type="radio"
+                          name="gender_identity"
+                          value="man"
+                          onChange={handleChange}
+                          checked={formData.gender_identity === "man"}
+                        />
+                        <label
+                          className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                          htmlFor="man-gender-identity"
+                        >
+                          זכר
+                        </label>
+                        <input
+                          className=""
+                          id="woman-gender-identity"
+                          type="radio"
+                          name="gender_identity"
+                          value="woman"
+                          onChange={handleChange}
+                          checked={formData.gender_identity === "woman"}
+                        />
+                        <label
+                          className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                          htmlFor="woman-gender-identity"
+                        >
+                          נקבה
+                        </label>
+                        <input
+                          className=""
+                          id="more-gender-identity"
+                          type="radio"
+                          name="gender_identity"
+                          value="more"
+                          onChange={handleChange}
+                          checked={formData.gender_identity === "more"}
+                        />
+                        <label
+                          className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                          htmlFor="more-gender-identity"
+                        >
+                          חייזר
+                        </label>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* User Intrest */}
-                  <div
-                    className={`${
-                      !isEditable &&
-                      " pointer-events-none bg-[grey]/20 rounded-2xl"
-                    } w-full text-right  h-[100px] my-2 pl-3`}
-                  >
-                    <label className="text-lg text-[#656565]">
-                      מעוניין להכיר
-                    </label>
+                  {isEditable && (
+                    <div
+                      className={`${
+                        !isEditable &&
+                        " pointer-events-none bg-[grey]/20 rounded-2xl"
+                      } w-full text-right  h-[100px] my-2 pl-3`}
+                    >
+                      <label className="text-lg text-[#656565]">
+                        מעוניין להכיר
+                      </label>
 
-                    <div className="onBoarding flex w-full justify-end mb-4">
-                      <input
-                        className=""
-                        id="man-gender-interest"
-                        type="radio"
-                        name="gender_interest"
-                        value="man"
-                        onChange={handleChange}
-                        checked={formData.gender_interest === "man"}
-                      />
-                      <label
-                        className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
-                        htmlFor="man-gender-interest"
-                      >
-                        בחורים
-                      </label>
-                      <input
-                        className=""
-                        id="woman-gender-interest"
-                        type="radio"
-                        name="gender_interest"
-                        value="woman"
-                        onChange={handleChange}
-                        checked={formData.gender_interest === "woman"}
-                      />
-                      <label
-                        className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
-                        htmlFor="woman-gender-interest"
-                      >
-                        בחורות
-                      </label>
-                      <input
-                        className=""
-                        id="everyone-gender-interest"
-                        type="radio"
-                        name="gender_interest"
-                        value="everyone"
-                        onChange={handleChange}
-                        checked={formData.gender_interest === "everyone"}
-                      />
-                      <label
-                        className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
-                        htmlFor="everyone-gender-interest"
-                      >
-                        חייזרים
-                      </label>
+                      <div className="onBoarding flex w-full justify-end mb-4">
+                        <input
+                          className=""
+                          id="man-gender-interest"
+                          type="radio"
+                          name="gender_interest"
+                          value="man"
+                          onChange={handleChange}
+                          checked={formData.gender_interest === "man"}
+                        />
+                        <label
+                          className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                          htmlFor="man-gender-interest"
+                        >
+                          בחורים
+                        </label>
+                        <input
+                          className=""
+                          id="woman-gender-interest"
+                          type="radio"
+                          name="gender_interest"
+                          value="woman"
+                          onChange={handleChange}
+                          checked={formData.gender_interest === "woman"}
+                        />
+                        <label
+                          className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                          htmlFor="woman-gender-interest"
+                        >
+                          בחורות
+                        </label>
+                        <input
+                          className=""
+                          id="everyone-gender-interest"
+                          type="radio"
+                          name="gender_interest"
+                          value="everyone"
+                          onChange={handleChange}
+                          checked={formData.gender_interest === "everyone"}
+                        />
+                        <label
+                          className="border-2 border-[#E2E2E2] p-2 rounded-3xl min-w-[100px]  mt-1 text-center m-1 "
+                          htmlFor="everyone-gender-interest"
+                        >
+                          חייזרים
+                        </label>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
 
                 <div className="flex flex-col items-stretch   ">
                   {/* Date Of birth */}
-                  <div
-                    className={`${
-                      !isEditable &&
-                      "pointer-events-none rounded-2xl mt-2 flex w-full justify-start flex-row-reverse"
-                    } w-full text-right  h-[100px] my-2 pl-3`}
-                  >
-                    <label className="text-lg text-[#656565] ">
-                      {isEditable ? "תאריך לידה" : ":גיל"}
-                    </label>
-                    {isEditable ? (
+                  {isEditable && (
+                    <div
+                      className={`${
+                        !isEditable &&
+                        "pointer-events-none rounded-2xl mt-2 flex w-full justify-start flex-row-reverse"
+                      } w-full text-right  h-[100px] my-2 pl-3`}
+                    >
+                      <label className="text-lg text-[#656565] ">
+                        תאריך לידה
+                      </label>
                       <input
                         className="border-2 border-[#E2E2E2] p-2 rounded-3xl w-full mt-1 text-right m-1"
                         id="dob"
@@ -409,10 +453,8 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
                         value={formData.dob}
                         onChange={handleChange}
                       />
-                    ) : (
-                      <p className="text-2xl">{getAge(formData.dob)}</p>
-                    )}
-                  </div>
+                    </div>
+                  )}
 
                   {/* city */}
                   <div
@@ -421,37 +463,32 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
                       "pointer-events-none rounded-2xl flex w-full justify-start flex-row-reverse"
                     } w-full text-right  h-[100px] my-2 pl-3`}
                   >
-                    <label className="text-[#656565] w-[150px] text-2xl ">
-                      {isEditable ? "" : ":עיר"}
-                    </label>
-                    {isEditable ? (
+                    {isEditable && (
                       <InputField
                         label="עיר"
                         name="city"
                         value={formData.city}
                         onChange={handleChange}
                       />
-                    ) : (
-                      <h2 className="font-bold text-2xl">{formData.city}</h2>
                     )}
                   </div>
                 </div>
               </div>
 
               {/* about me */}
-              <div
-                className={`${
-                  !isEditable &&
-                  "pointer-events-none rounded-2xl mt-2  w-full justify-start flex-row-reverse"
-                } w-full text-right p-2 m-1`}
-              >
-                <label
-                  htmlFor="about"
-                  className="text-2xl text-gray-600 mt-4 block mb-2"
+              {isEditable && (
+                <div
+                  className={`${
+                    !isEditable &&
+                    "pointer-events-none rounded-2xl mt-2  w-full justify-start flex-row-reverse"
+                  } w-full text-right p-2 m-1`}
                 >
-                  {":על עצמי"}
-                </label>
-                {isEditable ? (
+                  <label
+                    htmlFor="about"
+                    className="text-2xl text-gray-600 mt-4 block mb-2"
+                  >
+                    {":על עצמי"}
+                  </label>
                   <textarea
                     id="about"
                     name="about"
@@ -460,10 +497,8 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
                     className="border-2 border-gray-300 p-2 rounded-lg w-full h-32 resize-none mb-3 block  text-right"
                     placeholder="...אני אוהב לטייל"
                   ></textarea>
-                ) : (
-                  <h2 className="text-xl">{formData.about}</h2>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </section>
         </form>
