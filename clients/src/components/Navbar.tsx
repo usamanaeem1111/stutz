@@ -49,6 +49,8 @@ const Navbar: FC<NavbarProps> = ({
   const socket = io("https://api.stutz.co.il");
   const user = useSelector((state: RootState) => state.user.user);
 
+  const [socketCalls, setSocketCalls] = useState(0);
+
   const handleNotificationClose = useCallback(() => {
     setNumUnreadMessages(0);
   }, []);
@@ -69,6 +71,8 @@ const Navbar: FC<NavbarProps> = ({
             from_userId: data.from_userId,
           })
         );
+
+        setSocketCalls((prevSocketCalls) => prevSocketCalls + 1);
       }
     };
 
@@ -143,6 +147,7 @@ const Navbar: FC<NavbarProps> = ({
           </Link>
         </div>
       </div>
+      <p>{socketCalls} total socket calls</p>
 
       {currentMessage && (
         <div className="fixed bottom-0 left-0 right-0 p-3 bg-gray-100 text-gray-800 shadow-lg z-[999]">

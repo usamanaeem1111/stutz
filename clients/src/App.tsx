@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
@@ -13,6 +13,8 @@ import { RootState } from "./store";
 const App = () => {
   // TOOLS
   const dispatch = useDispatch();
+  // Counter variable
+  const [counter, setCounter] = useState(0);
 
   // PROPS
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -31,6 +33,7 @@ const App = () => {
       });
       const _user = response.data;
       dispatch(userActions.setUser({ value: _user }));
+      setCounter((prevCounter) => prevCounter + 1);
     } catch (error) {
       console.log(error);
     }
@@ -46,6 +49,7 @@ const App = () => {
   return (
     <div className="background-image">
       <BrowserRouter>
+        <p>fetchUser called {counter} times</p> {/* Display counter */}
         <Routes>
           <Route
             path={"/"}
