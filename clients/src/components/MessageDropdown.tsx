@@ -50,13 +50,13 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
   };
 
   return (
-    <div className="relative z-[99]">
+    <div className="z-[99]">
       <button
         type="button"
         className="flex items-center bg-gray-200 px-4 py-2 rounded-lg text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         onClick={() => setShowDropdown(!showDropdown)}
       >
-        <span>Notifications</span>
+        <span>התראות</span>
         {options.length > 0 && notifications.length > 0 && (
           <span className="ml-2 inline-block bg-[#FE316E] text-white text-xs rounded-full px-2 py-1">
             {/* {options.reduce((total, option) => total + option.count, 0)} */}
@@ -65,7 +65,7 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
         )}
       </button>
       {showDropdown && (
-        <div className="absolute  mt-2 w-80 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="absolute w-full left-0  rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <div className="py-1">
             <div className="text-gray-700 px-4 py-3 font-medium border-b border-gray-200">
               Recent notifications

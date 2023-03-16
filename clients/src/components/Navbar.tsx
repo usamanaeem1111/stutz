@@ -8,6 +8,7 @@ import MessageDropdown from "./MessageDropdown";
 import NavigationLinks from "./NavigationLinks";
 import UserActions from "./UserActions";
 import { addNotification } from "../store/reducers/notification/notification.reducer";
+import ProfileDropdown from "./ProfileDropdown";
 
 interface NavbarProps {
   minimal: boolean;
@@ -97,24 +98,34 @@ const Navbar: FC<NavbarProps> = ({
   }, [cookies.UserId, cookies.AuthToken, removeCookie]);
 
   return (
-    <div className=" ">
-      <nav className="container mx-auto  py-3 w-full flex items-center justify-end">
+    <nav className="sticky top-0 z-[999] backdrop-blur-[7px] bg-white/20">
+      <div className="container mx-auto  py-3 w-full flex items-center justify-between p-1 ">
         {user && (
-          <section className="flex items-center justify-between w-full ">
-            <div className="flex items-center">
-              <div className="relative w-10 h-10 mr-4">
-                <img
-                  className="absolute top-0 left-0 w-full h-full rounded-full object-cover"
-                  src={user?.images?.[0] ?? ""}
-                  alt=""
-                />
-              </div>
-              <MessageDropdown messages={messageList} />
+          <section className="hidden md:flex items-center justify-between w-full ">
+            <div className="relative w-10 h-10 mr-4">
+              <img
+                className="absolute top-0 left-0 w-full h-full rounded-full object-cover"
+                src={user?.images?.[0] ?? ""}
+                alt=""
+              />
             </div>
           </section>
         )}
 
-        <div className="flex w-full justify-between items-center">
+        {user && (
+          <ProfileDropdown
+            userImages={user.images}
+            messageList={messageList}
+            authToken={authToken}
+            minimal={minimal}
+            showModal={showModal}
+            handleClick={handleClick}
+            handleLogout={handleLogout}
+          />
+        )}
+        <MessageDropdown messages={messageList} />
+
+        <div className="hidden md:flex w-full justify-between items-center">
           <NavigationLinks />
 
           <UserActions
@@ -126,12 +137,12 @@ const Navbar: FC<NavbarProps> = ({
           />
         </div>
 
-        <div className="w-[300px]">
+        <div className="min-w-[100px]">
           <Link to="/">
-            <img src={siteLogo} alt="siteLogo" />
+            <img className="mt-[-5px]" src={siteLogo} alt="siteLogo" />
           </Link>
         </div>
-      </nav>
+      </div>
 
       {currentMessage && (
         <div className="fixed bottom-0 left-0 right-0 p-3 bg-gray-100 text-gray-800 shadow-lg z-[999]">
@@ -167,7 +178,7 @@ const Navbar: FC<NavbarProps> = ({
           </button>
         </div>
       )}
-    </div>
+    </nav>
   );
 };
 
