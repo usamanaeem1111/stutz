@@ -132,12 +132,12 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
       />
 
       <div className="">
-        <div className="flex items-center justify-center max-w-[1150px] w-full mx-auto">
-          <h2 className="text-[72px] font-bold">הפרופיל שלי</h2>
-        </div>
+        <h2 className="text-4xl h-[100px] flex items-center justify-center  md:text-[72px] font-bold">
+          הפרופיל שלי
+        </h2>
 
         <form
-          className={`flex text-[#100307] font-medium font-noto-sans text-base leading-6 text-right   max-w-[1150px] w-full mx-auto backdrop-blur-[7px] `}
+          className={`flex flex-col-reverse md:flex-row text-[#100307] font-medium font-noto-sans text-base leading-6 text-right   max-w-[1150px] w-full mx-auto backdrop-blur-[7px] `}
           onSubmit={handleSubmit}
         >
           <section
@@ -162,19 +162,19 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
             {/* Top section  */}
 
             {/* verify email section */}
-            <div className="flex w-full justify-between bg-[#FFF6E8] p-4">
-              <div className="flex  justify-between items-center">
+            <div className="flex w-full items-start justify-between bg-[#FFF6E8] p-4">
+              <div className="flex justify-between items-center">
                 {isEditable ? (
                   <div
                     onClick={handleSubmit}
-                    className="py-2 px-4 text-center rounded-2xl border border-black/20 cursor-pointer hover:bg-[#ff5b95] bg-[#100307] text-white transition-all active:translate-y-[1px]"
+                    className="px-2 text-center rounded-md text-sm border border-black/20 cursor-pointer hover:bg-[#ff5b95] bg-[#100307] text-white transition-all active:translate-y-[1px]"
                   >
                     שמור שינויים
                   </div>
                 ) : (
                   <button
                     onClick={() => setIsEditable(true)}
-                    className="py-2 px-4 text-center rounded-2xl border border-black/20 transition-all active:translate-y-[1px] hover:bg-[#ff5b95] hover:text-white"
+                    className="px-2 text-center rounded-md text-sm border border-black/20 transition-all active:translate-y-[1px] hover:bg-[#ff5b95] hover:text-white"
                   >
                     ערוך פרופיל
                   </button>
@@ -185,10 +185,10 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
                 {!formData.email_verified ? (
                   <div className="flex ">
                     <div className="mr-2">
-                      <p className="font-semibold text-xl">
+                      <p className="font-semibold md:text-xl">
                         אנא אמת את האימייל שלך
                       </p>
-                      <div className="flex text-[#FE316E] text-xl whitespace-no-wrap">
+                      <div className="md:flex text-[#FE316E] text-xl whitespace-no-wrap">
                         <p className="">{formData.email}</p>
                         <h3 className="font-medium ml-3 ">:נרשמת עם</h3>
                       </div>
@@ -202,10 +202,12 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
                 ) : (
                   <div className="flex">
                     <div className="mr-2">
-                      <p className="font-semibold text-xl">!האמייל שלך מאומת</p>
-                      <div className="flex text-[#00C853] text-xl whitespace-no-wrap">
-                        <p className="">{formData.email}</p>
-                        <h3 className="font-medium ml-3 ">:נרשמת עם</h3>
+                      <p className="font-semibold md:text-xl">
+                        !האמייל שלך מאומת
+                      </p>
+                      <div className="md:flex text-[#00C853] text-xl whitespace-no-wrap">
+                        <p className="text-sm">{formData.email}</p>
+                        <h3 className="font-medium ml-3 text-sm ">:נרשמת עם</h3>
                       </div>
                     </div>
                     <img

@@ -37,8 +37,11 @@ const App = () => {
   }, [dispatch, userId]);
 
   useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
+    // Only fetch user data if the userId has changed
+    if (userId) {
+      fetchUser();
+    }
+  }, [fetchUser, userId]);
 
   return (
     <div className="background-image">
