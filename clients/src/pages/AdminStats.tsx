@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import axios, { AxiosResponse } from "axios";
 import { RootState, useSelector } from "../store";
+import NavigationLinks from "../components/NavigationLinks";
 
 type StatsData = {
   mostPopularMan: object;
@@ -62,14 +63,6 @@ const AdminStats: React.FC<AdminStatsProps> = ({
 
   return (
     <div className=" text-white flex flex-col justify-end ">
-      <Navbar
-        formData=""
-        minimal={true}
-        setShowModal={() => {}}
-        showModal={false}
-        removeCookie={removeCookie}
-        cookies={cookies}
-      />
       {Object.entries(stats).map(([fieldKey, fieldValue]: any) => (
         <div key={fieldKey} className="bg-red-500 p-2 m-1">
           <p>name: {fieldValue["first_name"]}</p>

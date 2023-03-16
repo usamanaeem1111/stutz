@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AuthModal from "../components/AuthModal";
 import Navbar from "../components/Navbar";
+import NavigationLinks from "../components/NavigationLinks";
 
 function Home({ cookies, removeCookie, setCookie }: any) {
   const [showModal, setShowModal] = useState(false);
@@ -20,19 +21,8 @@ function Home({ cookies, removeCookie, setCookie }: any) {
   };
 
   return (
-    <div className=" flex flex-col">
-      <Navbar
-        formData=""
-        authToken={authToken}
-        minimal={false}
-        setShowModal={setShowModal}
-        showModal={showModal}
-        setIsSignUp={setIsSignUp}
-        removeCookie={removeCookie}
-        cookies={cookies}
-      />
-
-      <div className="z-[10] relative">
+    <div className="h-screen flex flex-col">
+      <div className="z-[10] relative flex-1">
         <h1 className="text-[72px] font-bold text-white my-4">Swipe Right</h1>
         <button
           className="text-white text-[15px] uppercase bg-gradient-to-br from-[#fe3072] to-[#ff5940] py-2 px-4 border-none rounded-[30px] font-semibold transition-all active:translate-y-[1px] hover:from-[#ff5940] hover:to-[#fe3072]"

@@ -1,46 +1,69 @@
-import { FC } from "react";
+import { FaHome, FaUser, FaBell, FaEnvelope, FaHeart } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 
-interface NavigationLinksProps {}
-
-const NavigationLinks: FC<NavigationLinksProps> = ({}) => {
+function NavigationLinks() {
   const location = useLocation();
-
-  const linkClasses =
-    "px-3 py-2 hover:text-black text-gray-500 rounded-md font-medium transition-colors duration-200 w-[150px]";
-
-  const activeLinkClasses = "border-b-4 border-[#fe316e] text-black";
+  const isActive = (path: any) => {
+    if (path === "/") {
+      return location.pathname === "/";
+    } else {
+      return location.pathname.startsWith(path);
+    }
+  };
 
   return (
-    <div className="flex-col md:flex-row flex space-x-4 items-center justify-between mx-[20px]">
+    <div className="sticky bottom-0 z-[999] backdrop-blur-[7px] bg-white/50 flex items-center justify-between mt-3 bg-white ">
+      <Link
+        to="/"
+        className={`flex flex-col items-center text-gray-500 hover:text-gray-900 transition-colors duration-200 mx-1 p-1 ${
+          isActive("/") ? "text-gray-900" : ""
+        }`}
+      >
+        <FaHome className="h-6 w-6" />
+        <span className="text-xs font-semibold mt-1">Home</span>
+      </Link>
+
+      <Link
+        to="/myprofile"
+        className={`flex flex-col items-center text-gray-500 hover:text-gray-900 transition-colors duration-200 mx-1 p-1 ${
+          isActive("/myprofile") ? "text-gray-900 bg-gray-500" : ""
+        }`}
+      >
+        <FaUser className="h-6 w-6" />
+        <span className="text-xs font-semibold mt-1">My Profile</span>
+      </Link>
+
+      <Link
+        to="/"
+        className={`flex flex-col items-center text-gray-500 hover:text-gray-900 transition-colors duration-200 mx-1 p-1 ${
+          isActive("/notifications") ? "text-gray-900" : ""
+        }`}
+      >
+        <FaBell className="h-6 w-6" />
+        <span className="text-xs font-semibold mt-1">Notifications</span>
+      </Link>
+
       <Link
         to="/dashboard"
-        className={`${linkClasses} ${
-          location.pathname === "/dashboard" ? activeLinkClasses : ""
+        className={`flex flex-col items-center text-gray-500 hover:text-gray-900 transition-colors duration-200 mx-1 p-1 ${
+          isActive("/dashboard") ? "text-gray-900" : ""
         }`}
       >
-        הודעות
+        <FaEnvelope className="h-6 w-6" />
+        <span className="text-xs font-semibold mt-1">Messages</span>
       </Link>
 
       <Link
-        to="/onboarding"
-        className={`${linkClasses} ${
-          location.pathname === "/onboarding" ? activeLinkClasses : ""
+        to="/"
+        className={`flex flex-col items-center text-gray-500 hover:text-gray-900 transition-colors duration-200 mx-1 p-1 ${
+          isActive("/matches") ? "text-gray-900" : ""
         }`}
       >
-        הפרופיל שלי
-      </Link>
-
-      <Link
-        to="/adminStats"
-        className={`${linkClasses} ${
-          location.pathname === "/adminStats" ? activeLinkClasses : ""
-        }`}
-      >
-        AdminStats
+        <FaHeart className="h-6 w-6" />
+        <span className="text-xs font-semibold mt-1">Matches</span>
       </Link>
     </div>
   );
-};
+}
 
 export default NavigationLinks;

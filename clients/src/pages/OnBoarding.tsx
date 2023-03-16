@@ -13,6 +13,7 @@ import joinTheAppIcon from "./imgs/joinTheAppIcon.svg";
 import ageIcon from "./imgs/ageIcon.svg";
 import locationIcon from "./imgs/LocationIcon.svg";
 import genderWoman from "./imgs/genderWoman.svg";
+import NavigationLinks from "../components/NavigationLinks";
 
 const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   const [isEditable, setIsEditable] = useState(false);
@@ -136,15 +137,6 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   console.log(formData.matches, "matches");
   return (
     <>
-      <Navbar
-        formData={formData}
-        minimal={true}
-        setShowModal={() => {}}
-        showModal={false}
-        removeCookie={removeCookie}
-        cookies={cookies}
-      />
-
       <div className="">
         <h2 className="text-4xl h-[100px] flex items-center justify-center  md:text-[72px] font-bold">
           הפרופיל שלי

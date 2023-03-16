@@ -4,6 +4,7 @@ import ChatContainer from "../components/ChatContainer";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { RootState, useSelector } from "../store";
+import NavigationLinks from "../components/NavigationLinks";
 
 const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
   const [genderedUsers, setGenderedUsers] = useState<any>(null);
@@ -67,14 +68,6 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
 
   return (
     <>
-      <Navbar
-        formData={""}
-        minimal={true}
-        setShowModal={() => {}}
-        showModal={false}
-        removeCookie={removeCookie}
-        cookies={cookies}
-      />
       {user && (
         <div className="dashboard flex justify-between">
           <ChatContainer user={user} />

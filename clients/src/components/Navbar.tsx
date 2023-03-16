@@ -147,7 +147,6 @@ const Navbar: FC<NavbarProps> = ({
           </Link>
         </div>
       </div>
-      <p>{socketCalls} total socket calls</p>
 
       {currentMessage && (
         <div className="fixed bottom-0 left-0 right-0 p-3 bg-gray-100 text-gray-800 shadow-lg z-[999]">

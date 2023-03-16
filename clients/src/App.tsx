@@ -9,6 +9,8 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { userActions } from "./store/reducers/user/user.reducer";
 import { RootState } from "./store";
+import Navbar from "./components/Navbar";
+import NavigationLinks from "./components/NavigationLinks";
 
 const App = () => {
   // TOOLS
@@ -47,9 +49,16 @@ const App = () => {
   }, [fetchUser, userId]);
 
   return (
-    <div className="background-image">
-      <p>fetchUser called {counter} times</p> {/* Display counter */}
+    <div className="background-image ">
       <BrowserRouter>
+        <Navbar
+          formData={user}
+          minimal={true}
+          setShowModal={() => {}}
+          showModal={false}
+          removeCookie={removeCookie}
+          cookies={cookies}
+        />
         <Routes>
           <Route
             path={"/"}
@@ -85,7 +94,7 @@ const App = () => {
           />
 
           <Route
-            path={`${user === null ? "/" : "/Onboarding"}`}
+            path={`${user === null ? "/" : "/myprofile"}`}
             element={
               <OnBoarding
                 user={user}
@@ -96,6 +105,7 @@ const App = () => {
             }
           />
         </Routes>
+        <NavigationLinks />
       </BrowserRouter>
     </div>
   );
