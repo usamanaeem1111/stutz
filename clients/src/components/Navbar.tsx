@@ -1,12 +1,13 @@
 import { FC, useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { RootState, useSelector } from "../store";
+import { RootState, useDispatch, useSelector } from "../store";
 import io from "socket.io-client";
 
 import siteLogo from "./imgs/logo.png";
 import MessageDropdown from "./MessageDropdown";
 import NavigationLinks from "./NavigationLinks";
 import UserActions from "./UserActions";
+import { addNotification } from "../store/reducers/notification/notification.reducer";
 
 interface NavbarProps {
   minimal: boolean;
@@ -37,8 +38,9 @@ const Navbar: FC<NavbarProps> = ({
   removeCookie,
   cookies,
 }) => {
+  const dispatch = useDispatch();
   const [newMessage, setNewMessage] = useState(false);
-  const [newMatch, setNewMatch] = useState(false);
+
   const [numUnreadMessages, setNumUnreadMessages] = useState(0);
   const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
   const [messageList, setMessageList] = useState<Message[]>([]);
@@ -48,7 +50,6 @@ const Navbar: FC<NavbarProps> = ({
 
   const handleNotificationClose = useCallback(() => {
     setNumUnreadMessages(0);
-    setNewMatch(false);
   }, []);
 
   useEffect(() => {
@@ -58,6 +59,9 @@ const Navbar: FC<NavbarProps> = ({
         setNumUnreadMessages(
           (prevNumUnreadMessages) => prevNumUnreadMessages + 1
         );
+
+        // Dispatch addNotification action
+        dispatch(addNotification({ id: Date.now(), message: data.message }));
       }
     };
 
@@ -71,10 +75,6 @@ const Navbar: FC<NavbarProps> = ({
       }
     };
   }, [socket, user]);
-
-  const handleEnvelopIconClick = useCallback(() => {
-    setNewMessage(false);
-  }, []);
 
   const handleClick = useCallback(() => {
     setShowModal(true);
@@ -137,13 +137,6 @@ const Navbar: FC<NavbarProps> = ({
           >
             Close
           </button>
-        </div>
-      )}
-
-      {newMatch && (
-        <div className="fixed bottom-0 left-0 right-0 p-3 bg-white text-gray-800 border-t-2 border-[#FE316E]">
-          You have a new match
-          <button onClick={handleNotificationClose}>Close</button>
         </div>
       )}
 

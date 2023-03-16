@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearNotifications,
+  removeNotification,
+} from "../store/reducers/notification/notification.reducer";
+import { RootState } from "../store";
 
 interface ChatMessage {
   timestamp: string;
@@ -19,6 +25,11 @@ interface Option {
 }
 
 const MessageDropdown: React.FC<Props> = ({ messages }) => {
+  const notifications = useSelector(
+    (state: RootState) => state.notifications.notifications
+  );
+  const dispatch = useDispatch();
+
   const options: Option[] = messages.reduce((acc, curr) => {
     const index = acc.findIndex((option) => option.value === curr.from_userId);
     if (index === -1) {
@@ -39,7 +50,11 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
   const handleClick = (optionValue: string) => {
     setSelectedOption(optionValue);
     setShowDropdown(false);
+    dispatch(clearNotifications());
   };
+
+  console.log("options", options);
+  console.log("notifications", notifications);
 
   return (
     <div className="relative z-[99]">
@@ -49,9 +64,9 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
         onClick={() => setShowDropdown(!showDropdown)}
       >
         <span>Notifications</span>
-        {options.length > 0 && (
+        {notifications.length > 0 && (
           <span className="ml-2 inline-block bg-[#FE316E] text-white text-xs rounded-full px-2 py-1">
-            {options.reduce((total, option) => total + option.count, 0)}
+            {notifications.length}
           </span>
         )}
       </button>
@@ -61,41 +76,21 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
             <div className="text-gray-700 px-4 py-3 font-medium border-b border-gray-200">
               Recent notifications
             </div>
-            {options.map((option) => (
+            {notifications.map((notification) => (
               <div
-                key={option.value}
-                className={
-                  "px-4 py-2 cursor-pointer hover:bg-gray-100" +
-                  (option.value === selectedOption ? " bg-gray-100" : "")
-                }
-                onClick={() => handleClick(option.value)}
+                key={notification.id}
+                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                onClick={() => {
+                  dispatch(removeNotification(notification.id));
+                  handleClick(notification.id.toString());
+                }}
               >
-                <div className="flex items-center justify-between">
-                  <div className="font-medium text-gray-900">
-                    {option.label}
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-xs inline-block text-gray-500 mr-1">
-                      {option.count}
-                    </span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4 fill-current text-gray-500"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M4.01 5A2.99 2.99 0 017 2h6a2.99 2.99 0 012.99 3L16 9H4l.01-4zm2-1a1 1 0 00-.99 1l-.01 4A.99.99 0 006 9h10a1 1 0 00.99-1l-.01-4A.99.99 0 0014 3H6zM9 13a1 1 0 100 2 1 1 0 000-2zM11 13a1 1 0 100 2 1 1 0 000-2z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
+                <div className="font-medium text-gray-900">
+                  {notification.message}
                 </div>
-                <div className="text-gray-500 text-sm">{`You have ${option.count} new messages from ${option.label}`}</div>
               </div>
             ))}
-            {options.length === 0 && (
+            {notifications.length === 0 && (
               <div className="px-4 py-2">
                 <div className="text-gray-500 text-sm">
                   You have no new notifications

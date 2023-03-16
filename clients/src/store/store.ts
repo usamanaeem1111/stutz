@@ -1,14 +1,17 @@
-import { Action, combineReducers, configureStore } from '@reduxjs/toolkit';
-import { ThunkAction } from 'redux-thunk';
+import { Action, combineReducers, configureStore } from "@reduxjs/toolkit";
+import { ThunkAction } from "redux-thunk";
 
 // -- import user reducer
-import userReducer from './reducers/user/user.reducer';
+import userReducer from "./reducers/user/user.reducer";
+import notificationReducer from "./reducers/notification/notification.reducer";
+
 // -- export user actions & selectors
-export { userActions, userSelectors } from './reducers/user/user.reducer';
+export { userActions, userSelectors } from "./reducers/user/user.reducer";
 
 const rootReducer = combineReducers({
   /* PLOP_INJECT_COMBINE */
   user: userReducer,
+  notifications: notificationReducer,
 });
 
 /*
@@ -18,7 +21,7 @@ const rootReducer = combineReducers({
 |
 */
 const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
