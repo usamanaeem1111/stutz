@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface Notification {
   id: number;
   message: string;
+  from_userId: string;
 }
 
 interface NotificationState {

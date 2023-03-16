@@ -1,11 +1,9 @@
 import { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-interface NavigationLinksProps {
-  numUnreadMessages: number;
-}
+interface NavigationLinksProps {}
 
-const NavigationLinks: FC<NavigationLinksProps> = ({ numUnreadMessages }) => {
+const NavigationLinks: FC<NavigationLinksProps> = ({}) => {
   const location = useLocation();
 
   const linkClasses =
@@ -21,7 +19,7 @@ const NavigationLinks: FC<NavigationLinksProps> = ({ numUnreadMessages }) => {
           location.pathname === "/dashboard" ? activeLinkClasses : ""
         }`}
       >
-        הודעות{numUnreadMessages > 0 ? ` (${numUnreadMessages})` : ""}
+        הודעות
       </Link>
 
       <Link

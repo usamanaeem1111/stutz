@@ -61,7 +61,13 @@ const Navbar: FC<NavbarProps> = ({
         );
 
         // Dispatch addNotification action
-        dispatch(addNotification({ id: Date.now(), message: data.message }));
+        dispatch(
+          addNotification({
+            id: Date.now(),
+            message: data.message,
+            from_userId: data.from_userId,
+          })
+        );
       }
     };
 
@@ -92,22 +98,24 @@ const Navbar: FC<NavbarProps> = ({
 
   return (
     <div className=" ">
-      <nav className="container mx-auto  py-3 w-full flex items-start justify-end">
+      <nav className="container mx-auto  py-3 w-full flex items-center justify-end">
         {user && (
-          <section className="flex  justify-around w-full">
-            <div className="flex">
-              <img
-                className="h-12 w-12 rounded-full shadow-sm shadow-black/50 m-1"
-                src={user?.images?.[0] ?? ""}
-                alt=""
-              />
+          <section className="flex items-center justify-between w-full ">
+            <div className="flex items-center">
+              <div className="relative w-10 h-10 mr-4">
+                <img
+                  className="absolute top-0 left-0 w-full h-full rounded-full object-cover"
+                  src={user?.images?.[0] ?? ""}
+                  alt=""
+                />
+              </div>
               <MessageDropdown messages={messageList} />
             </div>
           </section>
         )}
 
         <div className="flex w-full justify-between items-center">
-          <NavigationLinks numUnreadMessages={numUnreadMessages} />
+          <NavigationLinks />
 
           <UserActions
             authToken={authToken}
