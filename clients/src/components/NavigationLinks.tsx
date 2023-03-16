@@ -1,34 +1,47 @@
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface NavigationLinksProps {
   numUnreadMessages: number;
 }
 
 const NavigationLinks: FC<NavigationLinksProps> = ({ numUnreadMessages }) => {
+  const location = useLocation();
+
+  const linkClasses =
+    "px-3 py-2 hover:text-black text-gray-500 rounded-md font-medium transition-colors duration-200";
+
+  const activeLinkClasses = "border-b-4 border-[#fe316e] text-black";
+
   return (
-    <div>
+    <nav className="flex space-x-4 ">
       <Link
         to="/dashboard"
-        className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
+        className={`${linkClasses} ${
+          location.pathname === "/dashboard" ? activeLinkClasses : ""
+        }`}
       >
         הודעות{numUnreadMessages > 0 ? ` (${numUnreadMessages})` : ""}
       </Link>
 
       <Link
         to="/onboarding"
-        className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
+        className={`${linkClasses} ${
+          location.pathname === "/onboarding" ? activeLinkClasses : ""
+        }`}
       >
         הפרופיל שלי
       </Link>
 
       <Link
         to="/adminStats"
-        className="mx-2 px-3 py-2 rounded-md text-sm font-medium text-white bg-[#FE316E] min-w-[100px] hover:bg-[#ff5b95] transition-all active:translate-y-[1px]"
+        className={`${linkClasses} ${
+          location.pathname === "/adminStats" ? activeLinkClasses : ""
+        }`}
       >
         AdminStats
       </Link>
-    </div>
+    </nav>
   );
 };
 

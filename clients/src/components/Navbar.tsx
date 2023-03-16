@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { RootState, useSelector } from "../store";
 import io from "socket.io-client";
 
-import envelopIcon from "./imgs/envelopeIcon.svg";
 import siteLogo from "./imgs/logo.png";
 import MessageDropdown from "./MessageDropdown";
 import NavigationLinks from "./NavigationLinks";
@@ -62,19 +61,13 @@ const Navbar: FC<NavbarProps> = ({
       }
     };
 
-    const handleNewMatch = (userId: any) => {
-      setNewMatch(true);
-    };
-
     if (socket && user) {
       socket.on("recive_msg", handleNewMessage);
-      socket.on("new_match", handleNewMatch);
     }
 
     return () => {
       if (socket && user) {
         socket.off("recive_msg", handleNewMessage);
-        socket.off("new_match", handleNewMatch);
       }
     };
   }, [socket, user]);
