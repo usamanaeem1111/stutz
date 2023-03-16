@@ -132,7 +132,8 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
         return value;
     }
   }
-
+  console.log(formData.likes, "likes");
+  console.log(formData.matches, "matches");
   return (
     <>
       <Navbar
@@ -168,6 +169,23 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
                 setFormData={setFormData}
                 isEditable={isEditable}
               />
+            </div>
+
+            {/* tottal matches and likes  */}
+            <div className="bg-[#FEF3F6] border border-[#FFCADA] rounded-2xl flex w-[70%]  justify-around">
+              <div className="flex flex-col justify-center items-center border-r w-[50%] p-3">
+                <p className="text-[#FE316E] font-bold">
+                  {formData.matches.length}
+                </p>
+                <p className="text-[#656565]">You Matched with </p>
+              </div>
+              <p className="border-r border-[#FFCADA]"></p>
+              <div className="flex flex-col justify-center items-center  w-[50%] p-3">
+                <p className="text-[#FE316E] font-bold">
+                  {formData.likes.length}
+                </p>
+                <p className="text-[#656565]">You Liked </p>
+              </div>
             </div>
           </section>
 
