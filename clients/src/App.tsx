@@ -48,8 +48,8 @@ const App = () => {
 
   return (
     <div className="background-image">
+      <p>fetchUser called {counter} times</p> {/* Display counter */}
       <BrowserRouter>
-        <p>fetchUser called {counter} times</p> {/* Display counter */}
         <Routes>
           <Route
             path={"/"}
