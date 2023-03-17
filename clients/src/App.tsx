@@ -11,6 +11,7 @@ import { userActions } from "./store/reducers/user/user.reducer";
 import { RootState } from "./store";
 import Navbar from "./components/Navbar";
 import NavigationLinks from "./components/NavigationLinks";
+import AuthModal from "./components/AuthModal";
 
 const App = () => {
   // TOOLS
@@ -26,6 +27,8 @@ const App = () => {
 
   // SELECTORS
   const user = useSelector((state: RootState) => state.user.user);
+  const [showModal, setShowModal] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(true);
   const userId = cookies.UserId;
 
   const fetchUser = useCallback(async () => {
@@ -54,11 +57,15 @@ const App = () => {
         <Navbar
           formData={user}
           minimal={true}
-          setShowModal={() => {}}
           showModal={false}
           removeCookie={removeCookie}
           cookies={cookies}
+          setCookie={setCookie}
+          setShowModal={setShowModal}
+          isSignUp={isSignUp}
+          setIsSignUp={setIsSignUp}
         />
+
         <Routes>
           <Route
             path={"/"}
@@ -67,6 +74,10 @@ const App = () => {
                 cookies={cookies}
                 removeCookie={removeCookie}
                 setCookie={setCookie}
+                setShowModal={setShowModal}
+                showModal={showModal}
+                isSignUp={isSignUp}
+                setIsSignUp={setIsSignUp}
               />
             }
           />

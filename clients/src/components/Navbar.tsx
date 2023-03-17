@@ -12,13 +12,15 @@ import ProfileDropdown from "./ProfileDropdown";
 
 interface NavbarProps {
   minimal: boolean;
-  setShowModal: (show: boolean) => void;
+  setShowModal: any;
   showModal: boolean;
   authToken?: string;
-  setIsSignUp?: (show: boolean) => void;
+  setIsSignUp: any;
   formData: any;
   removeCookie: any;
   cookies: any;
+  isSignUp: any;
+  setCookie: any;
 }
 
 type Message = {
@@ -38,6 +40,8 @@ const Navbar: FC<NavbarProps> = ({
   formData,
   removeCookie,
   cookies,
+  isSignUp,
+  setCookie,
 }) => {
   const dispatch = useDispatch();
   const [newMessage, setNewMessage] = useState(false);
@@ -89,9 +93,7 @@ const Navbar: FC<NavbarProps> = ({
 
   const handleClick = useCallback(() => {
     setShowModal(true);
-    if (setIsSignUp) {
-      setIsSignUp(false);
-    }
+    setIsSignUp(false);
   }, [setIsSignUp, setShowModal]);
 
   const handleLogout = useCallback(() => {
@@ -104,24 +106,15 @@ const Navbar: FC<NavbarProps> = ({
   return (
     <nav className="sticky top-0 z-[999] backdrop-blur-[7px] bg-white/20">
       <div className="container mx-auto  py-3 w-full flex items-center justify-between p-1 ">
-        {user && (
-          <ProfileDropdown
-            userImages={user.images}
-            messageList={messageList}
-            authToken={authToken}
-            minimal={minimal}
-            showModal={showModal}
-            handleClick={handleClick}
-            handleLogout={handleLogout}
-          />
-        )}
+        {user && <ProfileDropdown userImages={user.images} />}
 
         <UserActions
           authToken={authToken}
-          minimal={minimal}
+          minimal={false}
           showModal={showModal}
           handleClick={handleClick}
           handleLogout={handleLogout}
+          user={formData}
         />
 
         <div className="hidden md:flex w-full justify-between items-center">

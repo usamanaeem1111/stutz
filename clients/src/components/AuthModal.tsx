@@ -79,6 +79,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
   const handleClick = () => {
     setShowModal(false);
   };
+  useEffect(() => {}, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();

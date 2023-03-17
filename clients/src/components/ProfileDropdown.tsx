@@ -5,22 +5,9 @@ import UserActions from "./UserActions";
 
 interface ProfileDropdownProps {
   userImages?: string[];
-  messageList: any[];
-  authToken: any;
-  minimal: any;
-  showModal: any;
-  handleClick: any;
-  handleLogout: any;
 }
 
-const ProfileDropdown: FC<ProfileDropdownProps> = ({
-  userImages,
-  authToken,
-  minimal,
-  showModal,
-  handleClick,
-  handleLogout,
-}) => {
+const ProfileDropdown: FC<ProfileDropdownProps> = ({ userImages }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -47,13 +34,6 @@ const ProfileDropdown: FC<ProfileDropdownProps> = ({
         }`}
       >
         <NavigationLinks />
-        <UserActions
-          authToken={authToken}
-          showModal={showModal}
-          minimal={minimal}
-          handleClick={handleClick}
-          handleLogout={handleLogout}
-        />
       </div>
     </div>
   );

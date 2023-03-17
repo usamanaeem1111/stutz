@@ -1,16 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import AuthModal from "../components/AuthModal";
-import Navbar from "../components/Navbar";
-import NavigationLinks from "../components/NavigationLinks";
 
-function Home({ cookies, removeCookie, setCookie }: any) {
-  const [showModal, setShowModal] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(true);
+function Home({
+  cookies,
+  removeCookie,
+  setCookie,
+  setShowModal,
+  showModal,
+  setIsSignUp,
+  isSignUp,
+}: any) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const authToken = cookies.AuthToken;
+  useEffect(() => {
+    // Check if user is already authenticated
+    if (cookies.AuthToken) {
+      setIsAuthenticated(true);
+    }
+  }, [cookies.AuthToken]);
 
   const handleClick = () => {
-    if (authToken) {
+    if (isAuthenticated) {
       removeCookie("UserId", cookies.UserId);
       removeCookie("AuthToken", cookies.AuthToken);
       window.location.reload();
@@ -28,10 +38,10 @@ function Home({ cookies, removeCookie, setCookie }: any) {
           className="text-white text-[15px] uppercase bg-gradient-to-br from-[#fe3072] to-[#ff5940] py-2 px-4 border-none rounded-[30px] font-semibold transition-all active:translate-y-[1px] hover:from-[#ff5940] hover:to-[#fe3072]"
           onClick={handleClick}
         >
-          {authToken ? "SignOut" : "Create an account"}
+          {isAuthenticated ? "Sign Out" : "Create an Account/Login"}
         </button>
 
-        {showModal && (
+        {showModal && !isAuthenticated && (
           <AuthModal
             cookies={cookies}
             removeCookie={removeCookie}
