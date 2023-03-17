@@ -1,7 +1,5 @@
 import { FC, useState } from "react";
-import MessageDropdown from "./MessageDropdown";
 import NavigationLinks from "./NavigationLinks";
-import UserActions from "./UserActions";
 
 interface ProfileDropdownProps {
   userImages?: string[];

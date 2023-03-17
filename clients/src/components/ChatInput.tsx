@@ -17,7 +17,7 @@ const ChatInput = ({
   const clickedUserId = clickedUser?.user_id;
 
   useEffect(() => {
-    setMessagesTwo(descendingOrderMessages);
+    setMessagesTwo(descendingOrderMessages || []);
   }, [descendingOrderMessages]);
 
   const addMessage = async () => {
@@ -27,6 +27,8 @@ const ChatInput = ({
       to_userId: clickedUserId,
       message: textArea,
       currentUser: true,
+      first_name: clickedUser.first_name,
+      profileImage: clickedUser.images[0] ?? "",
     };
 
     try {

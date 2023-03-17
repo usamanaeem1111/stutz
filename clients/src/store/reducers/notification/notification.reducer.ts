@@ -4,6 +4,8 @@ interface Notification {
   id: number;
   message: string;
   from_userId: string;
+  first_name: string;
+  profileImage: string;
 }
 
 interface NotificationState {

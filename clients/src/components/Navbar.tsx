@@ -29,6 +29,8 @@ type Message = {
   to_userId: string;
   message: string;
   currentUser: boolean;
+  first_name: string;
+  profileImage: string;
 };
 
 const Navbar: FC<NavbarProps> = ({
@@ -44,10 +46,8 @@ const Navbar: FC<NavbarProps> = ({
   setCookie,
 }) => {
   const dispatch = useDispatch();
-  const [newMessage, setNewMessage] = useState(false);
 
   const [numUnreadMessages, setNumUnreadMessages] = useState(0);
-  const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
   const [messageList, setMessageList] = useState<Message[]>([]);
 
   const socket = io("https://api.stutz.co.il");
@@ -67,12 +67,15 @@ const Navbar: FC<NavbarProps> = ({
           (prevNumUnreadMessages) => prevNumUnreadMessages + 1
         );
 
+        console.log("incomming message data ", data);
         // Dispatch addNotification action
         dispatch(
           addNotification({
             id: Date.now(),
             message: data.message,
             from_userId: data.from_userId,
+            first_name: data.first_name,
+            profileImage: data.profileImage,
           })
         );
 
