@@ -20,7 +20,9 @@ function NavigationLinks() {
 
   return (
     <div className="flex items-center  w-full justify-between">
+      {/* notification link */}
       <MessageDropdown messages={notifications} />
+
       <Link
         to="/"
         className={`flex flex-col items-center  transition-colors duration-200 mx-1 p-2 ${
