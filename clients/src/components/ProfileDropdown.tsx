@@ -49,8 +49,8 @@ const ProfileDropdown: FC<ProfileDropdownProps> = ({
         <NavigationLinks />
         <UserActions
           authToken={authToken}
-          minimal={minimal}
           showModal={showModal}
+          minimal={minimal}
           handleClick={handleClick}
           handleLogout={handleLogout}
         />

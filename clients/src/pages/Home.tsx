@@ -21,7 +21,7 @@ function Home({ cookies, removeCookie, setCookie }: any) {
   };
 
   return (
-    <div className="h-screen flex flex-col">
+    <div className="h-screen flex flex-col items-center justify-center">
       <div className="z-[10] relative flex-1">
         <h1 className="text-[72px] font-bold text-white my-4">Swipe Right</h1>
         <button

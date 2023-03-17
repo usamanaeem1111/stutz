@@ -105,18 +105,6 @@ const Navbar: FC<NavbarProps> = ({
     <nav className="sticky top-0 z-[999] backdrop-blur-[7px] bg-white/20">
       <div className="container mx-auto  py-3 w-full flex items-center justify-between p-1 ">
         {user && (
-          <section className="hidden md:flex items-center justify-between w-full ">
-            <div className="relative w-10 h-10 mr-4">
-              <img
-                className="absolute top-0 left-0 w-full h-full rounded-full object-cover"
-                src={user?.images?.[0] ?? ""}
-                alt=""
-              />
-            </div>
-          </section>
-        )}
-
-        {user && (
           <ProfileDropdown
             userImages={user.images}
             messageList={messageList}
@@ -128,16 +116,16 @@ const Navbar: FC<NavbarProps> = ({
           />
         )}
 
+        <UserActions
+          authToken={authToken}
+          minimal={minimal}
+          showModal={showModal}
+          handleClick={handleClick}
+          handleLogout={handleLogout}
+        />
+
         <div className="hidden md:flex w-full justify-between items-center">
           <NavigationLinks />
-
-          <UserActions
-            authToken={authToken}
-            minimal={minimal}
-            showModal={showModal}
-            handleClick={handleClick}
-            handleLogout={handleLogout}
-          />
         </div>
 
         <div className="min-w-[100px]">
@@ -146,41 +134,6 @@ const Navbar: FC<NavbarProps> = ({
           </Link>
         </div>
       </div>
-
-      {currentMessage && (
-        <div className="fixed bottom-0 left-0 right-0 p-3 bg-gray-100 text-gray-800 shadow-lg z-[999]">
-          <p className="text-pink-500 font-bold mb-1">
-            You have a new message from {currentMessage.from_userId}
-          </p>
-          <p>{currentMessage.message}</p>
-          <button
-            className="bg-pink-500 text-white px-4 py-2 rounded mt-2 hover:bg-pink-600"
-            onClick={() => setCurrentMessage(null)}
-          >
-            Close
-          </button>
-        </div>
-      )}
-
-      {newMessage && (
-        <div className="fixed bottom-0 left-0 right-0 p-3 bg-gray-100 text-gray-800 shadow-lg z-[999]">
-          <h2 className="text-pink-500 font-bold mb-2">New Messages</h2>
-          <ul className="space-y-2">
-            {messageList.map((message) => (
-              <li key={message.from_userId}>
-                <p className="font-bold">{message.from_userId}</p>
-                <p>{message.message}</p>
-              </li>
-            ))}
-          </ul>
-          <button
-            className="bg-pink-500 text-white px-4 py-2 rounded mt-2 hover:bg-pink-600"
-            onClick={() => setNewMessage(false)}
-          >
-            Close
-          </button>
-        </div>
-      )}
     </nav>
   );
 };

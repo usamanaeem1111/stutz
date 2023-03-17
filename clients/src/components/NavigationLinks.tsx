@@ -19,7 +19,7 @@ function NavigationLinks() {
   };
 
   return (
-    <div className="sticky bottom-0 z-[999] flex items-center bg-white/20 md:bg-white/0 justify-between mt-3  md:min-w-[500px]">
+    <div className="flex items-center  w-full justify-between">
       <MessageDropdown messages={notifications} />
       <Link
         to="/"

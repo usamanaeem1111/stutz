@@ -15,9 +15,11 @@ const UserActions: FC<UserActionsProps> = ({
   handleClick,
   handleLogout,
 }) => {
+  console.log("authToken", authToken);
+  console.log("minimal", minimal);
   return (
     <div className="mr-3">
-      {!authToken && !minimal && (
+      {!authToken && (
         <button
           disabled={showModal}
           onClick={handleClick}
@@ -27,7 +29,7 @@ const UserActions: FC<UserActionsProps> = ({
         </button>
       )}
 
-      {!authToken && minimal && (
+      {authToken && (
         <button
           disabled={showModal}
           onClick={handleLogout}

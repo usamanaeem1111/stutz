@@ -105,7 +105,10 @@ const App = () => {
             }
           />
         </Routes>
-        <NavigationLinks />
+
+        <div className="md:hidden sticky bottom-0 z-[999] flex items-center bg-white/50 backdrop-blur-[7px] md:backdrop-blur-[0px] md:bg-white/0 justify-between mt-3  md:min-w-[500px]">
+          <NavigationLinks />
+        </div>
       </BrowserRouter>
     </div>
   );

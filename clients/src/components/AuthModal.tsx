@@ -1,10 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+
 import jwt_decode from "jwt-decode";
-import { RootState, useSelector } from "../store";
-const { v4: uuidv4 } = require("uuid");
 interface AuthModalProps {
   setShowModal: (show: boolean) => void;
   isSignUp: boolean;
@@ -143,7 +141,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   return (
-    <div className="absolute left-[50%] top-[80%] translate-x-[-50%] max-w-[360px] w-full h-[600px] bg-white rounded-[10px] p-[10px]">
+    <div className="fixed top-[20%] md:max-w-[350px] mx-auto h-fit md:left-0 md:right-0 md:bottom-0 w-full   bg-white rounded-[10px] px-4 py-[20px] ">
       <div className=" cursor-pointer" onClick={handleClick}>
         <p className=" border border-[black] rounded-full w-[25px] h-[25px] float-right">
           X
