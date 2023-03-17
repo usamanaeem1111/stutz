@@ -127,7 +127,6 @@ const Navbar: FC<NavbarProps> = ({
             handleLogout={handleLogout}
           />
         )}
-        <MessageDropdown messages={messageList} />
 
         <div className="hidden md:flex w-full justify-between items-center">
           <NavigationLinks />
