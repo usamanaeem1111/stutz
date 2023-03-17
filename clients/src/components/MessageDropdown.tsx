@@ -60,7 +60,7 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
         <FaBell className="h-6 w-6" />
         <span className="text-xs font-semibold mt-1">Notifications</span>
         {options.length > 0 && notifications.length > 0 && (
-          <span className="absolute  ml-2 inline-block bg-[#FE316E] text-white text-xs rounded-full px-2 py-1">
+          <span className="absolute h-4 w-4 flex items-center justify-center top-0 right-0 bg-[#FE316E] text-white text-xs rounded-full px-2 py-1">
             {/* {options.reduce((total, option) => total + option.count, 0)} */}
             {notifications.length}
           </span>
