@@ -117,7 +117,7 @@ const Navbar: FC<NavbarProps> = ({
           user={formData}
         />
 
-        <div className="hidden md:flex w-full justify-between items-center">
+        <div className="hidden md:flex max-w-[500px] w-full justify-between items-center p-2">
           <NavigationLinks />
         </div>
 

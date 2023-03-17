@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 
 interface UserActionsProps {
   authToken: any;
@@ -24,17 +25,17 @@ const UserActions: FC<UserActionsProps> = ({
         <button
           disabled={showModal}
           onClick={handleLogout}
-          className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
+          className="flex items-center justify-center text-[#FE316E] bg-white p-3 font-semibold rounded-md m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
         >
-          התנתק
+          <FaSignOutAlt className="mr-2" /> התנתק
         </button>
       ) : (
         <button
           disabled={showModal}
           onClick={handleClick}
-          className="text-red-500 bg-white p-3 font-semibold rounded-xl m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
+          className="flex items-center justify-center text-[#FE316E] bg-white p-3 font-semibold rounded-md m-2 disabled:bg-black/50 min-w-[100px] hover:bg-gray-100"
         >
-          התחבר
+          <FaSignInAlt className="mr-2" /> התחבר
         </button>
       )}
     </div>
