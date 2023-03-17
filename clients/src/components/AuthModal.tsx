@@ -50,7 +50,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       setCookie("UserId", userObject.sub);
 
       const success = response.status === 200 || response.status === 201;
-      if (success) navigate("./onboarding");
+      if (success) navigate("./myprofile");
       return;
     } else {
       console.log("there is auth token");
@@ -118,7 +118,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       setCookie("UserId", userId);
       setCookie("AuthToken", authToken);
 
-      if (success && isSignUp) navigate("./onboarding");
+      if (success && isSignUp) navigate("./myprofile");
       if (success && !isSignUp) navigate("./Dashboard");
       // window.location.reload();
       setIsLoading(false);
