@@ -27,8 +27,8 @@ const ChatInput = ({
       to_userId: clickedUserId,
       message: textArea,
       currentUser: true,
-      first_name: clickedUser.first_name,
-      profileImage: clickedUser.images[0] ?? "",
+      first_name: user.first_name,
+      profileImage: user.images[0] ?? "",
     };
 
     try {

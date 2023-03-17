@@ -82,9 +82,16 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
                   handleClick(notification.id.toString());
                 }}
               >
-                <div className="font-medium text-gray-900">
-                  New Message From : {notification.from_userId}{" "}
-                  {notification.message}
+                <div className="flex items-center justify-between font-medium text-gray-900">
+                  <div className="rounded-full overflow-hidden">
+                    <img
+                      width={36}
+                      height={36}
+                      src={notification.profileImage}
+                      alt="notification.profileImage"
+                    />
+                  </div>
+                  <p>{notification.message}</p>
                 </div>
               </div>
             ))}
