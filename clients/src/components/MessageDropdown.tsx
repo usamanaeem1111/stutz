@@ -51,7 +51,7 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
   };
 
   return (
-    <div className="z-[99]">
+    <div className="z-[99] relative">
       <button
         type="button"
         className="flex flex-col items-center relative"
@@ -60,14 +60,14 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
         <FaBell className="h-6 w-6" />
         <span className="text-xs font-semibold mt-1">Notifications</span>
         {options.length > 0 && notifications.length > 0 && (
-          <span className="absolute top-0 right-0 ml-2 inline-block bg-[#FE316E] text-white text-xs rounded-full px-2 py-1">
+          <span className="absolute  ml-2 inline-block bg-[#FE316E] text-white text-xs rounded-full px-2 py-1">
             {/* {options.reduce((total, option) => total + option.count, 0)} */}
             {notifications.length}
           </span>
         )}
       </button>
       {showDropdown && (
-        <div className="absolute w-full left-0  rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="fixed w-full  rounded-md rounded-tl-none shadow-lg bg-white ring-1 ring-black ring-opacity-5 md:max-w-[350px]">
           <div className="py-1">
             <div className="text-gray-700 px-4 py-3 font-medium border-b border-gray-200">
               Recent notifications
