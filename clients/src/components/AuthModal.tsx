@@ -148,53 +148,54 @@ const AuthModal: React.FC<AuthModalProps> = ({
           X
         </p>
       </div>
-      <h2 className="text-[42px]">{isSignUp ? "Create Account" : "Log In"}</h2>
-
+      <h2 className="text-[42px]">
+        {isSignUp ? "צור חשבון" : "כניסה למשתמש קיים"}
+      </h2>{" "}
       <form className="flex flex-col" onSubmit={handleSubmit} action="">
         <input
-          className="border border-black/20 my-2 p-2 rounded-md"
+          className="border border-black/20 my-2 p-2 rounded-md text-right"
           type="email"
           id="email"
           name="email"
-          placeholder="email"
+          placeholder="אימייל"
           required={true}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          className="border border-black/20 my-2 p-2 rounded-md"
+          className="border border-black/20 my-2 p-2 rounded-md text-right"
           type="password"
           id="password"
           name="password"
-          placeholder="password"
+          placeholder="סיסמה"
           required={true}
           onChange={(e) => setPassword(e.target.value)}
         />
 
         {isSignUp && (
           <input
-            className="border border-black/20 my-2 p-2 rounded-md"
+            className="border border-black/20 my-2 p-2 rounded-md text-right"
             type="password"
             id="password-check"
             name="password-check"
-            placeholder="Confirm Password"
+            placeholder="אימות סיסמה"
             required={true}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         )}
         <input
-          className=" text-gray-700 bg-white font-bold uppercase py-2 px-4 rounded-[30px] m-1 border cursor-pointer border-gray-300 hover:text-gray-900 hover:border-gray-500 active:translate-y-[1px]"
+          className="text-gray-700 bg-white font-bold uppercase py-2 px-4 rounded-[30px] m-1 border cursor-pointer border-gray-300 hover:text-gray-900 hover:border-gray-500 active:translate-y-[1px]"
           type="submit"
           disabled={isSubmitting}
+          value="התחבר"
         />
         <p className="text-red-500 py-2">{error}</p>
       </form>
       <hr className="my-5" />
-      <h2>Sign Up with Google</h2>
+      <h2>כניסה עם Google</h2>
       <div className="flex items-center justify-center mt-3">
         <div id="signInDiv"></div>
       </div>
-
-      {isLoading && <p className="text-black">Loading...</p>}
+      {isLoading && <p className="text-black">טוען...</p>}
     </div>
   );
 };
