@@ -23,7 +23,7 @@ function NavigationLinks() {
   return (
     <div
       className={`${
-        user && "hidden"
+        !user && "hidden"
       } flex items-center  w-full justify-between`}
     >
       {/* notification link */}

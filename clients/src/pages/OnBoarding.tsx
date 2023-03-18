@@ -181,7 +181,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
             </div>
           </section>
 
-          <section className=" max-w-[850px] w-full flex flex-col items-start  rounded-2xl bg-white shadow-lg overflow-hidden">
+          <section className=" max-w-[850px] w-full flex flex-col items-start  rounded-2xl bg-gradient-to-br from-white/0 to-white backdrop-blur-[7px] shadow-lg overflow-hidden">
             {/* Top section  */}
 
             {/* verify email section */}
@@ -262,7 +262,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
               </div>
             </div>
 
-            <div className="p-4 flex flex-col justify-end w-full">
+            <div className="p-4 flex flex-col justify-end w-full ">
               {/* OnSaved Info*/}
               {!isEditable && (
                 <div>

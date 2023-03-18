@@ -28,7 +28,6 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
   );
   const dispatch = useDispatch();
 
-  console.log("notifications", notifications);
   const options: Option[] = messages.reduce((acc, curr) => {
     const index = acc.findIndex((option) => option.value === curr.from_userId);
     if (index === -1) {
