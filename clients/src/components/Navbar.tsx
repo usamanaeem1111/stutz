@@ -4,11 +4,9 @@ import { RootState, useDispatch, useSelector } from "../store";
 import io from "socket.io-client";
 
 import siteLogo from "./imgs/logo.png";
-import MessageDropdown from "./MessageDropdown";
 import NavigationLinks from "./NavigationLinks";
 import UserActions from "./UserActions";
 import { addNotification } from "../store/reducers/notification/notification.reducer";
-import ProfileDropdown from "./ProfileDropdown";
 
 interface NavbarProps {
   minimal: boolean;
@@ -109,8 +107,6 @@ const Navbar: FC<NavbarProps> = ({
   return (
     <nav className="sticky top-0 z-[999] backdrop-blur-[7px] bg-white/20">
       <div className="container mx-auto  py-3 w-full flex items-center justify-between p-1 ">
-        {user && <ProfileDropdown userImages={user.images} />}
-
         <UserActions
           authToken={authToken}
           minimal={false}

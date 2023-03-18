@@ -137,7 +137,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   return (
     <>
       <div className="pb-[100px]">
-        <h2 className="text-4xl h-[100px] flex items-center justify-center  md:text-[72px] font-bold">
+        <h2 className="text-4xl h-[100px] flex items-center justify-center  md:text-[72px] font-bold ">
           הפרופיל שלי
         </h2>
 
