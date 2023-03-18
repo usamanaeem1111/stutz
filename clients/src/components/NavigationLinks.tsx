@@ -10,6 +10,8 @@ function NavigationLinks() {
     (state: RootState) => state.notifications.notifications
   );
 
+  const user = useSelector((state: RootState) => state.user.user);
+
   const isActive = (path: any) => {
     if (path === "/") {
       return location.pathname === "/";
@@ -19,7 +21,11 @@ function NavigationLinks() {
   };
 
   return (
-    <div className="flex items-center  w-full justify-between">
+    <div
+      className={`${
+        !user && "hidden"
+      } flex items-center  w-full justify-between`}
+    >
       {/* notification link */}
       <MessageDropdown messages={notifications} />
 

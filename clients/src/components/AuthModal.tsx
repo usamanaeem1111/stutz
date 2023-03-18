@@ -142,18 +142,18 @@ const AuthModal: React.FC<AuthModalProps> = ({
   };
 
   return (
-    <div className="fixed top-[20%] md:max-w-[350px] mx-auto h-fit md:left-0 md:right-0 md:bottom-0 w-full   bg-white rounded-[10px] px-4 py-[20px] ">
-      <div className=" cursor-pointer" onClick={handleClick}>
-        <p className=" border border-[black] rounded-full w-[25px] h-[25px] float-right">
+    <div className="fixed md:top-[240px] md:max-w-[350px] mx-auto h-fit top-[35%]  left-0 md:right-0 md:bottom-0 w-full bg-gradient-to-br from-white/0 to-gray-500 backdrop-blur-[7px] rounded-[10px] px-4 py-[20px] cursor-pointer shadow-md">
+      <div className="" onClick={handleClick}>
+        <p className=" border-2 border-gray-300 font-semibold rounded-full w-[25px] h-[25px] float-right text-gray-300 text-[14px] hover:shadow-lg transition-all translate-y-[1px]">
           X
         </p>
       </div>
-      <h2 className="text-[42px]">
+      <h2 className="text-[24px] font-semibold text-gray-300">
         {isSignUp ? "צור חשבון" : "כניסה למשתמש קיים"}
       </h2>{" "}
       <form className="flex flex-col" onSubmit={handleSubmit} action="">
         <input
-          className="border border-black/20 my-2 p-2 rounded-md text-right"
+          className="border border-black/20 my-2 p-2 rounded-md text-right outline-none "
           type="email"
           id="email"
           name="email"
@@ -162,7 +162,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          className="border border-black/20 my-2 p-2 rounded-md text-right"
+          className="border border-black/20 my-2 p-2 rounded-md text-right outline-none"
           type="password"
           id="password"
           name="password"
@@ -173,7 +173,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
 
         {isSignUp && (
           <input
-            className="border border-black/20 my-2 p-2 rounded-md text-right"
+            className="border border-black/20 my-2 p-2 rounded-md text-right outline-none"
             type="password"
             id="password-check"
             name="password-check"
@@ -183,15 +183,15 @@ const AuthModal: React.FC<AuthModalProps> = ({
           />
         )}
         <input
-          className="text-gray-700 bg-white font-bold uppercase py-2 px-4 rounded-[30px] m-1 border cursor-pointer border-gray-300 hover:text-gray-900 hover:border-gray-500 active:translate-y-[1px]"
+          className="bg-gradient-to-br from-[#fe3072] to-[#9640ff] hover:from-[#fe316e] hover:to-[#fe316e] text-gray-100 font-semibold px-4 py-2 rounded-md transition-colors cursor-pointer"
           type="submit"
           disabled={isSubmitting}
           value="התחבר"
         />
-        <p className="text-red-500 py-2">{error}</p>
+        {error && <p className="text-red-500 py-2">{error}</p>}
       </form>
-      <hr className="my-5" />
-      <h2>כניסה עם Google</h2>
+      <hr className="my-5 text-gray-300 " />
+      <h2 className="text-gray-300">Google כניסה בעזרת </h2>
       <div className="flex items-center justify-center mt-3">
         <div id="signInDiv"></div>
       </div>
