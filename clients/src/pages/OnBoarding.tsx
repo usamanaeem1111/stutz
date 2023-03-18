@@ -136,13 +136,13 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
 
   return (
     <>
-      <div className="pb-[100px]">
+      <div className="pb-[100px] ">
         <h2 className="text-4xl h-[100px] flex items-center justify-center  md:text-[72px]  md:py-[10] font-bold ">
           הפרופיל שלי
         </h2>
 
         <form
-          className={`flex flex-col-reverse md:flex-row text-[#100307] font-medium font-noto-sans text-base leading-6 text-right   max-w-[1150px] w-full mx-auto backdrop-blur-[7px] `}
+          className={`flex bg-none flex-col-reverse md:flex-row text-[#100307] font-medium font-noto-sans text-base leading-6 text-right   max-w-[1150px] w-full mx-auto  `}
           onSubmit={handleSubmit}
         >
           <section
@@ -169,14 +169,14 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
                 <p className="text-[#FE316E] font-bold">
                   {formData.matches.length}
                 </p>
-                <p className="text-[#656565]">You Matched with </p>
+                <p className="text-[#656565]">פוטנצייל להנות עם</p>
               </div>
               <p className="border-r border-[#FFCADA]"></p>
               <div className="flex flex-col justify-center items-center  w-[50%] p-3">
                 <p className="text-[#FE316E] font-bold">
                   {formData.likes.length}
                 </p>
-                <p className="text-[#656565]">You Liked </p>
+                <p className="text-[#656565]">מעוניין לדבר עם </p>
               </div>
             </div>
           </section>
