@@ -55,7 +55,9 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
     <div className="z-[99] relative">
       <button
         type="button"
-        className="flex flex-col items-center relative"
+        className={`${
+          showDropdown && "bg-[#00ffb5] text-black/50 "
+        } flex flex-col items-center relative p-2 rounded-lg`}
         onClick={() => setShowDropdown(!showDropdown)}
       >
         <FaBell className="h-6 w-6" />
@@ -76,22 +78,23 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
             {notifications.map((notification) => (
               <div
                 key={notification.id}
-                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                className=" py-2 cursor-pointer hover:bg-gray-100"
                 onClick={() => {
                   dispatch(removeNotification(notification.id));
                   handleClick(notification.id.toString());
                 }}
               >
-                <div className="flex items-center justify-between font-medium text-gray-900">
-                  <div className="rounded-full overflow-hidden">
-                    <img
-                      width={36}
-                      height={36}
-                      src={notification.profileImage}
-                      alt="notification.profileImage"
-                    />
-                  </div>
-                  <p>{notification.message}</p>
+                <div className="grid grid-cols-3 items-center font-medium text-gray-900 border-b border-black/05 px-4 py-2">
+                  <div className="col-span-2">{notification.message}</div>
+                  <img
+                    width={36}
+                    height={36}
+                    src={notification.profileImage}
+                    alt="notification.profileImage"
+                    className=""
+                  />
+                  <div>{notification.first_name}</div>
+                  <div className="rounded-full overflow-hidden w-[30px] h-[30px] justify-self-end"></div>
                 </div>
               </div>
             ))}
