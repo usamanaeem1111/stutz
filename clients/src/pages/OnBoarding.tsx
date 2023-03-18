@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../components/Navbar";
-import jwt_decode from "jwt-decode";
 import ImageUploader from "../components/ImageUploader";
 import InputField from "../components/InputField";
-import AgeCalculator from "../components/AgeCalculator";
 import { RootState, useSelector } from "../store";
 import ProfileCompletion from "../components/ProfileCompletion";
 import envelopUnverifiedEmail from "./imgs/envelopUnverified.svg";
@@ -13,7 +10,6 @@ import joinTheAppIcon from "./imgs/joinTheAppIcon.svg";
 import ageIcon from "./imgs/ageIcon.svg";
 import locationIcon from "./imgs/LocationIcon.svg";
 import genderWoman from "./imgs/genderWoman.svg";
-import NavigationLinks from "../components/NavigationLinks";
 
 const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
   const [isEditable, setIsEditable] = useState(false);

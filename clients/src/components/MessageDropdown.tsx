@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeNotification } from "../store/reducers/notification/notification.reducer";
 import { RootState } from "../store";
-import { FaHome, FaUser, FaBell, FaEnvelope, FaHeart } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
 
 interface ChatMessage {
   timestamp: string;
@@ -43,10 +43,8 @@ const MessageDropdown: React.FC<Props> = ({ messages }) => {
   }, [] as Option[]);
 
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
 
   const handleClick = (optionValue: string) => {
-    setSelectedOption(optionValue);
     setShowDropdown(false);
   };
 
