@@ -36,9 +36,11 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
 
   const updateMatches = async (matchedUserId: any) => {
     try {
-      await axios.put("https://api.stutz.co.il/addmatch", {
-        userId,
-        matchedUserId,
+      // Insert a new match into the "matches" collection
+      await axios.post("https://api.stutz.co.il/matches", {
+        user1Id: userId,
+        user2Id: matchedUserId,
+        createdAt: new Date(),
       });
     } catch (err) {
       console.log(err);
@@ -67,7 +69,7 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
     <>
       {user && (
         <div className="dashboard flex justify-between ">
-          {/* <ChatContainer user={user} /> */}
+          <ChatContainer user={user} />
           <Swipe
             filteredGenderedUsers={filteredGenderedUsers}
             swiped={swiped}
