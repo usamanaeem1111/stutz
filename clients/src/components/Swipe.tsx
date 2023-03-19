@@ -18,8 +18,11 @@ const Swipe = ({ filteredGenderedUsers, swiped, outOfFrame }: SwipeProps) => {
     undefined
   );
 
+  const defaultImage =
+    "https://awik.io/wp-content/uploads/2018/06/unsplash.jpg";
+
   return (
-    <div className="swipe-container w-[70%] flex flex-col justify-center items-center h-[100vh]">
+    <div className="swipe-container flex flex-col justify-center items-center h-[100vh] mx-auto">
       <div className="card-container w-[400px] h-[650px]">
         {!filteredGenderedUsers || filteredGenderedUsers.length === 0 ? (
           <h1>There is No Ppl inside the DB</h1>
@@ -33,16 +36,17 @@ const Swipe = ({ filteredGenderedUsers, swiped, outOfFrame }: SwipeProps) => {
             >
               <div
                 style={{
-                  backgroundImage: genderedUser.images
-                    ? "url(" + genderedUser.images[selectedImage ?? 0] + ")"
-                    : "",
+                  backgroundImage:
+                    genderedUser.images && genderedUser.images.length > 0
+                      ? "url(" + genderedUser.images[selectedImage ?? 0] + ")"
+                      : `url(${defaultImage})`,
                 }}
                 className="card w-[400px] h-[650px] rounded-[30px] bg-cover bg-no-repeat bg-center	"
               >
                 <div className="flex flex-col items-center  absolute w-full bottom-0 text-white bg-black/50 backdrop-blur-[20px] rounded-2xl overflow-hidden">
                   <h3 className="">{genderedUser.first_name}</h3>
 
-                  {genderedUser.images && (
+                  {genderedUser.images && genderedUser.images.length > 0 && (
                     <div className="image-gallery-container flex">
                       {genderedUser.images.map(
                         (image: string, index: number) => (
