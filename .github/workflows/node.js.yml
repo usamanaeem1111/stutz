@@ -3,10 +3,6 @@
 
 
 name: Node.js
-
-env:
-      REACT_APP_BASE_URL = 'https://api.stutz.co.il'
-
       
 on:
   push:
