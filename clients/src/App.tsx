@@ -33,7 +33,7 @@ const App = () => {
 
   const fetchUser = useCallback(async () => {
     try {
-      const response = await axios.get(`${process.env.BASE_URL}/user`, {
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user`, {
         params: { userId },
       });
       const _user = response.data;

@@ -67,7 +67,7 @@ const OnBoarding = ({ cookies, removeCookie, setCookie }: any) => {
     try {
       console.log("formData ready to upload ", formData);
       const response = await axios.put(
-        `${process.env.BASE_URL}/user`,
+        `${process.env.REACT_APP_BASE_URL}/user`,
         {
           formData,
         },

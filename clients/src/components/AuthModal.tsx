@@ -37,7 +37,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       let email = userObject.email;
 
       const response = await axios.post(
-        `${process.env.BASE_URL}/googleSignUp`,
+        `${process.env.REACT_APP_BASE_URL}/googleSignUp`,
         {
           email,
           authToken,
@@ -103,7 +103,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       setIsSubmitting(true);
 
       const response = await axios.post(
-        `${process.env.BASE_URL}/${isSignUp ? "signup" : "login"}`,
+        `${process.env.REACT_APP_BASE_URL}/${isSignUp ? "signup" : "login"}`,
         {
           email,
           password,

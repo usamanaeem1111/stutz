@@ -13,7 +13,7 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
   // update user to have new match
   const [hasNewMatch, setHasNewMatch] = useState(false);
 
-  const socket = io(`${process.env.BASE_URL}`);
+  const socket = io(`${process.env.REACT_APP_BASE_URL}`);
 
   // SELECTORS
   const user = useSelector((state: RootState) => state.user.user);
@@ -22,7 +22,7 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
   const getGenderedUsers = async () => {
     try {
       const response = await axios.get(
-        `${process.env.BASE_URL}/gendered-users`,
+        `${process.env.REACT_APP_BASE_URL}/gendered-users`,
         {
           params: { gender: user?.gender_interest },
         }
@@ -46,7 +46,7 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
     try {
       // Check if the match already exists in the database
       const response = await axios.get(
-        `${process.env.BASE_URL}/matches/${matchId}`
+        `${process.env.REACT_APP_BASE_URL}/matches/${matchId}`
       );
 
       if (response.data) {
@@ -59,7 +59,7 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
 
       // Insert a new match into the "matches" collection
       const insertResponse = await axios.post(
-        `${process.env.BASE_URL}/matches`,
+        `${process.env.REACT_APP_BASE_URL}/matches`,
         {
           matchId,
           user1Id: userId,
