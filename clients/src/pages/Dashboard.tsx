@@ -54,6 +54,9 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
         return;
       }
 
+      // Emit a "right_swipe" event to the server
+      socket.emit("right_swipe", { matchId, userId });
+
       // Insert a new match into the "matches" collection
       const insertResponse = await axios.post(
         "https://api.stutz.co.il/matches",
@@ -65,13 +68,9 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
         }
       );
 
-      // If the response indicates a new match, notify both users via WebSocket
+      // If the response indicates a new match, notify the WebSocket server
       if (insertResponse.data.newMatch) {
-        socket.emit("new_match", {
-          matchId,
-          user1Id: userId,
-          user2Id: matchedUserId,
-        });
+        // Match created, do nothing
       }
     } catch (err) {
       console.log(err);
@@ -96,8 +95,13 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
     (genderedUser: any) => !matchedUserIds.includes(genderedUser.user_id)
   );
 
-  socket.on("new_match", (match) => {
-    setHasNewMatch(true);
+  socket.on("match_created", ({ matchId, user1Id, user2Id }) => {
+    if (user1Id === userId || user2Id === userId) {
+      console.log("You have a new match!");
+
+      // Set the "hasNewMatch" state to true
+      setHasNewMatch(true);
+    }
   });
 
   return (
