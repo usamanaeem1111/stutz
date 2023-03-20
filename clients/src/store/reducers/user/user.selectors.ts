@@ -8,8 +8,9 @@ const selectUser = createSelector(selectUserState, (user) => user.user);
 
 const isAuth = createSelector(selectUserState, (user) => !!user.user);
 
-export default {
+const Users = {
   selectUserState,
   selectUser,
   isAuth,
-};
+}
+export default Users;
