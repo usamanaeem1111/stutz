@@ -10,7 +10,7 @@ const ChatDisplay = ({ user, clickedUser }: any) => {
   const [clickedUsersMessages, setClickedUsersMessages] = useState<any>(null);
   const getUsersMessages = async () => {
     try {
-      const response = await axios.get("https://api.stutz.co.il/messages", {
+      const response = await axios.get(`${process.env.BASE_URL}/messages`, {
         params: { userId: userId, correspondingUserId: clickedUserId },
       });
       setUsersMessages(response.data);
@@ -21,7 +21,7 @@ const ChatDisplay = ({ user, clickedUser }: any) => {
 
   const getClickedUsersMessages = async () => {
     try {
-      const response = await axios.get("https://api.stutz.co.il/messages", {
+      const response = await axios.get(`${process.env.BASE_URL}/messages`, {
         params: { userId: clickedUserId, correspondingUserId: userId },
       });
       setClickedUsersMessages(response.data);

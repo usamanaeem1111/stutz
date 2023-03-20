@@ -24,7 +24,7 @@ const MatchesDisplay = ({ matches, setClickedUser }: Props) => {
   const getMatches = async () => {
     try {
       const response = await axios.get<User[]>(
-        "https://api.stutz.co.il/users",
+        `${process.env.BASE_URL}/users`,
         {
           params: { userIds: JSON.stringify(matchedUserIds) },
         }

@@ -45,7 +45,7 @@ const AdminStats: React.FC<AdminStatsProps> = ({
     const fetchData = async () => {
       try {
         const response: AxiosResponse<StatsData> = await axios.get<StatsData>(
-          "https://api.stutz.co.il/adminStats"
+          `${process.env.BASE_URL}/adminStats`
         );
         setStats(response.data);
       } catch (error) {

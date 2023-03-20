@@ -33,7 +33,7 @@ const App = () => {
 
   const fetchUser = useCallback(async () => {
     try {
-      const response = await axios.get("https://api.stutz.co.il/user", {
+      const response = await axios.get(`${process.env.BASE_URL}/user`, {
         params: { userId },
       });
       const _user = response.data;
@@ -50,7 +50,7 @@ const App = () => {
       fetchUser();
     }
   }, [fetchUser, userId]);
-
+ 
   return (
     <div className="background-image ">
       <BrowserRouter>

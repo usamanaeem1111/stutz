@@ -48,7 +48,7 @@ const Navbar: FC<NavbarProps> = ({
   const [numUnreadMessages, setNumUnreadMessages] = useState(0);
   const [messageList, setMessageList] = useState<Message[]>([]);
 
-  const socket = io("https://api.stutz.co.il");
+  const socket = io(`${process.env.BASE_URL}`);
   const user = useSelector((state: RootState) => state.user.user);
 
   const [socketCalls, setSocketCalls] = useState(0);
