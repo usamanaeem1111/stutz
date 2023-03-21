@@ -21,18 +21,35 @@ function NavigationLinks() {
   );
 
   const user = useSelector((state: RootState) => state.user.user);
-  const [alert, setAlert] = useState(true);
+  const [alert, setAlert] = useState(false);
 
   const dispatch = useDispatch();
 
   const handleNotificationsClick = async () => {
+    if (!user?.notification) {
+      console.log("tehre is no notification avilable");
+      setAlert(false);
+      return;
+    } else {
+      setAlert(true);
+    }
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_BASE_URL}/users/${user?.user_id}/notifications`
       );
-      dispatch(userActions.updateUser(response.data.user));
+      debugger;
+      console.log(user);
+
+      dispatch(
+        userActions.updateUser({
+          ...response.data.user,
+          notification: false, // set notification to false
+        })
+      );
+
+      debugger; // pause execution here
     } catch (error) {
-      console.log(error);
+      console.log("PUT request error", error);
     }
   };
 
@@ -99,7 +116,7 @@ function NavigationLinks() {
       >
         <FaHeart className="h-6 w-6" />
         <span className="text-xs font-semibold mt-1">התאמות</span>{" "}
-        {user && user.notification && (
+        {user && user?.notification > 0 && (
           <span className="h-6 w-6 bg-[red] rounded-full"></span>
         )}
       </div>
