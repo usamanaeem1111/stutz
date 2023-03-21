@@ -13,8 +13,18 @@ interface Card {
 const Swipe = ({ cardData, user }: { cardData: Card[]; user: any }) => {
   const [cards, setCards] = useState(cardData);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   const handleSwipe = async (direction: any) => {
+    if (buttonsDisabled) {
+      return; // Buttons are disabled, so ignore click
+    }
+
+    // Disable the buttons for a short period of time
+    setButtonsDisabled(true);
+    setTimeout(() => {
+      setButtonsDisabled(false);
+    }, 2000);
     // remove the current card from the array and set the next card as current
     console.log("direction", direction);
     const newCards = [...cards];
