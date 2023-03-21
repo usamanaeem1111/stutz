@@ -4,22 +4,17 @@ import axios from "axios";
 import { RootState, useSelector } from "../store";
 import Swipe from "../components/Swipe";
 import io from "socket.io-client";
-import CardDeck from "../components/CardDeck";
 
 const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
   const [genderedUsers, setGenderedUsers] = useState<any>(null);
-  const [selectedImage, setSelectedImage] = useState<number | null>(0);
-
-  // update user to have new match
-  const [hasNewMatch, setHasNewMatch] = useState(false);
-
-  const socket = io(`${process.env.REACT_APP_BASE_URL}`);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // SELECTORS
   const user = useSelector((state: RootState) => state.user.user);
   const userId = cookies.UserId;
 
   const getGenderedUsers = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/gendered-users`,
@@ -30,6 +25,8 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
       setGenderedUsers(response.data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,13 +38,15 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
 
   return (
     <>
-      {user && (
-        <div className="dashboard flex justify-between ">
-          <ChatContainer user={user} />
-          {genderedUsers && <Swipe cardData={genderedUsers} />}
-
-          {/* <CardDeck cards={genderedUsers} /> */}
-        </div>
+      {isLoading ? (
+        <div className="loader"></div>
+      ) : (
+        user && (
+          <div className="dashboard flex justify-between ">
+            <ChatContainer user={user} />
+            {genderedUsers && <Swipe user={user} cardData={genderedUsers} />}
+          </div>
+        )
       )}
     </>
   );

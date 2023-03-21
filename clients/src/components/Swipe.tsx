@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import { HiOutlineX, HiOutlineHeart } from "react-icons/hi";
+import axios from "axios";
 
 interface Card {
   user_id: any;
@@ -9,18 +10,38 @@ interface Card {
   images: any[];
 }
 
-const Swipe = ({ cardData }: { cardData: Card[] }) => {
+const Swipe = ({ cardData, user }: { cardData: Card[]; user: any }) => {
   const [cards, setCards] = useState(cardData);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
-  const handleSwipe = (direction: any) => {
+  const handleSwipe = async (direction: any) => {
     // remove the current card from the array and set the next card as current
     console.log("direction", direction);
     const newCards = [...cards];
+    const currentCard = newCards[currentCardIndex];
+    const nextCardIndex = currentCardIndex + 1;
     newCards.splice(currentCardIndex, 1);
     setCards(newCards);
-    if (currentCardIndex === newCards.length) {
+    if (nextCardIndex === newCards.length) {
       setCurrentCardIndex(0);
+    } else {
+      setCurrentCardIndex(nextCardIndex);
+    }
+
+    // Send API request to record swipe
+    const data = {
+      user_id: user.user_id,
+      corresponding_id: currentCard.user_id,
+      direction: direction,
+    };
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/swipes`,
+        data
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
     }
   };
 

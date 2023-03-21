@@ -17,6 +17,7 @@ const App = () => {
   const dispatch = useDispatch();
   // Counter variable
   const [counter, setCounter] = useState(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // PROPS
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -55,74 +56,78 @@ const App = () => {
 
   return (
     <div className="background-image ">
-      <BrowserRouter>
-        <Navbar
-          formData={user}
-          minimal={true}
-          showModal={false}
-          removeCookie={removeCookie}
-          cookies={cookies}
-          setCookie={setCookie}
-          setShowModal={setShowModal}
-          isSignUp={isSignUp}
-          setIsSignUp={setIsSignUp}
-        />
-
-        <Routes>
-          <Route
-            path={"/"}
-            element={
-              <Home
-                cookies={cookies}
-                removeCookie={removeCookie}
-                setCookie={setCookie}
-                setShowModal={setShowModal}
-                showModal={showModal}
-                isSignUp={isSignUp}
-                setIsSignUp={setIsSignUp}
-              />
-            }
-          />
-          <Route
-            path={"/AdminStats"}
-            element={
-              <AdminStats
-                cookies={cookies}
-                removeCookie={removeCookie}
-                setCookie={setCookie}
-              />
-            }
+      {isLoading ? (
+        <div className="loader"></div>
+      ) : (
+        <BrowserRouter>
+          <Navbar
+            formData={user}
+            minimal={true}
+            showModal={false}
+            removeCookie={removeCookie}
+            cookies={cookies}
+            setCookie={setCookie}
+            setShowModal={setShowModal}
+            isSignUp={isSignUp}
+            setIsSignUp={setIsSignUp}
           />
 
-          <Route
-            path={`${user === null ? "/" : "/dashboard"}`}
-            element={
-              <Dashboard
-                user={user}
-                cookies={cookies}
-                removeCookie={removeCookie}
-                setCookie={setCookie}
-              />
-            }
-          />
+          <Routes>
+            <Route
+              path={"/"}
+              element={
+                <Home
+                  cookies={cookies}
+                  removeCookie={removeCookie}
+                  setCookie={setCookie}
+                  setShowModal={setShowModal}
+                  showModal={showModal}
+                  isSignUp={isSignUp}
+                  setIsSignUp={setIsSignUp}
+                />
+              }
+            />
+            <Route
+              path={"/AdminStats"}
+              element={
+                <AdminStats
+                  cookies={cookies}
+                  removeCookie={removeCookie}
+                  setCookie={setCookie}
+                />
+              }
+            />
 
-          <Route
-            path={`${user === null ? "/" : "/myprofile"}`}
-            element={
-              <OnBoarding
-                user={user}
-                cookies={cookies}
-                removeCookie={removeCookie}
-                setCookie={setCookie}
-              />
-            }
-          />
-        </Routes>
+            <Route
+              path={`${user === null ? "/" : "/dashboard"}`}
+              element={
+                <Dashboard
+                  user={user}
+                  cookies={cookies}
+                  removeCookie={removeCookie}
+                  setCookie={setCookie}
+                />
+              }
+            />
 
-        <div className="md:hidden sticky bottom-0 z-[999] flex items-center bg-white/50 backdrop-blur-[7px] md:backdrop-blur-[0px] md:bg-white/0 justify-between mt-3  md:min-w-[500px]">
-          <NavigationLinks />
-        </div>
-      </BrowserRouter>
+            <Route
+              path={`${user === null ? "/" : "/myprofile"}`}
+              element={
+                <OnBoarding
+                  user={user}
+                  cookies={cookies}
+                  removeCookie={removeCookie}
+                  setCookie={setCookie}
+                />
+              }
+            />
+          </Routes>
+
+          <div className="md:hidden sticky bottom-0 z-[999] flex items-center bg-white/50 backdrop-blur-[7px] md:backdrop-blur-[0px] md:bg-white/0 justify-between mt-3  md:min-w-[500px]">
+            <NavigationLinks />
+          </div>
+        </BrowserRouter>
+      )}
     </div>
   );
 };
