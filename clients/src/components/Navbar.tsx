@@ -7,6 +7,7 @@ import siteLogo from "./imgs/logo.png";
 import NavigationLinks from "./NavigationLinks";
 import UserActions from "./UserActions";
 import { addNotification } from "../store/reducers/notification/notification.reducer";
+import axios from "axios";
 
 interface NavbarProps {
   minimal: boolean;

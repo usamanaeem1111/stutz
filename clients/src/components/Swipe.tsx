@@ -84,6 +84,7 @@ const Swipe = ({ cardData, user }: { cardData: Card[]; user: any }) => {
     fetchMatches();
   }, [user.user_id]);
 
+  // console.log("setMatches", user);
   return (
     <div className="relative w-full flex items-center justify-center h-screen max-w-[480px] ">
       {cards.length > 0 ? (
