@@ -21,24 +21,6 @@ const MatchesDisplay = ({ matches, setClickedUser }: Props) => {
   const matchedUserIds = matches.map(({ user_id }) => user_id);
   const userId = cookies.UserId;
 
-  const getMatches = async () => {
-    try {
-      const response = await axios.get<User[]>(
-        `${process.env.REACT_APP_BASE_URL}/users`,
-        {
-          params: { userIds: JSON.stringify(matchedUserIds) },
-        }
-      );
-      setMatchedProfiles(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getMatches();
-  }, [matches]);
-
   return (
     <div className="matches-display ">
       {matchedProfiles && <p>No matches yet</p>}

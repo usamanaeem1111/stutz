@@ -1,72 +1,75 @@
-import { useState } from "react";
-import TinderCard from "react-tinder-card";
+import React, { useState } from "react";
+import { Transition } from "@headlessui/react";
+import { HiOutlineX, HiOutlineHeart } from "react-icons/hi";
 
-type GenderedUser = {
-  user_id: string;
-  first_name: string;
-  images: string[];
-};
+interface Card {
+  user_id: any;
+  first_name: any;
+  name: string;
+  images: any[];
+}
 
-type SwipeProps = {
-  filteredGenderedUsers?: GenderedUser[];
-  swiped: (dir: string, userId: string) => void;
-  outOfFrame: (firstName: string) => void;
-};
+const Swipe = ({ cardData }: { cardData: Card[] }) => {
+  const [cards, setCards] = useState(cardData);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
-const Swipe = ({ filteredGenderedUsers, swiped, outOfFrame }: SwipeProps) => {
-  const [selectedImage, setSelectedImage] = useState<number | undefined>(
-    undefined
-  );
-
-  const defaultImage =
-    "https://awik.io/wp-content/uploads/2018/06/unsplash.jpg";
+  const handleSwipe = (direction: any) => {
+    // remove the current card from the array and set the next card as current
+    console.log("direction", direction);
+    const newCards = [...cards];
+    newCards.splice(currentCardIndex, 1);
+    setCards(newCards);
+    if (currentCardIndex === newCards.length) {
+      setCurrentCardIndex(0);
+    }
+  };
 
   return (
-    <div className="swipe-container flex flex-col justify-center items-center h-[100vh] mx-auto">
-      <div className="card-container w-[400px] h-[650px]">
-        {!filteredGenderedUsers || filteredGenderedUsers.length === 0 ? (
-          <h1>There is No Ppl inside the DB</h1>
-        ) : (
-          filteredGenderedUsers.map((genderedUser: GenderedUser) => (
-            <TinderCard
-              className="swipe absolute"
-              key={genderedUser.user_id}
-              onSwipe={(dir) => swiped(dir, genderedUser.user_id)}
-              onCardLeftScreen={() => outOfFrame(genderedUser.first_name)}
-            >
-              <div
-                style={{
-                  backgroundImage:
-                    genderedUser.images && genderedUser.images.length > 0
-                      ? "url(" + genderedUser.images[selectedImage ?? 0] + ")"
-                      : `url(${defaultImage})`,
-                }}
-                className="card w-[400px] h-[650px] rounded-[30px] bg-cover bg-no-repeat bg-center	"
-              >
-                <div className="flex flex-col items-center  absolute w-full bottom-0 text-white bg-black/50 backdrop-blur-[20px] rounded-2xl overflow-hidden">
-                  <h3 className="">{genderedUser.first_name}</h3>
-
-                  {genderedUser.images && genderedUser.images.length > 0 && (
-                    <div className="image-gallery-container flex">
-                      {genderedUser.images.map(
-                        (image: string, index: number) => (
-                          <img
-                            key={index}
-                            src={image}
-                            alt={`${genderedUser.first_name} ${index + 1}`}
-                            className="image-gallery-item w-[100px] h-[100px] m-1 rounded-2xl"
-                            onClick={() => setSelectedImage(index)}
-                          />
-                        )
-                      )}
-                    </div>
-                  )}
+    <div className="relative w-full flex items-center justify-center h-screen bg-gray-100">
+      {cards.length > 0 ? (
+        cards.map((card: Card, index: number) => (
+          <Transition
+            key={card.user_id}
+            show={index === currentCardIndex}
+            enter="transition-all duration-500 ease-out"
+            enterFrom="opacity-0 scale-95"
+            enterTo="opacity-100 scale-100"
+            leave="transition-all duration-500 ease-in"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-95"
+          >
+            <div className="" key={card.user_id}>
+              <div className="w-full  p-4 mx-auto mt-10 bg-white rounded-lg shadow-lg">
+                <div className="flex justify-end">
+                  <button
+                    className="p-2 mx-2 text-gray-400 rounded-full hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    onClick={() => handleSwipe("left")}
+                  >
+                    <HiOutlineX size={24} />
+                  </button>
+                  <button
+                    className="p-2 mx-2 text-gray-400 rounded-full hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    onClick={() => handleSwipe("right")}
+                  >
+                    <HiOutlineHeart size={24} />
+                  </button>
                 </div>
+                <h2 className="mt-2 text-lg font-medium text-gray-800">
+                  {card.first_name}
+                </h2>
+                <img src={card.images[0]} alt="" />
               </div>
-            </TinderCard>
-          ))
-        )}
-      </div>
+            </div>
+          </Transition>
+        ))
+      ) : (
+        <div className="flex flex-col items-center justify-center">
+          <img src="no-users-image.png" alt="No more users" />
+          <p className="text-red">
+            Sorry, there are no more users with the gender you are looking for
+          </p>
+        </div>
+      )}
     </div>
   );
 };

@@ -11,7 +11,6 @@ import { userActions } from "./store/reducers/user/user.reducer";
 import { RootState } from "./store";
 import Navbar from "./components/Navbar";
 import NavigationLinks from "./components/NavigationLinks";
-import AuthModal from "./components/AuthModal";
 
 const App = () => {
   // TOOLS
@@ -33,9 +32,12 @@ const App = () => {
 
   const fetchUser = useCallback(async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user`, {
-        params: { userId },
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/user`,
+        {
+          params: { userId },
+        }
+      );
       const _user = response.data;
       dispatch(userActions.setUser({ value: _user }));
       setCounter((prevCounter) => prevCounter + 1);
@@ -50,7 +52,7 @@ const App = () => {
       fetchUser();
     }
   }, [fetchUser, userId]);
- 
+
   return (
     <div className="background-image ">
       <BrowserRouter>
