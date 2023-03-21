@@ -24,7 +24,7 @@ const Swipe = ({ cardData, user }: { cardData: Card[]; user: any }) => {
     setButtonsDisabled(true);
     setTimeout(() => {
       setButtonsDisabled(false);
-    }, 2000);
+    }, 1000);
     // remove the current card from the array and set the next card as current
     console.log("direction", direction);
     const newCards = [...cards];
