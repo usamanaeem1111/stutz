@@ -11,7 +11,6 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
 
   // SELECTORS
   const user = useSelector((state: RootState) => state.user.user);
-  const userId = cookies.UserId;
 
   const getGenderedUsers = async () => {
     setIsLoading(true);

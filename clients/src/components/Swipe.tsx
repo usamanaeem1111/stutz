@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Transition } from "@headlessui/react";
 import { HiOutlineX, HiOutlineHeart } from "react-icons/hi";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 interface Card {
   user_id: any;
@@ -84,7 +85,10 @@ const Swipe = ({ cardData, user }: { cardData: Card[]; user: any }) => {
     fetchMatches();
   }, [user.user_id]);
 
-  // console.log("setMatches", user);
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   return (
     <div className="relative w-full flex items-center justify-center h-screen max-w-[480px] ">
       {cards.length > 0 ? (
