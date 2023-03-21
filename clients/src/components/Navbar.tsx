@@ -8,6 +8,7 @@ import NavigationLinks from "./NavigationLinks";
 import UserActions from "./UserActions";
 import { addNotification } from "../store/reducers/notification/notification.reducer";
 import axios from "axios";
+import { FaHeart } from "react-icons/fa";
 
 interface NavbarProps {
   minimal: boolean;

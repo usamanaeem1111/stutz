@@ -7,6 +7,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 |
 */
 interface IUser {
+  [x: string]: IUser | null;
   about: any;
   city: any;
   dob: any;
@@ -19,7 +20,7 @@ interface IUser {
   gender_identity: any;
   gender_interest: any;
   images: any;
-
+  notification: any;
   likes: any;
 
   matches: any;
@@ -55,6 +56,9 @@ const userState = createSlice({
   initialState,
   reducers: {
     setUser(state: IUserState, action: PayloadAction<{ value: null | IUser }>) {
+      state.user = action.payload.value;
+    },
+    updateUser(state: IUserState, action: PayloadAction<{ value: IUser }>) {
       state.user = action.payload.value;
     },
   },
