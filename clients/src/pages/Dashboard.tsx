@@ -42,7 +42,7 @@ const Dashboard = ({ cookies, removeCookie, setCookie }: any) => {
         <div className="loader"></div>
       ) : (
         user && (
-          <div className="dashboard flex justify-between ">
+          <div className="dashboard flex justify-between">
             <ChatContainer user={user} />
             {genderedUsers && <Swipe user={user} cardData={genderedUsers} />}
           </div>

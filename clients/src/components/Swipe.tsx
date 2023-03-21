@@ -56,7 +56,7 @@ const Swipe = ({ cardData, user }: { cardData: Card[]; user: any }) => {
   };
 
   return (
-    <div className="relative w-full flex items-center justify-center h-screen bg-gray-100">
+    <div className="relative w-full flex items-center justify-center h-screen max-w-[480px] ">
       {cards.length > 0 ? (
         cards.map((card: Card, index: number) => (
           <Transition
@@ -69,26 +69,31 @@ const Swipe = ({ cardData, user }: { cardData: Card[]; user: any }) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="" key={card.user_id}>
-              <div className="w-full  p-4 mx-auto mt-10 bg-white rounded-lg shadow-lg">
-                <div className="flex justify-end">
+            <div className="p-4" key={card.user_id}>
+              <div className="w-full mx-auto mt-10 rounded-lg bg-gradient-to-br from-white/0 to-white backdrop-blur-[7px] shadow-lg">
+                <div className="flex justify-between p-4">
                   <button
-                    className="p-2 mx-2 text-gray-400 rounded-full hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    className="p-2 mx-2 text-white rounded-full hover:bg-black/50 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 active:translate-y-[1px]"
                     onClick={() => handleSwipe("left")}
                   >
-                    <HiOutlineX size={24} />
+                    <HiOutlineX size={36} />
                   </button>
+                  <h2 className="mt-2 text-lg font-medium text-gray-800">
+                    {card.first_name}
+                  </h2>
                   <button
-                    className="p-2 mx-2 text-gray-400 rounded-full hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    className="p-2 mx-2 text-green-500 rounded-full hover:bg-[#f8306f]/80 backdrop-blur-[7px] hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-600 active:translate-y-[1px]"
                     onClick={() => handleSwipe("right")}
                   >
-                    <HiOutlineHeart size={24} />
+                    <HiOutlineHeart size={36} />
                   </button>
                 </div>
-                <h2 className="mt-2 text-lg font-medium text-gray-800">
-                  {card.first_name}
-                </h2>
-                <img src={card.images[0]} alt="" />
+
+                <img
+                  src={card.images[0]}
+                  alt=""
+                  className="w-full object-cover rounded-lg shadow-lg min-h-[480px]"
+                />
               </div>
             </div>
           </Transition>
