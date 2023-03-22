@@ -11,6 +11,7 @@ import {
   FaHandshake,
 } from "react-icons/fa";
 import MessageDropdown from "./MessageDropdown";
+import NotificationDropdown from "./NotificationDropdown";
 import { RootState } from "../store";
 import { userActions } from "../store/reducers/user/user.reducer";
 
@@ -20,9 +21,12 @@ function NavigationLinks() {
   const notifications = useSelector(
     (state: RootState) => state.notifications.notifications
   );
+
+  console.log(notifications);
   const user = useSelector((state: RootState) => state.user.user);
   const [matchNotification, setMatchNotification] = useState(true);
   const [notificationRemoved, setNotificationRemoved] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const isActive = (path: any) => {
     if (path === "/") {
@@ -32,13 +36,34 @@ function NavigationLinks() {
     }
   };
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const markAllNotificationsAsRead = () => {
+    console.log(
+      "send request to the api to mark all the notifications as read"
+    );
+  };
+
   return (
     <div
       className={`${
         !user && "hidden"
       } flex items-center w-full justify-between`}
     >
-      <MessageDropdown messages={notifications} />
+      <div onClick={toggleDropdown}>
+        <FaBell className="h-6 w-6" />
+        {notifications.length > 0 && (
+          <span className="h-3 w-3 bg-[red] rounded-full absolute right-2 top-2"></span>
+        )}
+      </div>
+      {dropdownOpen && (
+        <NotificationDropdown
+          notifications={user?.notification}
+          markAllNotificationsAsRead={markAllNotificationsAsRead}
+        />
+      )}
 
       <Link
         to="/"
@@ -77,6 +102,9 @@ function NavigationLinks() {
       </Link>
 
       <div
+        onClick={() => {
+          setMatchNotification(true);
+        }}
         className={`flex flex-col items-center transition-colors duration-200 mx-1 p-2 cursor-pointer rounded-md active:translate-y-[1px] hover:bg-white/80 hover:backdrop-blur-[7px] ${
           isActive("/matches")
             ? "text-[#fe316e] bg-white shadow-lg md:shadow-none active:translate-y-[1px] rounded-lg "
@@ -85,8 +113,8 @@ function NavigationLinks() {
       >
         <FaHeart className="h-6 w-6" />
         <span className="text-xs font-semibold mt-1">התאמות</span>{" "}
-        {!matchNotification && !notificationRemoved && (
-          <span className="h-6 w-6 bg-[red] rounded-full"></span>
+        {matchNotification && (
+          <span className="h-3 w-3 bg-[red] rounded-full"></span>
         )}
       </div>
     </div>
