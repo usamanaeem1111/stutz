@@ -39,11 +39,12 @@ function NavigationLinks() {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
+  // {process.env.REACT_APP_BASE_URL}
   const markAllNotificationsAsRead = () => {
     console.log(
       "send request to the api to mark all the notifications as read"
     );
+    setDropdownOpen(!dropdownOpen);
   };
 
   return (
@@ -58,7 +59,7 @@ function NavigationLinks() {
           <span className="h-3 w-3 bg-[red] rounded-full absolute right-2 top-2"></span>
         )}
       </div>
-      {dropdownOpen && (
+      {user?.notification && dropdownOpen && (
         <NotificationDropdown
           notifications={user?.notification}
           markAllNotificationsAsRead={markAllNotificationsAsRead}
