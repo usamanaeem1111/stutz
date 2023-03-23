@@ -31,7 +31,6 @@ const CardDeck = ({ cards }: CardDeckProps) => {
     }
   };
 
-  console.log(cards);
   return (
     <div className="relative">
       <div className="flex justify-center">

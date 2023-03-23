@@ -47,7 +47,6 @@ const ChatInput = ({
     }
   };
 
-  // console.log("user", user);
   return (
     <div>
       <Chat

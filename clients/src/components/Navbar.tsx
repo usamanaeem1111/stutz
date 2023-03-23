@@ -53,10 +53,6 @@ const Navbar: FC<NavbarProps> = ({
 
   const [socketCalls, setSocketCalls] = useState(0);
 
-  const handleNotificationClose = useCallback(() => {
-    setNumUnreadMessages(0);
-  }, []);
-
   useEffect(() => {
     const handleNewMessage = (data: Message) => {
       if (data.from_userId !== user?.user_id) {

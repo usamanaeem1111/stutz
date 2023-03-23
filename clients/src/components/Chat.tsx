@@ -8,8 +8,6 @@ const Chat = ({ descendingOrderMessages, currentUser, clickedUser }: any) => {
   let prevDate: any = null;
   let prevUser: any = null;
 
-  // console.log(descendingOrderMessages);
-
   useEffect(() => {
     if (chatMessagesRef.current) {
       if (isAtBottom) {
