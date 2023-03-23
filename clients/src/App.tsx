@@ -29,12 +29,14 @@ const App = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const [showModal, setShowModal] = useState(false);
   const [isSignUp, setIsSignUp] = useState(true);
-  const userId = cookies.UserId;
+
+  const userId = cookies.UserId || user?.user_id;
+  console.log("userId", userId);
 
   const fetchUser = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/user`,
+        `${process.env.REACT_APP_BASE_URL}/user/${userId}`,
         {
           params: { userId },
         }
