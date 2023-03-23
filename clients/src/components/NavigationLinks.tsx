@@ -22,7 +22,6 @@ function NavigationLinks() {
     (state: RootState) => state.notifications.notifications
   );
 
-  console.log(notifications);
   const user = useSelector((state: RootState) => state.user.user);
   const [matchNotification, setMatchNotification] = useState(true);
   const [notificationRemoved, setNotificationRemoved] = useState(false);

@@ -31,7 +31,6 @@ const App = () => {
   const [isSignUp, setIsSignUp] = useState(true);
 
   const userId = cookies.UserId || user?.user_id;
-  console.log("userId", userId);
 
   const fetchUser = useCallback(async () => {
     try {

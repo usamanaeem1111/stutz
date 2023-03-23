@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
@@ -11,14 +12,28 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
   notifications,
   markAllNotificationsAsRead,
 }) => {
+  const user = useSelector((state: RootState) => state.user.user);
+
   const handleNotificationClick = (id: number) => {
     console.log(`mark notification ${id} as read`);
   };
 
-  const user = useSelector((state: RootState) => state.user.user);
+  const handleClearNotificationsClick = async () => {
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BASE_URL}/user/${user?.user_id}/notification`
+      );
+      if (response.status === 200) {
+        console.log("Notifications cleared successfully");
+        markAllNotificationsAsRead();
+      } else {
+        console.error("Failed to clear notifications");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  console.log("user", user);
-  console.log("notification", notifications);
   const unreadNotifications = notifications
     .filter((notification) => !notification.read)
     .slice(0, 5);
@@ -28,10 +43,10 @@ const NotificationDropdown: React.FC<NotificationDropdownProps> = ({
       <div className="flex items-center justify-between border-b border-gray-300 px-4 py-2">
         <h2 className="text-lg font-medium">Notifications</h2>
         <button
-          onClick={markAllNotificationsAsRead}
+          onClick={handleClearNotificationsClick}
           className="text-xs text-blue-600 hover:underline focus:outline-none"
         >
-          clear notificatoin
+          Clear notifications
         </button>
       </div>
       <ul>
