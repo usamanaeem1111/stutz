@@ -1,30 +1,19 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import axios from "axios";
-import {
-  FaHome,
-  FaUser,
-  FaBell,
-  FaEnvelope,
-  FaHeart,
-  FaHandshake,
-} from "react-icons/fa";
-import MessageDropdown from "./MessageDropdown";
+import { FaHome, FaUser, FaBell, FaEnvelope, FaHeart } from "react-icons/fa";
 import NotificationDropdown from "./NotificationDropdown";
 import { RootState } from "../store";
-import { userActions } from "../store/reducers/user/user.reducer";
 
 function NavigationLinks() {
   const location = useLocation();
-  const dispatch = useDispatch();
+
   const notifications = useSelector(
     (state: RootState) => state.notifications.notifications
   );
 
   const user = useSelector((state: RootState) => state.user.user);
   const [matchNotification, setMatchNotification] = useState(true);
-  const [notificationRemoved, setNotificationRemoved] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const isActive = (path: any) => {

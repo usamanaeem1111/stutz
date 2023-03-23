@@ -7,8 +7,6 @@ import siteLogo from "./imgs/logo.png";
 import NavigationLinks from "./NavigationLinks";
 import UserActions from "./UserActions";
 import { addNotification } from "../store/reducers/notification/notification.reducer";
-import axios from "axios";
-import { FaHeart } from "react-icons/fa";
 
 interface NavbarProps {
   minimal: boolean;
@@ -54,10 +52,6 @@ const Navbar: FC<NavbarProps> = ({
   const user = useSelector((state: RootState) => state.user.user);
 
   const [socketCalls, setSocketCalls] = useState(0);
-
-  const handleNotificationClose = useCallback(() => {
-    setNumUnreadMessages(0);
-  }, []);
 
   useEffect(() => {
     const handleNewMessage = (data: Message) => {
