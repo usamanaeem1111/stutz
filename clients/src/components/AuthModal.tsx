@@ -37,7 +37,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       let email = userObject.email;
 
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/googleSignUp`,
+        `${process.env.REACT_APP_BASE_URL}/auth/googleSignUp`,
         {
           email,
           authToken,
@@ -48,6 +48,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
       setCookie("UserId", userObject.sub);
 
       const success = response.status === 200 || response.status === 201;
+
       if (success) navigate("./myprofile");
       return;
     } else {
@@ -103,7 +104,9 @@ const AuthModal: React.FC<AuthModalProps> = ({
       setIsSubmitting(true);
 
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/${isSignUp ? "signup" : "login"}`,
+        `${process.env.REACT_APP_BASE_URL}/auth/${
+          isSignUp ? "signup" : "login"
+        }`,
         {
           email,
           password,
